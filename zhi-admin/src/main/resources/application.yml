@@ -129,9 +129,6 @@ security:
     - /favicon.ico
     - /*/api-docs
     - /*/api-docs/**
-    # actuator 监控配置
-    - /actuator
-    - /actuator/**
 
 # MyBatisPlus配置
 # https://baomidou.com/config/
@@ -236,14 +233,3 @@ lock4j:
   # 分布式锁的超时时间，默认为 30 秒
   expire: 30000
 
---- # Actuator 监控端点的配置项
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: ALWAYS
-    logfile:
-      external-file: ./logs/sys-console.log

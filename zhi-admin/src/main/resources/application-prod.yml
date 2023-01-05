@@ -1,16 +1,5 @@
 --- # 临时文件存储位置 避免临时文件被系统清理报错
 spring.servlet.multipart.location: /ruoyi/server/temp
-
---- # 监控中心配置
-spring.boot.admin.client:
-  # 增加客户端开关
-  enabled: true
-  url: http://localhost:9090/admin
-  instance:
-    service-host-type: IP
-  username: ruoyi
-  password: 123456
-
 --- # xxl-job 配置
 xxl.job:
   # 执行器开关
@@ -52,7 +41,7 @@ spring:
           driverClassName: com.mysql.cj.jdbc.Driver
           # jdbc 所有参数配置参考 https://lionli.blog.csdn.net/article/details/122018562
           # rewriteBatchedStatements=true 批处理优化 大幅提升批量插入更新删除性能(对数据库有性能损耗 使用批量操作应考虑性能问题)
-          url: jdbc:mysql://localhost:3306/ry-vue-plus?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true
+          url: jdbc:mysql://localhost:3306/ry-vue-blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true
           username: root
           password: root
         # 从库数据源

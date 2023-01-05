@@ -12,7 +12,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>zhi-monitor-admin</module>
         <module>zhi-xxl-job-admin</module>
     </modules>
 

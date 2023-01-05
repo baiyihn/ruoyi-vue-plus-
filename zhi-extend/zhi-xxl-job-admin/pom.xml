@@ -50,11 +50,7 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-        <!-- starter-actuator -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+
 
         <!-- mybatis-starter：mybatis + mybatis-spring + hikari（default） -->
         <dependency>
@@ -68,10 +64,7 @@
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-        </dependency>
+
 
         <!-- xxl-job-core -->
         <dependency>
