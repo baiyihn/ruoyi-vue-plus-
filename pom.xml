@@ -281,6 +281,13 @@
                 <version>${zhi-vue-plus.version}</version>
             </dependency>
 
+            <!-- myblog模块 -->
+            <dependency>
+                <groupId>com.zhi</groupId>
+                <artifactId>zhi-myblog</artifactId>
+                <version>${zhi-vue-plus.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -295,6 +302,7 @@
         <module>zhi-extend</module>
         <module>zhi-oss</module>
         <module>zhi-sms</module>
+        <module>zhi-myblog</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -1,0 +1,687 @@
+#chatRoom {}
+
+#chatRoom .panel-chatroom {
+    /* border: none;
+    margin: 0;
+    border-radius: 0px; */
+    box-shadow: 0 0 1rem rgb(161 177 204 / 40%);
+}
+
+#chatRoom .panel-chatroom .panel-heading {
+    border: none;
+    border-radius: 0px;
+}
+
+#chatRoom .panel-chatroom .panel-body {
+    /* 83vh; */
+    height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#chatRoom .panel-chatroom .panel-body::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+#chatRoom .panel-chatroom .panel-body::-webkit-scrollbar-track {}
+
+/*定义滑块 内阴影+圆角*/
+#chatRoom .panel-chatroom .panel-body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    /* box-shadow: rgba(144,147,153,.3);
+    -webkit-box-shadow: rgba(144,147,153,.3); */
+    background-color: rgba(144, 147, 153, .3);
+}
+
+#chatRoom .panel-chatroom .panel-heading h3 b {
+    color: #4cae4c;
+    cursor: pointer;
+}
+
+/* 左上和右上通知 */
+.chatRoom-online-el-notification {
+    width: 279px;
+}
+
+.chatRoom-online-el-notification .el-notification__group {
+    margin: 0 8px 0 0;
+}
+
+.chatRoom-online-el-notification img {
+    max-height: 6vh;
+    padding: 1px;
+}
+
+.chatRoom-online-el-notification .notification-nickname {
+    /* color: #FFA500; */
+}
+
+.chatRoom-online-el-notification .span-msg-open {
+    color: #4cae4c;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.chatRoom-online-el-notification .span-msg-close {
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+#chatRoom .no-padding {
+    padding: 0;
+}
+
+#chatRoom .padding-0-10 {
+    padding: 0 10px;
+}
+
+#chatRoom .padding-0-5-0-10 {
+    padding: 0 5px 0 0px;
+}
+
+#chatRoom .padding-0-10-0-5 {
+    padding: 0 10px 0 5px;
+}
+
+#chatRoom #chatRoom-panel-body {
+    padding-top: 10px;
+    padding-bottom: 70px;
+    background-color: #FBFCFA;
+}
+
+#chatRoom #chatRoom-panel-body .col-msg-item {
+    padding: 5px 15px;
+}
+#chatRoom #chatRoom-panel-body .col-msg-item-left .el-popover__reference-wrapper .el-popover__reference{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+#chatRoom #chatRoom-panel-body .col-msg-item-left .el-popover__reference-wrapper .el-popover__reference .b-nickname{
+    cursor: pointer;
+}
+#chatRoom #chatRoom-panel-body .col-msg-item-left .label-is-stationmaster {
+    /* padding:0 5px ; */
+    margin-right: 5px;
+}
+
+#chatRoom .text-align-right {
+    text-align: right;
+}
+
+#chatRoom .height-20px {
+    height: 20px;
+}
+
+#chatRoom #chatRoom-panel-body .col-msg-item .label-is-stationmaster {
+    padding: 2px;
+    background-color: #FFA500;
+}
+#chatRoom #chatRoom-panel-body .col-msg-item .img-face{
+    min-height: 53px;
+    min-width: 53px;
+    max-height: 53px;
+    max-width: 53px;
+}
+/* 聊天气泡公共样式 */
+#chatRoom #chatRoom-panel-body .col-msg-item .col-msg-content {
+    border-radius: 4px;
+    margin-top: 6px;
+    padding: 8px;
+    letter-spacing: 1px;
+    max-width: 100%;
+    min-height: 36px;
+    text-align: left;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    /* 只对英文起作用，以字母作为换行依据 */
+    /* word-break:break-all; */
+    /*  只对英文起作用，以单词作为换行依据 */
+    word-wrap: break-word;
+
+    /* 只对中文起作用，强制换行 */
+    /* white-space:pre-wrap; */
+}
+
+/* 聊天气泡公共样式 pre*/
+#chatRoom #chatRoom-panel-body .col-msg-item .col-msg-content pre {
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 0px;
+    line-height: none;
+    word-wrap: normal;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: transparent;
+    font: 15px Helvetica Neue, Helvetica, PingFang SC, Tahoma, Arial, sans-serif;
+}
+
+/* 别人聊天的气泡 */
+#chatRoom #chatRoom-panel-body .col-msg-item .col-msg-content-left {
+    background-color: #FCF8E3;
+    box-shadow: 1px 1px 3px #ffa500;
+}
+
+#chatRoom #chatRoom-panel-body .col-msg-item .col-msg-content-left pre {
+    color: #8a6d3b;
+}
+
+/* 自己聊天的气泡 */
+#chatRoom #chatRoom-panel-body .col-msg-item .col-msg-content-right {
+    background-color: #F5F5F5;
+    box-shadow: -1px 1px 3px #66666E;
+}
+
+#chatRoom #chatRoom-panel-body .col-msg-item .col-msg-content-right pre {
+
+    color: #66666E;
+}
+
+#chatRoom .panel-chatroom .panel-footer {
+    background-color: #fff;
+    border: none;
+}
+
+/* 群聊私聊公共 文本框 */
+#chatRoom .panel-chatroom .panel-footer .form-control,
+#privateChatContainer .row-private-textarea .form-control {
+    resize: vertical;
+    height: 10vh;
+    border: none;
+    box-shadow: none !important;
+    background-color: transparent;
+}
+
+/* 群聊文本框 */
+#chatRoom .panel-chatroom .panel-footer .form-control {
+    height: 10vh;
+}
+
+/* 私聊文本框 */
+#privateChatContainer .row-private-textarea .form-control {
+    height: 6vh;
+    padding-top: 1px;
+}
+
+#chatRoom .panel-chatroom .panel-footer .form-control::-webkit-scrollbar {
+    width: 4px;
+
+    /* background-color: #F5F5F5; */
+    background-color: transparent;
+}
+
+#privateChatContainer .row-private-textarea .form-control::-webkit-scrollbar {
+    width: 4px;
+
+    /* background-color: #F5F5F5; */
+    background-color: transparent;
+}
+
+#chatRoom .panel-chatroom .panel-footer .form-control::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    /* box-shadow: rgba(144,147,153,.3);
+    -webkit-box-shadow: rgba(144,147,153,.3); */
+    background-color: rgba(144, 147, 153, .3);
+}
+
+#privateChatContainer .row-private-textarea .form-control::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    /* box-shadow: rgba(144,147,153,.3);
+    -webkit-box-shadow: rgba(144,147,153,.3); */
+    background-color: rgba(144, 147, 153, .3);
+}
+
+#chatRoom .panel-chatroom .panel-footer .row-send-btn {
+    padding: 10px 15px 0;
+}
+
+#chatRoom .panel-chatroom .panel-footer .row-send-btn .btn-default {
+    border: 1px solid #FFA500;
+    color: #FFA500;
+    background-color: transparent;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+#chatRoom .panel-chatroom .panel-footer .row-send-btn .btn-default:hover {
+    background-color: #FFA500;
+    color: #fff;
+}
+
+/* 聊天功能区 */
+#chatRoom .panel-chatroom .panel-footer .row-sendmsg-funs {
+    padding: 2px 27px;
+}
+
+/* 聊天功能区 下面的图标 */
+#chatRoom .panel-chatroom .panel-footer .row-sendmsg-funs i {
+    font-size: 21px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 这个class是唯一的 */
+.el-popover-faces {}
+
+.el-popover-faces .face {
+    height: 23vh;
+    overflow-y: auto;
+}
+
+.el-popover-faces .face::-webkit-scrollbar {
+    width: 12px;
+}
+
+.el-popover-faces .face::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(144, 147, 153, 0.3);
+}
+
+.el-popover-faces .face-item {
+    font-size: 16px;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    padding: 7px;
+    cursor: pointer;
+}
+
+#chatRoom #chatRoom-panel-body .msg-online {
+    padding: 6px 0;
+}
+
+/* 当有连接时 室内通知 */
+#chatRoom #chatRoom-panel-body .msg-online .msg-online-resmsg .span-online-open {
+    color: #4cae4c;
+}
+
+#chatRoom #chatRoom-panel-body .msg-online .msg-online-resmsg b {
+    letter-spacing: 1px;
+}
+
+#chatRoom #chatRoom-panel-body .msg-online .msg-online-resmsg .span-online-close {
+    color: red;
+}
+
+#chatRoom .col-online-users {
+    padding: 0;
+
+}
+
+.el-drawer-chatroom-online-users .el-drawer__body {
+    overflow: scroll;
+    overflow: hidden;
+}
+
+.el-drawer-chatroom-online-users .container-fluid {
+    height: 100%;
+    /* width: 30vw; */
+    overflow-y: auto;
+}
+
+.el-drawer-chatroom-online-users .container-fluid::-webkit-scrollbar {
+    width: 10px;
+}
+
+.el-drawer-chatroom-online-users .container-fluid::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    /* box-shadow: rgba(144,147,153,.3);
+    -webkit-box-shadow: rgba(144,147,153,.3); */
+    background-color: rgba(144, 147, 153, .3);
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row .col-online-users-item {
+    padding: 0;
+    cursor: pointer;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .col-for {
+    margin-top: 6px;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row {}
+
+.float-left {
+    float: left;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row .col-online-users-item {
+    width: 100%;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row .col-online-users-item span {
+    display: inline-block;
+    /* 强制不换行 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    width: 100%;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row .col-online-users-item span b {
+    margin-left: 5px;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row .col-online-users-item .el-card__body {
+    padding: 5px 0;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row .col-online-users-item .el-card__body:hover {
+    background-color: #FFA500;
+    box-shadow: 2px 2px 30px #FFA500;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row .col-online-users-item img {
+    max-height: 5vh;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row .col-online-users-item span .img-thumbnail {
+    padding: 1px;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row .col-online-users-item .el-card__body p {
+    padding: 0 12px;
+}
+
+.el-drawer-chatroom-online-users .container-fluid .row .col-online-users-item .img-con {
+    height: 100%;
+}
+
+/* 这个类名是唯一的 */
+.el-popover-userInfo {
+
+    padding: 12px 0;
+}
+
+.el-popover-userInfo .container-fluid {
+    padding: 0;
+}
+
+.el-popover-userInfo .container-fluid>div {
+    padding: 0 20px;
+}
+
+.el-popover-userInfo .container-fluid .el-divider {
+    margin: 10px 0;
+}
+
+.el-popover-userInfo .container-fluid .row-face .img-thumbnail {
+    max-height: 7vh;
+    padding: 2px;
+}
+
+.el-popover-userInfo .container-fluid .row-info .b-sex {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.el-popover-userInfo .container-fluid .row-info .b-sex .fa-venus {
+    color: #F56C6C;
+}
+
+.el-popover-userInfo .container-fluid .row-info .b-sex .fa-mars {
+    color: #409EFF;
+}
+
+.el-popover-userInfo .container-fluid .row-sign span {
+    letter-spacing: 0.4px;
+}
+
+.el-popover-userInfo .container-fluid .row-sign .no-sign {
+    color: #ddd;
+}
+
+.el-popover-userInfo .container-fluid .row-btn .row-btn-container {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+/* 私聊按钮和加好友按钮公共 */
+.el-popover-userInfo .container-fluid .row-btn button {
+    transition: all 0.3s ease;
+    font-size: 12px;
+    padding: 4px 9px;
+    letter-spacing: 0.4px;
+}
+
+/* 私聊按钮 */
+.el-popover-userInfo .container-fluid .row-btn .btn-private {
+    color: #409EFF;
+    border: 1px solid #409EFF;
+}
+
+.el-popover-userInfo .container-fluid .row-btn .btn-private:hover {
+    background-color: #409EFF;
+    color: #fff;
+}
+
+/* 加好友按钮 */
+.el-popover-userInfo .container-fluid .row-btn .btn-addfriend {
+
+    color: #FFA500;
+    border: 1px solid #FFA500;
+}
+
+.el-popover-userInfo .container-fluid .row-btn .btn-addfriend:focus {
+    border: none !important;
+}
+
+.el-popover-userInfo .container-fluid .row-btn .btn-addfriend:hover {
+    background-color: #FFA500;
+    color: #fff;
+}
+
+#privateChatContainer {
+
+    display: none;
+}
+
+#privateChatContainer .row-private-caht-container {
+    background-color: #FBFCFA;
+    padding-top: 10px;
+    padding-bottom: 50px;
+    height: 60vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#privateChatContainer .row-private-caht-container .priva-msg-item {}
+
+#privateChatContainer .row-private-caht-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+#privateChatContainer .row-private-caht-container::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(144, 147, 153, 0.3);
+}
+
+#privateChatContainer .row-private-caht-container .private-chat-face {
+    float: left;
+    width: 16%;
+}
+
+#privateChatContainer .row-private-caht-container .private-chat-face img {
+    max-width: 4vw;
+    min-width: 40px;
+    width: 100%;
+}
+
+#privateChatContainer .row-private-caht-container .private-chat-msg-left {
+    margin-left: 4px;
+    float: left;
+    padding: 13px 0 0;
+}
+
+/* 私聊 公共的pre */
+#privateChatContainer .row-private-caht-container pre {
+    max-width: 100%;
+    border: none;
+    padding: 7px;
+    margin: 0;
+    font: 13px Helvetica Neue, Helvetica, PingFang SC, Tahoma, Arial, sans-serif;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    word-break: normal;
+    word-wrap: normal;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+
+}
+
+#privateChatContainer .row-private-caht-container .private-chat-msg-left pre {
+    background-color: #FCF8E3;
+
+    color: #8a6d3b;
+    box-shadow: 1px 1px 3px #ffa500;
+}
+
+
+#privateChatContainer .row-private-caht-container .me-msg {
+    float: right;
+}
+
+#privateChatContainer .row-private-caht-container .me-face {
+    float: right;
+}
+
+#privateChatContainer .row-private-caht-container .me .private-chat-msg-right {
+    margin-right: 4px;
+    padding: 13px 0 0;
+    word-wrap: break-word;
+}
+
+#privateChatContainer .row-private-caht-container .me .private-chat-msg-right pre {
+    float: right;
+    background-color: #F5F5F5;
+    box-shadow: -1px 1px 3px #66666E;
+}
+
+#privateChatContainer .row-private-caht-container>.col-lg-12>div {
+
+    margin-top: 5px;
+}
+
+/* layer-private-chat 这个类是唯一的*/
+.layer-private-chat {
+    z-index: 2000;
+}
+
+.layer-private-chat .layui-layer-content {}
+
+.layer-private-chat .layui-layer-content::-webkit-scrollbar {
+    width: 5px;
+
+}
+
+.layer-private-chat .layui-layer-content::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(144, 147, 153, 0.3);
+}
+
+#privateChatContainer .row .col-p-send {
+    padding-bottom: 20px;
+}
+
+#privateChatContainer .btn-private-send {
+    transition: all 0.3s ease;
+    border: 1px solid #FFFAE8;
+    background-color: transparent;
+    letter-spacing: 1px;
+    color: #FFA500;
+    padding: 7px 12px;
+}
+
+#privateChatContainer .btn-private-send:hover {
+    background-color: #FFA500;
+    color: #fff;
+}
+
+/* el-popover-private-faces 该类名唯一 */
+#privateChatContainer .row-p-faces .col-lg-12 {
+    padding-top: 5px;
+
+}
+
+#privateChatContainer .row-p-faces i {
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.el-popover-private-faces .face {
+
+    height: 20vh;
+    overflow-y: auto;
+}
+
+.el-popover-private-faces .face::-webkit-scrollbar {
+    width: 9px;
+}
+
+.el-popover-private-faces .face::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(144, 147, 153, 0.3);
+}
+
+.el-popover-private-faces .face .face-item {
+    font-size: 15px;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    padding: 3px;
+    cursor: pointer;
+    float: left;
+}
+
+/* el-popover-private-chat 唯一类 */
+.el-popover-private-chat .row {
+    margin-top: 10px;
+    line-height: 43px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 4px;
+    /* 相对 */
+    position: relative;
+}
+.el-popover-private-chat .row:hover{
+    background-color: #FFA500;
+    color: #fff;
+}
+.el-popover-private-chat .row .col {
+    padding: 0 5px;
+}
+.el-popover-private-chat .row .el-badge {}
+
+.el-popover-private-chat .row .col .img-thumbnail {
+    padding: 1px;
+}
+
+.el-popover-private-chat .row .col-nickname {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    padding: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.el-popover-private-chat .row .el-badge__content{
+    /* 绝对 使用绝对定位的元素，父元素需要相对定位 */
+    position: absolute;
+    right:-5px;
+    top: -6px;
+}

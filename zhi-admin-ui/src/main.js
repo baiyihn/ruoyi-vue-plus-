@@ -37,6 +37,21 @@ import DictTag from '@/components/DictTag'
 import VueMeta from 'vue-meta'
 // 字典数据组件
 import DictData from '@/components/DictData'
+import dayjs from "dayjs";
+
+import VueCalendarHeatmap from "vue-calendar-heatmap";
+import VueMarkdownEditor from '@kangc/v-md-editor';
+import '@kangc/v-md-editor/lib/style/base-editor.css';
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
+import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
+import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
+import Prism from 'prismjs';
+VueMarkdownEditor.use(vuepressTheme, {
+  Prism,
+});
+VueMarkdownEditor.use(createEmojiPlugin());
+
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -49,6 +64,7 @@ Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.selectDictLabels = selectDictLabels
 Vue.prototype.download = download
 Vue.prototype.handleTree = handleTree
+Vue.prototype.$moment = dayjs;
 
 // 全局组件挂载
 Vue.component('DictTag', DictTag)
@@ -62,6 +78,8 @@ Vue.component('ImagePreview', ImagePreview)
 Vue.use(directive)
 Vue.use(plugins)
 Vue.use(VueMeta)
+Vue.use(VueMarkdownEditor);
+Vue.use(VueCalendarHeatmap);
 DictData.install()
 
 /**
