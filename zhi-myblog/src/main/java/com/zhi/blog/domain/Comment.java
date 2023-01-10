@@ -49,10 +49,6 @@ public class Comment extends BaseEntity {
      */
     private Integer isDelete;
     /**
-     * 是否审核
-     */
-    private Integer isReview;
-    /**
      * 评论主题id
      */
     private Long topicId;

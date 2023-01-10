@@ -67,7 +67,6 @@ public class CommentServiceImpl implements ICommentService {
         lqw.eq(bo.getParentId() != null, Comment::getParentId, bo.getParentId());
         lqw.eq(bo.getType() != null, Comment::getType, bo.getType());
         lqw.eq(bo.getIsDelete() != null, Comment::getIsDelete, bo.getIsDelete());
-        lqw.eq(bo.getIsReview() != null, Comment::getIsReview, bo.getIsReview());
         lqw.eq(bo.getTopicId() != null, Comment::getTopicId, bo.getTopicId());
         lqw.eq(StringUtils.isNotBlank(bo.getIpAddress()), Comment::getIpAddress, bo.getIpAddress());
         lqw.eq(StringUtils.isNotBlank(bo.getIpSource()), Comment::getIpSource, bo.getIpSource());

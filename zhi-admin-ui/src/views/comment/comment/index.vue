@@ -1,40 +1,9 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="评论用户Id" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入评论用户Id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="评论内容" prop="commentContent">
-        <el-input
-          v-model="queryParams.commentContent"
-          placeholder="请输入评论内容"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="回复用户id" prop="replyUserId">
-        <el-input
-          v-model="queryParams.replyUserId"
-          placeholder="请输入回复用户id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="父评论id" prop="parentId">
-        <el-input
-          v-model="queryParams.parentId"
-          placeholder="请输入父评论id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="评论类型 1.文章 2.友链 3.说说" prop="type">
-        <el-select v-model="queryParams.type" placeholder="请选择评论类型 1.文章 2.友链 3.说说" clearable>
+
+      <el-form-item label="评论类型" prop="type">
+        <el-select v-model="queryParams.type" placeholder="1.文章 2.友链 3.说说" clearable>
           <el-option
             v-for="dict in dict.type.commen_type"
             :key="dict.value"
@@ -42,46 +11,6 @@
             :value="dict.value"
           />
         </el-select>
-      </el-form-item>
-      <el-form-item label="是否删除  0否 1是" prop="isDelete">
-        <el-input
-          v-model="queryParams.isDelete"
-          placeholder="请输入是否删除  0否 1是"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="是否审核" prop="isReview">
-        <el-input
-          v-model="queryParams.isReview"
-          placeholder="请输入是否审核"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="评论主题id" prop="topicId">
-        <el-input
-          v-model="queryParams.topicId"
-          placeholder="请输入评论主题id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="评论ip" prop="ipAddress">
-        <el-input
-          v-model="queryParams.ipAddress"
-          placeholder="请输入评论ip"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="真实地址" prop="ipSource">
-        <el-input
-          v-model="queryParams.ipSource"
-          placeholder="请输入真实地址"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
       </el-form-item>
       <el-form-item label="评论状态" prop="state">
         <el-select v-model="queryParams.state" placeholder="请选择评论状态" clearable>
@@ -158,7 +87,6 @@
         </template>
       </el-table-column>
       <el-table-column label="是否删除  0否 1是" align="center" prop="isDelete" />
-      <el-table-column label="是否审核" align="center" prop="isReview" />
       <el-table-column label="评论主题id" align="center" prop="topicId" />
       <el-table-column label="评论ip" align="center" prop="ipAddress" />
       <el-table-column label="真实地址" align="center" prop="ipSource" />
@@ -222,9 +150,6 @@
         </el-form-item>
         <el-form-item label="是否删除  0否 1是" prop="isDelete">
           <el-input v-model="form.isDelete" placeholder="请输入是否删除  0否 1是" />
-        </el-form-item>
-        <el-form-item label="是否审核" prop="isReview">
-          <el-input v-model="form.isReview" placeholder="请输入是否审核" />
         </el-form-item>
         <el-form-item label="评论主题id" prop="topicId">
           <el-input v-model="form.topicId" placeholder="请输入评论主题id" />
@@ -292,7 +217,6 @@ export default {
         parentId: undefined,
         type: undefined,
         isDelete: undefined,
-        isReview: undefined,
         topicId: undefined,
         ipAddress: undefined,
         ipSource: undefined,
@@ -322,9 +246,6 @@ export default {
         ],
         isDelete: [
           { required: true, message: "是否删除  0否 1是不能为空", trigger: "blur" }
-        ],
-        isReview: [
-          { required: true, message: "是否审核不能为空", trigger: "blur" }
         ],
         createTime: [
           { required: true, message: "评论时间不能为空", trigger: "blur" }
@@ -372,7 +293,6 @@ export default {
         parentId: undefined,
         type: undefined,
         isDelete: undefined,
-        isReview: undefined,
         createTime: undefined,
         updateTime: undefined,
         topicId: undefined,

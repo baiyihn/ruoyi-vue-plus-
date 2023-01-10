@@ -62,12 +62,6 @@ public class CommentBo extends BaseEntity {
     private Integer isDelete;
 
     /**
-     * 是否审核
-     */
-    @NotNull(message = "是否审核不能为空", groups = { AddGroup.class, EditGroup.class })
-    private Integer isReview;
-
-    /**
      * 评论主题id
      */
     @NotNull(message = "评论主题id不能为空", groups = { AddGroup.class, EditGroup.class })

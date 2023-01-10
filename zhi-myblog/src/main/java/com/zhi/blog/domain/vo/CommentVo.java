@@ -63,12 +63,6 @@ public class CommentVo {
     private Integer isDelete;
 
     /**
-     * 是否审核
-     */
-    @ExcelProperty(value = "是否审核")
-    private Integer isReview;
-
-    /**
      * 评论主题id
      */
     @ExcelProperty(value = "评论主题id")
