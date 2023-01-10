@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhi.blog.mapper.ArticleMapper">
+
+    <resultMap type="com.zhi.blog.domain.Article" id="ArticleResult">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="articleCover" column="article_cover"/>
+        <result property="articleTitle" column="article_title"/>
+        <result property="articleContent" column="article_content"/>
+        <result property="type" column="type"/>
+        <result property="originalUrl" column="original_url"/>
+        <result property="isTop" column="is_top"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="likeCount" column="like_count"/>
+        <result property="viewsCount" column="views_count"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <association property="sysOss" javaType="com.zhi.system.domain.SysOss">
+            <id property="ossId" column="oss_id"></id>
+            <result property="url" column="url"></result>
+        </association>
+
+
+
+
+    </resultMap>
+
+
+
+
+</mapper>
