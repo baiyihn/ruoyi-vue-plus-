@@ -219,6 +219,7 @@ public interface BaseMapperPlus<M, T, V> extends BaseMapper<T> {
     default <C, P extends IPage<C>> P selectVoPage(IPage<T> page, Wrapper<T> wrapper, Class<C> voClass) {
         IPage<T> pageData = this.selectPage(page, wrapper);
         IPage<C> voPage = new Page<>(pageData.getCurrent(), pageData.getSize(), pageData.getTotal());
+
         if (CollUtil.isEmpty(pageData.getRecords())) {
             return (P) voPage;
         }

@@ -8,27 +8,27 @@ import lombok.EqualsAndHashCode;
 
 
 /**
- * 分类管理对象 blog_category
+ * 标签管理对象 blog_tag
  *
  * @author ftz
- * @date 2023-01-07
+ * @date 2023-01-08
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@TableName("blog_tag")
 @Builder
-@TableName("blog_category")
-public class Category extends BaseEntity {
+public class Tag extends BaseEntity {
 
     private static final long serialVersionUID=1L;
 
     /**
-     *id
+     * 标签ID
      */
     @TableId(value = "id" ,type = IdType.AUTO)
     private Long id;
     /**
-     * 分类名
+     * 标签名
      */
-    private String categoryName;
+    private String tagName;
 
 }

@@ -17,4 +17,12 @@ public interface CategoryMapper extends BaseMapperPlus<CategoryMapper, Category,
      */
     String selectNameById(int id);
 
+
+    /**
+     * 根据名称查分类ID
+     */
+    Long selectIdByName(String name);
+
+
+
 }

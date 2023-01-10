@@ -39,7 +39,7 @@
           plain
           icon="el-icon-plus"
           size="mini"
-          @click="handleAdd"
+          @click="NewhandleAdd"
           v-hasPermi="['article:article:add']"
         >新增</el-button>
       </el-col>
@@ -52,7 +52,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['article:article:edit']"
-        >修改</el-button>
+        >标签修改</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -80,7 +80,7 @@
 
     <el-table v-loading="loading" :data="articleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="文章分类" align="center" prop="category.categoryName" />
+      <el-table-column label="文章分类" align="center" prop="categoryName" />
       <el-table-column label="文章缩略图" align="center" prop="articleCover" width="300">
         <template slot-scope="scope">
           <image-preview :src="scope.row.articleCover" :width="180" :height="100"/>
@@ -92,11 +92,28 @@
           <dict-tag :options="dict.type.article_type" :value="scope.row.type"/>
         </template>
       </el-table-column>
-      <el-table-column label="是否置顶" align="center" prop="isTop">
+<!--      <el-table-column label="是否置顶" align="center" prop="isTop">-->
+<!--        <template slot-scope="scope">-->
+<!--          <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.isTop"/>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+      <el-table-column
+        label="标签"
+        width="170"
+        align="center"
+      >
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.isTop"/>
+          <el-tag
+            v-for="item of scope.row.tagNameList"
+            :key="item.id"
+            style="margin-right:0.2rem;margin-top:0.2rem"
+          >
+            {{ item }}
+          </el-tag>
         </template>
       </el-table-column>
+
+
 
       <el-table-column label="状态值" align="center" prop="status">
         <template slot-scope="scope">
@@ -106,12 +123,13 @@
       <el-table-column label="点赞数" align="center" prop="likeCount" />
       <el-table-column label="浏览量" align="center" prop="viewsCount" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+
         <template slot-scope="scope">
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
+            @click="editArticle(scope.row.id)"
             v-hasPermi="['article:article:edit']"
           >修改</el-button>
           <el-button
@@ -134,12 +152,69 @@
     />
 
     <!-- 添加或修改文章列表对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
+
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="文章分类" prop="categoryId">
-          <el-input v-model="form.categoryName" placeholder="请输入文章分类" />
+        <!--        文章分类-->
+        <el-form-item label="文章分类">
+          <el-tag type="success" v-show="form.categoryName" style="margin:0 1rem 0 0" :closable="true"
+                  @close="removeCategory">
+            {{ form.categoryName }}
+          </el-tag>
+          <!-- 分类选项 -->
+          <el-popover placement="bottom-start" width="460"  trigger="click" v-if="!form.categoryName">
+            <div class="popover-title">分类</div>
+            <!-- 搜索框 -->
+            <el-autocomplete style="width:100%" v-model="categoryName" :fetch-suggestions="searchCategories"
+                             placeholder="请输入分类名搜索，enter可添加自定义分类" :trigger-on-focus="false" @keyup.enter.native="saveCategory"
+                             @select="handleSelectCategories">
+              <template slot-scope="{ item }">
+                <div>{{ item.categoryName }}</div>
+              </template>
+            </el-autocomplete>
+            <!-- 分类 -->
+            <div class="popover-container">
+              <div v-for="item of categoryList" :key="item.id" class="category-item" @click="addCategory(item)">
+                {{ item.categoryName }}
+              </div>
+            </div>
+            <el-button type="success" plain slot="reference" size="small">
+              添加分类
+            </el-button>
+          </el-popover>
         </el-form-item>
-        <el-form-item label="文章缩略图">
+
+          <!--        文章标签 -->
+        <el-form-item label="文章标签">
+          <el-tag v-for="(item, index) of form.tagNameList" :key="index" style="margin:0 1rem 0 0" :closable="true"
+                  @close="removeTag(item)">
+            {{ item}}
+          </el-tag>
+          <!-- 标签选项 -->
+          <el-popover placement="bottom-start" width="460" trigger="click" v-if= "form.tagNameList.length < 3">
+            <div class="popover-title">标签</div>
+            <!-- 搜索框 -->
+            <el-autocomplete style="width:100%" v-model="tagName" :fetch-suggestions="searchTags"
+                             placeholder="请输入标签名搜索，enter可添加自定义标签" :trigger-on-focus="false" @keyup.enter.native="saveTag"
+                             @select="handleSelectTag">
+              <template slot-scope="{ item }">
+                <div>{{ item.tagName }}</div>
+              </template>
+            </el-autocomplete>
+            <!-- 标签 -->
+            <div class="popover-container">
+              <div style="margin-bottom:1rem">添加标签</div>
+              <el-tag v-for="(item, index) of tagList" :key="index" :class="tagClass(item)" @click="addTag(item)">
+                {{ item.tagName }}
+              </el-tag>
+            </div>
+            <el-button type="primary" plain slot="reference" size="small">
+              添加标签
+            </el-button>
+          </el-popover>
+        </el-form-item>
+
+        <el-form-item label="文章图片">
           <image-upload v-model="form.articleCover"/>
         </el-form-item>
         <el-form-item label="标题" prop="articleTitle">
@@ -154,15 +229,6 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="是否置顶 0否 1是">
-          <el-radio-group v-model="form.isTop">
-            <el-radio
-              v-for="dict in dict.type.sys_yes_no"
-              :key="dict.value"
-              :label="parseInt(dict.value)"
-            >{{dict.label}}</el-radio>
-          </el-radio-group>
-        </el-form-item>
         <el-form-item label="状态值">
           <el-radio-group v-model="form.status">
             <el-radio
@@ -172,12 +238,7 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="点赞数" prop="likeCount">
-          <el-input v-model="form.likeCount" placeholder="请输入点赞数" />
-        </el-form-item>
-        <el-form-item label="浏览量" prop="viewsCount">
-          <el-input v-model="form.viewsCount" placeholder="请输入浏览量" />
-        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
@@ -189,12 +250,23 @@
 
 <script>
 import { listArticle, getArticle, delArticle, addArticle, updateArticle } from "@/api/article/article";
+import {listByIds} from "@/api/system/oss";
+import {listCategory} from "@/api/category/category";
+import {listTag} from "@/api/tag/tag";
 
 export default {
   name: "Article",
   dicts: ['article_status', 'article_type', 'sys_yes_no'],
   data() {
     return {
+      //文章分类
+      categoryName: "",
+      //分类集合
+      categoryList: [],
+      //标签名
+      tagName: "",
+      //标签名集合
+      tagList: [],
       // 按钮loading
       buttonLoading: false,
       // 遮罩层
@@ -233,7 +305,23 @@ export default {
         viewsCount: undefined,
       },
       // 表单参数
-      form: {},
+      form: {
+        id:  null,
+        userId: null,
+        username: "",
+        categoryId: null,
+        tagNameList: [],
+        categoryName: "",
+        articleContent: "",
+        type: null,
+        originalUrl: null,
+        isTop: null,
+        isDelete: null,
+        status: null,
+        likeCount: null,
+        viewsCount: null
+
+      },
       // 表单校验
       rules: {
         id: [
@@ -272,17 +360,14 @@ export default {
         createTime: [
           { required: true, message: "发表时间不能为空", trigger: "blur" }
         ],
-        likeCount: [
-          { required: true, message: "点赞数不能为空", trigger: "blur" }
-        ],
-        viewsCount: [
-          { required: true, message: "浏览量不能为空", trigger: "blur" }
-        ],
       }
     };
   },
   created() {
     this.getList();
+    this.searchCategories();
+    this.searchTags();
+
   },
   methods: {
     /** 查询文章列表列表 */
@@ -305,6 +390,8 @@ export default {
         id: undefined,
         userId: undefined,
         categoryId: undefined,
+        tagNameList: [],
+        categoryName: "",
         articleCover: undefined,
         articleTitle: undefined,
         articleContent: undefined,
@@ -344,6 +431,10 @@ export default {
       this.open = true;
       this.title = "添加文章列表";
     },
+    /** 新增跳转到新增界面 */
+    NewhandleAdd(){
+      this.$router.push({path: "/article/articles"});
+    },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.loading = true;
@@ -355,6 +446,10 @@ export default {
         this.open = true;
         this.title = "修改文章列表";
       });
+    },
+    /** 修改跳转界面 */
+    editArticle(id) {
+      this.$router.push({path: "/article/articles",query:{id:id}});
     },
     /** 提交按钮 */
     submitForm() {
@@ -401,7 +496,124 @@ export default {
       this.download('article/article/export', {
         ...this.queryParams
       }, `article_${new Date().getTime()}.xlsx`)
-    }
-  }
+    },
+
+    /**  文章分类操作 */
+    removeCategory() {
+      this.form.categoryName = null;
+    },
+    searchCategories(){
+      listCategory(this.queryParams).then( response =>{
+        this.categoryList = response.rows;
+      });
+    },
+    saveCategory() {
+      if (this.categoryName.trim() != "") {
+        this.addCategory({
+          categoryName: this.categoryName,
+        });
+        this.categoryName = "";
+      }
+    },
+    addCategory(item) {
+      this.form.categoryName = item.categoryName;
+    },
+    handleSelectCategories(item) {
+      this.addCategory({
+        categoryName: item.categoryName,
+      });
+    },
+
+    /**  文章标签方法 */
+    removeTag(item) {
+      const index = this.form.tagNameList.indexOf(item);
+      this.form.tagNameList.splice(index, 1);
+    },
+    searchTags(){
+      listTag(this.queryParams).then(response =>{
+        this.tagList  = response.rows
+      })
+    },
+    saveTag() {
+      if (this.tagName.trim() != "") {
+        this.addTag({
+          tagName: this.tagName,
+        });
+        this.tagName = "";
+      }
+    },
+    handleSelectTag(item) {
+      this.addTag({
+        tagName: item.tagName,
+      });
+    },
+    addTag(item) {
+      if (this.form.tagNameList.indexOf(item.tagName) == -1) {
+        this.form.tagNameList.push(item.tagName);
+      }
+    },
+  },
+  computed: {
+    tagClass() {
+      return function (item) {
+        const index = this.form.tagNameList.indexOf(item.tagName);
+        return index != -1 ? "tag-item-select" : "tag-item";
+      };
+    },
+  },
 };
 </script>
+
+
+<style scoped>
+.ed {
+  height: calc(100vh - 260px);
+}
+
+.article-title-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  margin-top: 2.25rem;
+}
+
+.save-btn {
+  margin-left: 0.75rem;
+  background: #fff;
+  color: #f56c6c;
+}
+
+.tag-item {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.tag-item-select {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  cursor: not-allowed;
+  color: #ccccd8 !important;
+}
+
+.category-item {
+  cursor: pointer;
+  padding: 0.6rem 0.5rem;
+}
+
+.category-item:hover {
+  background-color: #f0f9eb;
+  color: #67c23a;
+}
+
+.popover-title {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.popover-container {
+  margin-top: 1rem;
+  height: 260px;
+  overflow-y: auto;
+}
+</style>
