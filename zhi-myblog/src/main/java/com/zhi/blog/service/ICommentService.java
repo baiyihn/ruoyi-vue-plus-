@@ -3,6 +3,7 @@ package com.zhi.blog.service;
 import com.zhi.blog.domain.Comment;
 import com.zhi.blog.domain.vo.CommentVo;
 import com.zhi.blog.domain.bo.CommentBo;
+import com.zhi.common.core.domain.R;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 
@@ -46,4 +47,10 @@ public interface ICommentService {
      * 校验并批量删除评论管理信息
      */
     Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid);
+
+
+    /**
+     * 审核评论
+     */
+    Boolean auditComment(Long id,Boolean type);
 }

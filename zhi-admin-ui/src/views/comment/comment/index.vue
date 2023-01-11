@@ -29,27 +29,17 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['comment:comment:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['comment:comment:edit']"
-        >修改</el-button>
-      </el-col>
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="success"-->
+<!--          plain-->
+<!--          icon="el-icon-edit"-->
+<!--          size="mini"-->
+<!--          :disabled="single"-->
+<!--          @click="handleUpdate"-->
+<!--          v-hasPermi="['comment:comment:edit']"-->
+<!--        >修改</el-button>-->
+<!--      </el-col>-->
       <el-col :span="1.5">
         <el-button
           type="danger"
@@ -76,18 +66,20 @@
 
     <el-table v-loading="loading" :data="commentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" v-if="true"/>
-      <el-table-column label="评论用户Id" align="center" prop="userId" />
+      <el-table-column label="评论用户" align="center" prop="nickname" />
       <el-table-column label="评论内容" align="center" prop="commentContent" />
-      <el-table-column label="回复用户id" align="center" prop="replyUserId" />
-      <el-table-column label="父评论id" align="center" prop="parentId" />
-      <el-table-column label="评论类型 1.文章 2.友链 3.说说" align="center" prop="type">
+      <el-table-column label="回复用户" align="center" prop="replyUserName" >
+        <template slot-scope="scope">
+          <span>{{scope.row.replyUserName== null ? '无' :scope.row.replyUserName}}</span>
+        </template>
+      </el-table-column>>
+<!--      <el-table-column label="父评论id" align="center" prop="parentId" />-->
+      <el-table-column label="来源" align="center" prop="type">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.commen_type" :value="scope.row.type"/>
         </template>
       </el-table-column>
-      <el-table-column label="是否删除  0否 1是" align="center" prop="isDelete" />
-      <el-table-column label="评论主题id" align="center" prop="topicId" />
+      <el-table-column label="评论文章" align="center" prop="articleTitle" />
       <el-table-column label="评论ip" align="center" prop="ipAddress" />
       <el-table-column label="真实地址" align="center" prop="ipSource" />
       <el-table-column label="评论状态" align="center" prop="state">
@@ -95,22 +87,26 @@
           <dict-tag :options="dict.type.comment_status" :value="scope.row.state"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+
+      <el-table-column label="审核" align="center" class-name="small-padding fixed-width">
+
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['comment:comment:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['comment:comment:remove']"
-          >删除</el-button>
+          <el-button v-if="scope.row.state==3?true:false" type="success" size="small" @click="audit(scope.row)">通过</el-button>
+          <el-button v-if="scope.row.state==3?false:true" type="danger" size="small" @click="Unaudit(scope.row)">驳回</el-button>
+<!--          <el-button-->
+<!--            size="mini"-->
+<!--            type="text"-->
+<!--            icon="el-icon-edit"-->
+<!--            @click="handleUpdate(scope.row)"-->
+<!--            v-hasPermi="['comment:comment:edit']"-->
+<!--          >修改</el-button>-->
+<!--          <el-button-->
+<!--            size="mini"-->
+<!--            type="text"-->
+<!--            icon="el-icon-delete"-->
+<!--            @click="handleDelete(scope.row)"-->
+<!--            v-hasPermi="['comment:comment:remove']"-->
+<!--          >删除</el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -176,11 +172,17 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+
+
+
+
   </div>
 </template>
 
 <script>
-import { listComment, getComment, delComment, addComment, updateComment } from "@/api/comment/comment";
+import {auditComment, listComment, getComment, delComment, addComment, updateComment } from "@/api/comment/comment";
+import {delArticle} from "@/api/article/article";
 
 export default {
   name: "Comment",
@@ -221,6 +223,11 @@ export default {
         ipAddress: undefined,
         ipSource: undefined,
         state: undefined,
+      },
+      //审核参数
+      auditParams:{
+        id:null,
+        status:null,
       },
       // 表单参数
       form: {},
@@ -383,7 +390,40 @@ export default {
       this.download('comment/comment/export', {
         ...this.queryParams
       }, `comment_${new Date().getTime()}.xlsx`)
-    }
+    },
+    /**   审核逻辑  */
+    audit(row){
+      const id = row.id
+      this.$modal.confirm('确定通过审核？').then(() => {
+        this.loading = true;
+        this.auditParams.id = id;
+        this.auditParams.status = true;
+        return auditComment(this.auditParams);
+      }).then(() => {
+        this.loading = false;
+        this.getList();
+        this.$modal.msgSuccess("审核成功");
+      }).catch(() => {
+      }).finally(() => {
+        this.loading = false;
+      });
+    },
+    Unaudit(row){
+      const id = row.id
+      this.$modal.confirm('确定驳回评论？').then(() => {
+        this.loading = true;
+        this.auditParams.id = id;
+        this.auditParams.status = false;
+        return auditComment(this.auditParams);
+      }).then(() => {
+        this.loading = false;
+        this.getList();
+        this.$modal.msgSuccess("驳回成功");
+      }).catch(() => {
+      }).finally(() => {
+        this.loading = false;
+      });
+    },
   }
 };
 </script>

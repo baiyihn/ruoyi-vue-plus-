@@ -41,4 +41,15 @@ export function delComment(id) {
     url: '/comment/comment/' + id,
     method: 'delete'
   })
+
+}
+
+//审核评论管理
+export function auditComment(query){
+  return request({
+    url:'/comment/comment/audit',
+    method: 'get',
+    params: query
+
+  })
 }

@@ -80,13 +80,21 @@
 
     <el-table v-loading="loading" :data="articleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="文章分类" align="center" prop="categoryName" />
-      <el-table-column label="文章缩略图" align="center" prop="articleCover" width="300">
+      <el-table-column label="作者"  align="center" prop="username" />
+      <el-table-column label="标题" align="center" prop="articleTitle" />
+
+      <el-table-column label="文章缩略图" align="center" prop="articleCover" width="220">
         <template slot-scope="scope">
           <image-preview :src="scope.row.articleCover" :width="180" :height="100"/>
         </template>
       </el-table-column>
-      <el-table-column label="标题" align="center" prop="articleTitle" />
+
+      <el-table-column  label="文章分类" align="center" prop="categoryName" >
+        <template slot-scope="scope">
+        <el-tag>{{scope.row.categoryName}}</el-tag>
+        </template>
+      </el-table-column>>
+
       <el-table-column label="文章类型 " align="center" prop="type">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.article_type" :value="scope.row.type"/>
@@ -132,6 +140,7 @@
             @click="editArticle(scope.row.id)"
             v-hasPermi="['article:article:edit']"
           >修改</el-button>
+
           <el-button
             size="mini"
             type="text"

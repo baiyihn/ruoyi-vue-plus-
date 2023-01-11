@@ -44,9 +44,8 @@ public class CommentServiceImpl implements ICommentService {
      */
     @Override
     public TableDataInfo<CommentVo> queryPageList(CommentBo bo, PageQuery pageQuery) {
-        LambdaQueryWrapper<Comment> lqw = buildQueryWrapper(bo);
-        Page<CommentVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
-        return TableDataInfo.build(result);
+        List<CommentVo> commentVos = baseMapper.queryCommentList();
+        return TableDataInfo.build(commentVos);
     }
 
     /**
@@ -115,4 +114,18 @@ public class CommentServiceImpl implements ICommentService {
         }
         return baseMapper.deleteBatchIds(ids) > 0;
     }
+
+
+
+    /**
+     * 审核评论
+     */
+    @Override
+    public Boolean auditComment(Long id, Boolean status) {
+
+        return baseMapper.UpdateCommentStatusById(id,status?1:3)>0;
+
+    }
+
+
 }

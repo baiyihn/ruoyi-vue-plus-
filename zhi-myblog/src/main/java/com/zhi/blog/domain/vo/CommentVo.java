@@ -32,6 +32,12 @@ public class CommentVo {
     private Long userId;
 
     /**
+     * 评论用户昵称
+     */
+    @ExcelProperty(value = "用户昵称")
+    private String nickname;
+
+    /**
      * 评论内容
      */
     @ExcelProperty(value = "评论内容")
@@ -42,6 +48,12 @@ public class CommentVo {
      */
     @ExcelProperty(value = "回复用户id")
     private Long replyUserId;
+
+    /**
+     * 回复用户昵称
+     */
+    @ExcelProperty(value = "回复用户昵称")
+    private String replyUserName;
 
     /**
      * 父评论id
@@ -63,10 +75,16 @@ public class CommentVo {
     private Integer isDelete;
 
     /**
-     * 评论主题id
+     * 评论文章id
      */
     @ExcelProperty(value = "评论主题id")
     private Long topicId;
+
+    /**
+     * 评论文章名
+     */
+    @ExcelProperty(value = "评论文章名")
+    private String articleTitle;
 
     /**
      * 评论ip

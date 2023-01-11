@@ -1,44 +1,44 @@
 import request from '@/utils/request'
 
-// 查询评论管理列表
-export function listComment(query) {
+// 查询文章列表列表
+export function listArticle(query) {
   return request({
-    url: '/comment/comment/list',
+    url: '/article/article/list',
     method: 'get',
     params: query
   })
 }
 
-// 查询评论管理详细
-export function getComment(id) {
+// 查询文章列表详细
+export function getArticle(id) {
   return request({
-    url: '/comment/comment/' + id,
+    url: '/article/article/' + id,
     method: 'get'
   })
 }
 
-// 新增评论管理
-export function addComment(data) {
+// 新增文章列表
+export function addArticle(data) {
   return request({
-    url: '/comment/comment',
+    url: '/article/article',
     method: 'post',
     data: data
   })
 }
 
-// 修改评论管理
-export function updateComment(data) {
+// 修改文章列表
+export function updateArticle(data) {
   return request({
-    url: '/comment/comment',
+    url: '/article/article',
     method: 'put',
     data: data
   })
 }
 
-// 删除评论管理
-export function delComment(id) {
+// 删除文章列表
+export function delArticle(id) {
   return request({
-    url: '/comment/comment/' + id,
+    url: '/article/article/' + id,
     method: 'delete'
   })
 }

@@ -103,4 +103,16 @@ public class CommentController extends BaseController {
                           @PathVariable Long[] ids) {
         return toAjax(iCommentService.deleteWithValidByIds(Arrays.asList(ids), true));
     }
+
+
+    /**
+     * 审核评论
+     */
+    @GetMapping("/audit")
+    public R<Void> audit(Long id, Boolean status){
+        return toAjax(iCommentService.auditComment(id,status));
+
+    }
+
+
 }
