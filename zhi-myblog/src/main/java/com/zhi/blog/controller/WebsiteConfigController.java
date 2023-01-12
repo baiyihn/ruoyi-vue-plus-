@@ -5,10 +5,7 @@ import com.zhi.blog.service.IWebsiteConfigService;
 import com.zhi.common.core.domain.R;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -19,6 +16,7 @@ import javax.validation.Valid;
  * @date 2023/1/11 20:17 网站配置信息
  */
 @RestController
+@RequestMapping("/website")
 public class WebsiteConfigController {
 
     @Resource
@@ -27,7 +25,7 @@ public class WebsiteConfigController {
     /**
      * 获取网站配置
      */
-    @GetMapping("/website/config")
+    @GetMapping("/config")
     public R<WebsiteConfigVO> getWebsiteConfig() {
         return R.ok(websiteConfigService.getWebsiteConfig());
     }
@@ -40,7 +38,7 @@ public class WebsiteConfigController {
      * @return {@link R}
      */
     @ApiOperation(value = "更新网站配置")
-    @PutMapping("/website/config")
+    @PutMapping("/config")
     public R<?> updateWebsiteConfig(@Valid @RequestBody WebsiteConfigVO websiteConfigVO) {
         websiteConfigService.updateWebsiteConfig(websiteConfigVO);
         return R.ok();
