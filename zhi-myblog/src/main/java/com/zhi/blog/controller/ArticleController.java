@@ -40,7 +40,7 @@ public class ArticleController extends BaseController {
     /**
      * 查询文章列表列表
      */
-    @SaCheckPermission("article:article:list")
+//    @SaCheckPermission("article:article:list")
     @GetMapping("/list")
     public TableDataInfo<ArticleVo> list(ArticleBo bo, PageQuery pageQuery) {
         return iArticleService.queryPageList(bo, pageQuery);

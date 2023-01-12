@@ -27,6 +27,7 @@ public class WebsiteConfigServiceImpl implements IWebsiteConfigService {
     private WebsiteConfigMapper websiteConfigMapper;
 
 
+
     @Override
     public WebsiteConfigVO getWebsiteConfig() {
         WebsiteConfigVO websiteConfigVO;
@@ -38,6 +39,12 @@ public class WebsiteConfigServiceImpl implements IWebsiteConfigService {
             //从数据库中加载
             String config = websiteConfigMapper.selectById(DEFAULT_CONFIG_ID).getConfig();
             websiteConfigVO = JSON.parseObject(config, WebsiteConfigVO.class);
+            //将图片改为url地址
+            websiteConfigVO.setWebsiteAvatar(websiteConfigMapper.websiteAvatar(Long.parseLong(websiteConfigVO.getWebsiteAvatar())));
+            websiteConfigVO.setAlipayQRCode(websiteConfigMapper.alipayQRCode(Long.parseLong(websiteConfigVO.getAlipayQRCode())));
+            websiteConfigVO.setTouristAvatar(websiteConfigMapper.touristAvatar(Long.parseLong(websiteConfigVO.getTouristAvatar())));
+            websiteConfigVO.setUserAvatar( websiteConfigMapper.userAvatar(Long.parseLong(websiteConfigVO.getUserAvatar())));
+            websiteConfigVO.setWeiXinQRCode(websiteConfigMapper.weiXinQRCode(Long.parseLong(websiteConfigVO.getWeiXinQRCode())));
             RedisUtils.setCacheObject(WEBSITE_CONFIG, config);
         }
         return websiteConfigVO;

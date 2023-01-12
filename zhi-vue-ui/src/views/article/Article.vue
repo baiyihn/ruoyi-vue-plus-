@@ -1,685 +1,959 @@
 <template>
-  <div class="article">
-    <!--封面 -->
-    <header-cover>
-      <div class="article-info">
-        <h1 class="article-title">
-          {{ state.articleDetail.articleTitle }}
-        </h1>
-        <div class="article-meta-data-wrap">
-          <span class="article-meta-data">
-            <calendar-filled />&nbsp;发表于
-            {{ $formatDate(state.articleDetail.createTime) }}
-          </span>
-          <span class="article-meta-data-divider">|</span>
-          <span class="article-meta-data">
-            <field-time-outlined />&nbsp;更新于
-            {{ $formatDate(state.articleDetail.updateTime) }}
-          </span>
-          <span class="article-meta-data-divider">|</span>
-          <span class="article-meta-data">
-            <container-filled />&nbsp;分类
-            {{ state.articleDetail.categoryName }}
-          </span>
-        </div>
-        <div class="article-meta-data-wrap">
-          <span class="article-meta-data">
-            <like-filled />&nbsp;点赞量
-            {{ state.articleDetail.likeCount }}
-          </span>
-          <span class="article-meta-data-divider">|</span>
-          <span class="article-meta-data">
-            <message-filled />&nbsp;评论量
-            {{ state.commentCount }}
-          </span>
-          <span class="article-meta-data-divider">|</span>
-          <span class="article-meta-data">
-            <eye-filled />&nbsp;阅读量
-            {{ state.articleDetail.viewsCount }}
-          </span>
-        </div>
-      </div>
-    </header-cover>
-    <div class="container">
-      <div class="main">
-        <a-card class="article-card">
-          <!--文章内容-->
-          <div class="article-content">
-            <!--@ts-ignore-->
-            <md-editor v-model="state.articleDetail.articleContent" :theme="pinia.themeName" preview-only
-              :preview-theme="state.themes[state.themeIndex].name" />
-          </div>
-
-          <!--分割线-->
-          <hr />
-
-          <div class="article-like">
-            觉得文章写得不错的话可以点赞鼓励一下&nbsp;
-            <a-button @click="ArticleLike(state.articleDetail)" :class="isLike(state.articleDetail.id)">
-              <like-filled />
-              <span v-show="state.articleDetail.likeCount > 0">{{
-                  state.articleDetail.likeCount
-              }}</span>
-            </a-button>
-          </div>
-
-          <!-- 版权声明 -->
-          <div class="article-signature">
-            <img :src="pinia.blogInfo.websiteConfig.websiteAvatar" alt="头像" />
-            <div class="copyright">
-              <div class="copyright-item">
-                <span class="copyright-title">文章作者：</span>
-                <span class="copyright-content">
-                  <router-link to="/">
-                    {{
-                        pinia.blogInfo.websiteConfig.websiteAuthor
-                    }}</router-link>
-                </span>
-              </div>
-              <div class="copyright-item">
-                <span class="copyright-title">文章链接：</span>
-                <span class="copyright-content">
-                  <a :href="state.articleHref">{{
-                      state.articleHref
-                  }}</a>
-                </span>
-              </div>
-              <div class="copyright-item">
-                <span class="copyright-title">版权声明：</span>
-                <span class="copyright-content">
-                  本博客所有文章除特别声明外，均采用
-                  <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">BY-NC-SA</a>
-                  许可协议。转载请注明出处！
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- 标签 -->
-          <div class="article-tags">
-            <tags-filled style="font-size: 20px" />&nbsp;标签：
-            <router-link v-for="item of state.articleDetail.tagDTOList" :key="item.id" :to="'/tag/' + item.id"
-              class="tag-link">
-              {{ item.tagName }}
-            </router-link>
-          </div>
-          <!-- 上一篇和下一篇 -->
-          <div class="previous-next-article" v-if="state.articleDetail.nextArticle">
-            <div class="previous-article" :style="{
-              width: state.articleDetail.nextArticle.id
-                ? '50%'
-                : '100%',
-            }">
-              <router-link :to="`/articles/${state.articleDetail.lastArticle.id}`">
-                <img :src="state.articleDetail.lastArticle.articleCover" alt="缩略图" />
-                <div class="previous-article-info">
-                  <div class="label">« 上一篇</div>
-                  <div class="title">
-                    {{ state.articleDetail.lastArticle.articleTitle }}
-                  </div>
-                </div>
+  <div>
+    <!-- 封面图 -->
+    <div class="banner" :style="articleCover">
+      <div class="article-info-container">
+        <!-- 文章标题 -->
+        <div class="article-title">{{ article.articleTitle }}</div>
+        <div class="article-info">
+          <div class="first-line">
+            <!-- 发表时间 -->
+            <span>
+              <i class="iconfont iconrili" />
+              发表于 {{ article.createTime | date }}
+            </span>
+            <span class="separator">|</span>
+            <!-- 发表时间 -->
+            <span>
+              <i class="iconfont icongengxinshijian" />
+              更新于
+              <template v-if="article.updateTime">
+                {{ article.updateTime | date }}
+              </template>
+              <template v-else>
+                {{ article.createTime | date }}
+              </template>
+            </span>
+            <span class="separator">|</span>
+            <!-- 文章分类 -->
+            <span class="article-category">
+              <i class="iconfont iconfenlei1" />
+              <router-link :to="'/categories/' + article.categoryId">
+                {{ article.categoryName }}
               </router-link>
-            </div>
-
-            <div class="next-article" :style="{
-              width: state.articleDetail.lastArticle.id
-                ? '50%'
-                : '100%',
-            }">
-              <router-link :to="`/articles/${state.articleDetail.nextArticle.id}`">
-                <img :src="state.articleDetail.nextArticle.articleCover" alt="缩略图" />
-                <div class="next-article-info">
-                  <div class="label">下一篇 »</div>
-                  <div class="title">
-                    {{ state.articleDetail.nextArticle.articleTitle }}
-                  </div>
-                </div>
-              </router-link>
-            </div>
+            </span>
           </div>
-          <!--分割线-->
-          <hr />
-        </a-card>
-
-        <a-card class="comment-card">
-          <!--评论-->
-          <comment @get-count="getCount" />
-        </a-card>
-      </div>
-
-      <div class="side">
-        <!--主题切换-->
-        <div class="theme-card">
-          <blog-card title="主题切换" style="margin: 0">
-            <template #icon>
-              <skin-filled style="color: #1296db" />&nbsp;
-            </template>
-            <template #slot-body>
-              <div class="theme-body">
-                <div @click="themeSwitch(1)" style="display: inline">
-                  <icon-font type="icon-zuojiantou" class="left" />
-                </div>
-                <div v-for="(item, index) in state.themes" :key="index" style="display: inline-block">
-                  <p :style="item.show ? 'display:block;' : 'display:none;'" :class="state.animateType">
-                    {{ item.name }}
-                  </p>
-                </div>
-                <div @click="themeSwitch(2)" style="display: inline">
-                  <icon-font type="icon-youjiantou" class="right" />
-                </div>
-              </div>
-            </template>
-          </blog-card>
-        </div>
-        <!--固定位置-->
-        <div class="sticky-layout">
-          <!--文章目录-->
-          <article-catalog />
-          <!--热门文章-->
-          <blog-card title="热门文章">
-            <template #icon>
-              <fire-filled style="color: rgb(240, 17, 17)" />&nbsp;
-            </template>
-            <template #slot-body>
-              <div v-for="article in state.articleDetail.recommendArticleList" :key="article.id"
-                class="hot-article-item">
-                <router-link :to="`/articles/${article.id}`" class="hot-article-thumbail-link">
-                  <img :src="article.articleCover" alt="缩略图" class="hot-article-thumbnail" />
-                </router-link>
-                <div class="hot-article-info">
-                  <router-link :to="`/articles/${article.id}`" class="hot-article-title">{{ article.articleTitle }}
-                  </router-link>
-                </div>
-              </div>
-            </template>
-          </blog-card>
+          <div class="second-line">
+            <!-- 字数统计 -->
+            <span>
+              <i class="iconfont iconzishu" />
+              字数统计: {{ wordNum | num }}
+            </span>
+            <span class="separator">|</span>
+            <!-- 阅读时长 -->
+            <span>
+              <i class="iconfont iconshijian" />
+              阅读时长: {{ readTime }}
+            </span>
+          </div>
+          <div class="third-line">
+            <span class="separator">|</span>
+            <!-- 阅读量 -->
+            <span>
+              <i class="iconfont iconliulan" /> 阅读量: {{ article.viewsCount }}
+            </span>
+            <span class="separator">|</span>
+            <!-- 评论量 -->
+            <span>
+              <i class="iconfont iconpinglunzu1" />评论数: {{ commentCount }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
+    <!-- 内容 -->
+    <v-row class="article-container">
+      <v-col md="9" cols="12">
+        <v-card class="article-wrapper">
+          <article
+            id="write"
+            class="article-content markdown-body"
+            v-html="article.articleContent"
+            ref="article"
+          />
+          <!-- 版权声明 -->
+          <div class="aritcle-copyright">
+            <div>
+              <span>文章作者：</span>
+              <router-link to="/">
+                {{ blogInfo.websiteConfig.websiteAuthor }}
+              </router-link>
+            </div>
+            <div>
+              <span>文章链接：</span>
+              <a :href="articleHref" target="_blank">{{ articleHref }} </a>
+            </div>
+            <div>
+              <span>版权声明：</span>本博客所有文章除特别声明外，均采用
+              <a
+                href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                target="_blank"
+              >
+                CC BY-NC-SA 4.0
+              </a>
+              许可协议。转载请注明文章出处。
+            </div>
+          </div>
+          <!-- 转发 -->
+          <div class="article-operation">
+            <div class="tag-container">
+              <router-link
+                v-for="item of article.tagDTOList"
+                :key="item.id"
+                :to="'/tags/' + item.id"
+              >
+                {{ item.tagName }}
+              </router-link>
+            </div>
+            <share style="margin-left:auto" :config="config" />
+          </div>
+          <!-- 点赞打赏等 -->
+          <div class="article-reward">
+            <!-- 点赞按钮 -->
+            <a :class="isLike" @click="like">
+              <v-icon size="14" color="#fff">mdi-thumb-up</v-icon> 点赞
+              <span v-show="article.likeCount > 0">{{
+                article.likeCount
+              }}</span>
+            </a>
+            <a class="reward-btn" v-if="blogInfo.websiteConfig.isReward == 1">
+              <!-- 打赏按钮 -->
+              <i class="iconfont iconerweima" /> 打赏
+              <!-- 二维码 -->
+              <div class="animated fadeInDown reward-main">
+                <ul class="reward-all">
+                  <li class="reward-item">
+                    <img
+                      class="reward-img"
+                      :src="blogInfo.websiteConfig.weiXinQRCode"
+                    />
+                    <div class="reward-desc">微信</div>
+                  </li>
+                  <li class="reward-item">
+                    <img
+                      class="reward-img"
+                      :src="blogInfo.websiteConfig.alipayQRCode"
+                    />
+                    <div class="reward-desc">支付宝</div>
+                  </li>
+                </ul>
+              </div>
+            </a>
+          </div>
+          <div class="pagination-post">
+            <!-- 上一篇 -->
+            <div
+              :class="isFull(article.lastArticle.id)"
+              v-if="article.lastArticle.id"
+            >
+              <router-link :to="'/articles/' + article.lastArticle.id">
+                <img
+                  class="post-cover"
+                  :src="article.lastArticle.articleCover"
+                />
+                <div class="post-info">
+                  <div class="label">上一篇</div>
+                  <div class="post-title">
+                    {{ article.lastArticle.articleTitle }}
+                  </div>
+                </div>
+              </router-link>
+            </div>
+            <!-- 下一篇 -->
+            <div
+              :class="isFull(article.nextArticle.id)"
+              v-if="article.nextArticle.id"
+            >
+              <router-link :to="'/articles/' + article.nextArticle.id">
+                <img
+                  class="post-cover"
+                  :src="article.nextArticle.articleCover"
+                />
+                <div class="post-info" style="text-align: right">
+                  <div class="label">下一篇</div>
+                  <div class="post-title">
+                    {{ article.nextArticle.articleTitle }}
+                  </div>
+                </div>
+              </router-link>
+            </div>
+          </div>
+          <!-- 推荐文章 -->
+          <div
+            class="recommend-container"
+            v-if="article.recommendArticleList.length"
+          >
+            <div class="recommend-title">
+              <v-icon size="20" color="#4c4948">mdi-thumb-up</v-icon> 相关推荐
+            </div>
+            <div class="recommend-list">
+              <div
+                class="recommend-item"
+                v-for="item of article.recommendArticleList"
+                :key="item.id"
+              >
+                <router-link :to="'/articles/' + item.id">
+                  <img class="recommend-cover" :src="item.articleCover" />
+                  <div class="recommend-info">
+                    <div class="recommend-date">
+                      <i class="iconfont iconrili" />
+                      {{ item.createTime | date }}
+                    </div>
+                    <div>{{ item.articleTitle }}</div>
+                  </div>
+                </router-link>
+              </div>
+            </div>
+          </div>
+          <!-- 分割线 -->
+          <hr />
+          <!-- 评论 -->
+          <comment :type="commentType" @getCommentCount="getCommentCount" />
+        </v-card>
+      </v-col>
+      <!-- 侧边功能 -->
+      <v-col md="3" cols="12" class="d-md-block d-none">
+        <div style="position: sticky;top: 20px;">
+          <!-- 文章目录 -->
+          <v-card class="right-container">
+            <div class="right-title">
+              <i class="iconfont iconhanbao" style="font-size:16.8px" />
+              <span style="margin-left:10px">目录</span>
+            </div>
+            <div id="toc" />
+          </v-card>
+          <!-- 最新文章 -->
+          <v-card class="right-container" style="margin-top:20px">
+            <div class="right-title">
+              <i class="iconfont icongengxinshijian" style="font-size:16.8px" />
+              <span style="margin-left:10px">最新文章</span>
+            </div>
+            <div class="article-list">
+              <div
+                class="article-item"
+                v-for="item of article.newestArticleList"
+                :key="item.id"
+              >
+                <router-link :to="'/articles/' + item.id" class="content-cover">
+                  <img :src="item.articleCover" />
+                </router-link>
+                <div class="content">
+                  <div class="content-title">
+                    <router-link :to="'/articles/' + item.id">
+                      {{ item.articleTitle }}
+                    </router-link>
+                  </div>
+                  <div class="content-time">{{ item.createTime | date }}</div>
+                </div>
+              </div>
+            </div>
+          </v-card>
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
-<script setup lang="ts">
-import "animate.css";
-import { getArticleDetail, likeArticle } from "@/api/article";
-import MdEditor from "md-editor-v3";
-import "md-editor-v3/lib/style.css";
-import BlogCard from "@/components/component/BlogCard.vue";
-import HeaderCover from "@/components/component/HeaderCover.vue";
-import ArticleCatalog from "@/components/component/ArticleCatalog.vue";
-import { createFromIconfontCN } from "@ant-design/icons-vue";
-import Comment from "@/components/component/Comment.vue";
-import { onMounted, reactive } from "vue";
-import {
-  TagsFilled,
-  CalendarFilled,
-  ContainerFilled,
-  EyeFilled,
-  FireFilled,
-  FieldTimeOutlined,
-  MessageFilled,
-  SkinFilled,
-  LikeFilled,
-} from "@ant-design/icons-vue";
-import { useRoute } from "vue-router";
-import config from "@/config/config";
-import { useStore } from "@/store/index";
-import { message } from "ant-design-vue";
-import { articleDetails } from "@/types/api/article"
-const pinia = useStore();
-const IconFont = createFromIconfontCN({
-  scriptUrl: config.ICON_FONT_URL,
-});
-const state = reactive({
-  commentCount: 0,
-  animateType: "",
-  articleDetail: {} as articleDetails,
-  articleHref: window.location.href,
-  catalogList: [],
-  themeIndex: 0,
-  themes: [
-    { name: "default", show: true },
-    { name: "github", show: false },
-    { name: "vuepress", show: false },
-    { name: "mk-cute", show: false },
-    { name: "smart-blue", show: false },
-    { name: "cyanosis", show: false },
-  ],
-})
-const getCount = (count: number) => {
-  state.commentCount = count;
-};
-const route = useRoute();
-//判断是否点过赞
-const isLike = (articleId: number) => {
-  //判断是否登录
-  if (pinia.isLogin) {
-    var articleLikeSet = pinia.loginUserInfo.articleLikeSet;
-    //@ts-ignore
-    return articleLikeSet.indexOf(articleId) != -1 ? "like-active" : "like";
-  } else {
-    return "like";
-  }
-};
-//切换主题
-const themeSwitch = (type: number) => {
-  if (type === 1) {
-    state.animateType = "animate__animated animate__fadeInRight";
-    if (state.themeIndex === 0) {
-      state.themes[0].show = false;
-      state.themes[5].show = true;
-      state.themeIndex = 5;
-    } else {
-      state.themes[state.themeIndex].show = false;
-      state.themes[state.themeIndex - 1].show = true;
-      state.themeIndex--;
-    }
-  } else {
-    state.animateType = "animate__animated animate__fadeInLeft";
-    if (state.themeIndex === 5) {
-      state.themes[5].show = false;
-      state.themes[0].show = true;
-      state.themeIndex = 0;
-    } else {
-      state.themes[state.themeIndex].show = false;
-      state.themes[state.themeIndex + 1].show = true;
-      state.themeIndex++;
-    }
-  }
-};
-const ArticleLike = (item: any) => {
-  //判断是否登录
-  if (!pinia.isLogin) {
-    message.error("登录？");
-    return false;
-  }
-  likeArticle(item.id).then(data => {
-    if (data.flag) {
-      //判断是否点赞
-      //@ts-ignore
-      if (pinia.loginUserInfo.articleLikeSet.indexOf(item.id) != -1) {
-        item.likeCount -= 1;
-        message.error("痛,太痛了!");
-      } else {
-        item.likeCount += 1;
-        message.success("谢谢支持");
+<script>
+import Clipboard from "clipboard";
+import Comment from "../../components/Comment";
+import tocbot from "tocbot";
+export default {
+  components: {
+    Comment
+  },
+  created() {
+    this.getArticle();
+  },
+  destroyed() {
+    this.clipboard.destroy();
+    tocbot.destroy();
+  },
+  data: function() {
+    return {
+      config: {
+        sites: ["qzone", "wechat", "weibo", "qq"]
+      },
+      imgList: [],
+      article: {
+        nextArticle: {
+          id: 0,
+          articleCover: ""
+        },
+        lastArticle: {
+          id: 0,
+          articleCover: ""
+        },
+        recommendArticleList: [],
+        newestArticleList: []
+      },
+      wordNum: "",
+      readTime: "",
+      commentType: 1,
+      articleHref: window.location.href,
+      clipboard: null,
+      commentCount: 0
+    };
+  },
+  methods: {
+    getArticle() {
+      const that = this;
+      //查询文章
+      this.axios.get("/api" + this.$route.path).then(({ data }) => {
+        document.title = data.data.articleTitle;
+        //将markdown转换为Html
+        this.markdownToHtml(data.data);
+        this.$nextTick(() => {
+          // 统计文章字数
+          this.wordNum = this.deleteHTMLTag(this.article.articleContent).length;
+          // 计算阅读时间
+          this.readTime = Math.round(this.wordNum / 400) + "分钟";
+          // 添加代码复制功能
+          this.clipboard = new Clipboard(".copy-btn");
+          this.clipboard.on("success", () => {
+            this.$toast({ type: "success", message: "复制成功" });
+          });
+          // 添加文章生成目录功能
+          let nodes = this.$refs.article.children;
+          if (nodes.length) {
+            for (let i = 0; i < nodes.length; i++) {
+              let node = nodes[i];
+              let reg = /^H[1-4]{1}$/;
+              if (reg.exec(node.tagName)) {
+                node.id = i;
+              }
+            }
+          }
+          tocbot.init({
+            tocSelector: "#toc", //要把目录添加元素位置，支持选择器
+            contentSelector: ".article-content", //获取html的元素
+            headingSelector: "h1, h2, h3", //要显示的id的目录
+            hasInnerContainers: true,
+            onClick: function(e) {
+              e.preventDefault();
+            }
+          });
+          // 添加图片预览功能
+          const imgList = this.$refs.article.getElementsByTagName("img");
+          for (var i = 0; i < imgList.length; i++) {
+            this.imgList.push(imgList[i].src);
+            imgList[i].addEventListener("click", function(e) {
+              that.previewImg(e.target.currentSrc);
+            });
+          }
+        });
+      });
+    },
+    like() {
+      // 判断登录
+      if (!this.$store.state.userId) {
+        this.$store.state.loginFlag = true;
+        return false;
       }
-      pinia.articleLike(item.id);
+      //发送请求
+      this.axios
+        .post("/api/articles/" + this.article.id + "/like")
+        .then(({ data }) => {
+          if (data.flag) {
+            //判断是否点赞
+            if (
+              this.$store.state.articleLikeSet.indexOf(this.article.id) != -1
+            ) {
+              this.$set(this.article, "likeCount", this.article.likeCount - 1);
+            } else {
+              this.$set(this.article, "likeCount", this.article.likeCount + 1);
+            }
+            this.$store.commit("articleLike", this.article.id);
+          }
+        });
+    },
+    markdownToHtml(article) {
+      const MarkdownIt = require("markdown-it");
+      const hljs = require("highlight.js");
+      const md = new MarkdownIt({
+        html: true,
+        linkify: true,
+        typographer: true,
+        breaks: true,
+        highlight: function(str, lang) {
+          // 当前时间加随机数生成唯一的id标识
+          var d = new Date().getTime();
+          if (
+            window.performance &&
+            typeof window.performance.now === "function"
+          ) {
+            d += performance.now();
+          }
+          const codeIndex = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+            /[xy]/g,
+            function(c) {
+              var r = (d + Math.random() * 16) % 16 | 0;
+              d = Math.floor(d / 16);
+              return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+            }
+          );
+          // 复制功能主要使用的是 clipboard.js
+          let html = `<button class="copy-btn iconfont iconfuzhi" type="button" data-clipboard-action="copy" data-clipboard-target="#copy${codeIndex}"></button>`;
+          const linesLength = str.split(/\n/).length - 1;
+          // 生成行号
+          let linesNum = '<span aria-hidden="true" class="line-numbers-rows">';
+          for (let index = 0; index < linesLength; index++) {
+            linesNum = linesNum + "<span></span>";
+          }
+          linesNum += "</span>";
+          if (lang == null) {
+            lang = "java";
+          }
+          if (lang && hljs.getLanguage(lang)) {
+            // highlight.js 高亮代码
+            const preCode = hljs.highlight(lang, str, true).value;
+            html = html + preCode;
+            if (linesLength) {
+              html += '<b class="name">' + lang + "</b>";
+            }
+            // 将代码包裹在 textarea 中，由于防止textarea渲染出现问题，这里将 "<" 用 "<" 代替，不影响复制功能
+            return `<pre class="hljs"><code>${html}</code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str.replace(
+              /<\/textarea>/g,
+              "</textarea>"
+            )}</textarea>`;
+          }
+        }
+      });
+      // 将markdown替换为html标签
+      article.articleContent = md.render(article.articleContent);
+      this.article = article;
+    },
+    previewImg(img) {
+      this.$imagePreview({
+        images: this.imgList,
+        index: this.imgList.indexOf(img)
+      });
+    },
+    deleteHTMLTag(content) {
+      return content
+        .replace(/<\/?[^>]*>/g, "")
+        .replace(/[|]*\n/, "")
+        .replace(/&npsp;/gi, "");
+    },
+    getCommentCount(count) {
+      this.commentCount = count;
     }
-  });
+  },
+  computed: {
+    blogInfo() {
+      return this.$store.state.blogInfo;
+    },
+    articleCover() {
+      return (
+        "background: url(" +
+        this.article.articleCover +
+        ") center center / cover no-repeat"
+      );
+    },
+    isLike() {
+      var articleLikeSet = this.$store.state.articleLikeSet;
+      return articleLikeSet.indexOf(this.article.id) != -1
+        ? "like-btn-active"
+        : "like-btn";
+    },
+    isFull() {
+      return function(id) {
+        return id ? "post full" : "post";
+      };
+    }
+  }
 };
-const getDetail = async () => {
-  const data = await getArticleDetail(route.fullPath)
-  state.articleDetail = data;
-}
-onMounted(() => {
-  getDetail()
-});
 </script>
 
-<style lang="less" scoped>
-.article {
+<style scoped>
+.banner:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.article-info i {
+  font-size: 14px;
+}
+.article-info {
+  font-size: 14px;
+  line-height: 1.9;
+  display: inline-block;
+}
+@media (min-width: 760px) {
+  .banner {
+    color: #eee !important;
+  }
+  .article-info span {
+    font-size: 95%;
+  }
+  .article-info-container {
+    position: absolute;
+    bottom: 6.25rem;
+    padding: 0 8%;
+    width: 100%;
+    text-align: center;
+  }
+  .second-line,
+  .third-line {
+    display: inline;
+  }
+  .article-title {
+    font-size: 35px;
+    margin: 20px 0 8px;
+  }
+  .pagination-post {
+    display: flex;
+  }
+  .post {
+    width: 50%;
+  }
+  .recommend-item {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin: 3px;
+    width: calc(33.333% - 6px);
+    height: 200px;
+    background: #000;
+    vertical-align: bottom;
+  }
+}
+@media (max-width: 759px) {
+  .banner {
+    color: #eee !important;
+    height: 360px;
+  }
+  .article-info span {
+    font-size: 90%;
+  }
+  .separator:first-child {
+    display: none;
+  }
+  .blog-container {
+    margin: 322px 5px 0 5px;
+  }
+  .article-info-container {
+    position: absolute;
+    bottom: 1.3rem;
+    padding: 0 5%;
+    width: 100%;
+    color: #eee;
+    text-align: left;
+  }
+  .article-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
+  }
+  .post {
+    width: 100%;
+  }
+  .pagination-post {
+    display: block;
+  }
+  .recommend-item {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    margin: 3px;
+    width: calc(100% - 4px);
+    height: 150px;
+    margin: 2px;
+    background: #000;
+    vertical-align: bottom;
+  }
+}
+.article-operation {
+  display: flex;
+  align-items: center;
+}
+.article-category a {
+  color: #fff !important;
+}
+.tag-container a {
+  display: inline-block;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  padding: 0 0.75rem;
+  width: fit-content;
+  border: 1px solid #49b1f5;
+  border-radius: 1rem;
+  color: #49b1f5 !important;
+  font-size: 12px;
+  line-height: 2;
+}
+.tag-container a:hover {
+  color: #fff !important;
+  background: #49b1f5;
+  transition: all 0.5s;
+}
+.aritcle-copyright {
+  position: relative;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  font-size: 0.875rem;
+  line-height: 2;
+  padding: 0.625rem 1rem;
+  border: 1px solid #eee;
+}
+.aritcle-copyright span {
+  color: #49b1f5;
+  font-weight: bold;
+}
+.aritcle-copyright a {
+  text-decoration: underline !important;
+  color: #99a9bf !important;
+}
+.aritcle-copyright:before {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 1rem;
+  background: #49b1f5;
+  content: "";
+}
+.aritcle-copyright:after {
+  position: absolute;
+  top: 0.95rem;
+  right: 0.95rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.5em;
+  background: #fff;
+  content: "";
+}
+.article-reward {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.reward-btn {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  background: #49b1f5;
+  margin: 0 1rem;
+  color: #fff !important;
+  text-align: center;
+  line-height: 36px;
+  font-size: 0.875rem;
+}
+.reward-btn:hover .reward-main {
+  display: block;
+}
+.reward-main {
+  display: none;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  margin: 0;
+  padding: 0 0 15px;
   width: 100%;
-  background-color: var(--theme-background);
+}
+.reward-all {
+  display: inline-block;
+  margin: 0 0 0 -110px;
+  padding: 20px 10px 8px !important;
+  width: 320px;
+  border-radius: 4px;
+  background: #f5f5f5;
+}
+.reward-all:before {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  content: "";
+}
+.reward-all:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  left: 0;
+  margin: 0 auto;
+  width: 0;
+  height: 0;
+  border-top: 13px solid #f5f5f5;
+  border-right: 13px solid transparent;
+  border-left: 13px solid transparent;
+}
+.reward-item {
+  display: inline-block;
+  padding: 0 8px;
+  list-style-type: none;
+}
+.reward-img {
+  width: 130px;
+  height: 130px;
+  display: block;
+}
+.reward-desc {
+  margin: -5px 0;
+  color: #858585;
+  text-align: center;
+}
+.like-btn {
+  display: inline-block;
+  width: 100px;
+  background: #969696;
+  color: #fff !important;
+  text-align: center;
+  line-height: 36px;
+  font-size: 0.875rem;
+}
+.like-btn-active {
+  display: inline-block;
+  width: 100px;
+  background: #ec7259;
+  color: #fff !important;
+  text-align: center;
+  line-height: 36px;
+  font-size: 0.875rem;
+}
+.pagination-post {
+  margin-top: 40px;
+  overflow: hidden;
+  width: 100%;
+  background: #000;
+}
+.post {
+  position: relative;
+  height: 150px;
+  overflow: hidden;
+}
+.post-info {
+  position: absolute;
+  top: 50%;
+  padding: 20px 40px;
+  width: 100%;
+  transform: translate(0, -50%);
+  line-height: 2;
+  font-size: 14px;
+}
+.post-cover {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  transition: all 0.6s;
+  object-fit: cover;
+}
+.post a {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 150px;
+}
+.post:hover .post-cover {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+.label {
+  font-size: 90%;
+  color: #eee;
+}
+.post-title {
+  font-weight: 500;
+  color: #fff;
+}
+hr {
+  position: relative;
+  margin: 40px auto;
+  border: 2px dashed #d2ebfd;
+  width: calc(100% - 4px);
+}
+.full {
+  width: 100% !important;
+}
+.right-container {
+  padding: 20px 24px;
+  font-size: 14px;
+}
+.right-title {
+  display: flex;
+  align-items: center;
+  line-height: 2;
+  font-size: 16.8px;
+  margin-bottom: 6px;
+}
+.right-title i {
+  font-weight: bold;
+}
+.recommend-container {
+  margin-top: 40px;
+}
+.recommend-title {
+  font-size: 20px;
+  line-height: 2;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.recommend-cover {
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  transition: all 0.6s;
+  object-fit: cover;
+}
+.recommend-info {
+  line-height: 2;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  padding: 0 20px;
+  width: 100%;
+  transform: translate(0, -50%);
+  text-align: center;
+  font-size: 14px;
+}
+.recommend-date {
+  font-size: 90%;
+}
+.recommend-item:hover .recommend-cover {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+.article-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 0;
+}
+.article-item:first-child {
+  padding-top: 0;
+}
+.article-item:last-child {
+  padding-bottom: 0;
+}
+.article-item:not(:last-child) {
+  border-bottom: 1px dashed #f5f5f5;
+}
+.article-item img {
+  width: 100%;
+  height: 100%;
+  transition: all 0.6s;
+  object-fit: cover;
+}
+.article-item img:hover {
+  transform: scale(1.1);
+}
+.content {
+  flex: 1;
+  padding-left: 10px;
+  word-break: break-all;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+.content-cover {
+  width: 58.8px;
+  height: 58.8px;
+  overflow: hidden;
+}
+.content-title a {
+  transition: all 0.2s;
+  font-size: 95%;
+}
+.content-title a:hover {
+  color: #2ba1d1;
+}
+.content-time {
+  color: #858585;
+  font-size: 85%;
+  line-height: 2;
+}
+</style>
 
-  .article-meta-data-wrap {
+<style lang="scss">
+pre.hljs {
+  padding: 12px 2px 12px 40px !important;
+  border-radius: 5px !important;
+  position: relative;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  overflow: hidden !important;
+  &:hover .copy-btn {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
-
-  .article-meta-data {
-    font-size: 14px;
-    color: white;
-    box-sizing: border-box;
-    line-height: 24px;
-    overflow: hidden;
-    -webkit-line-clamp: 1;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
+  code {
+    display: block !important;
+    margin: 0 10px !important;
+    overflow-x: auto !important;
+    &::-webkit-scrollbar {
+      z-index: 11;
+      width: 6px;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      width: 6px;
+      background: #666;
+    }
+    &::-webkit-scrollbar-corner,
+    &::-webkit-scrollbar-track {
+      background: #1e1e1e;
+    }
+    &::-webkit-scrollbar-track-piece {
+      background: #1e1e1e;
+      width: 6px;
+    }
   }
-
-  .article-meta-data-divider {
-    color: white;
-    margin: 3px 8px;
-    font-size: 14px;
-  }
-
-  .container {
-    display: flex;
-
-    .comment-card {
-      margin-top: 24px;
-      background: var(--theme-card-color);
-      border: 1px solid var(--theme-card-color);
-      border-radius: 8px;
-      box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
-    }
-
-    .article-card {
-      background: var(--theme-card-color);
-      border: 1px solid var(--theme-card-color);
-      border-radius: 8px;
-      box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
-    }
-
-    @media (min-width: 760px) {
-      padding: 16px 20% 16px 20%;
-
-      .main {
-        width: 75%;
-      }
-
-      .side {
-        width: 25%;
-      }
-    }
-
-    @media (max-width: 759px) {
-      padding: 16px 8px 16px 8px;
-
-      .main {
-        width: 100%;
-      }
-
-      .side {
-        display: none;
-      }
-    }
-
-    .article-like {
-      text-align: center;
-      color: var(--theme-color);
-
-      .like-active {
-        background-color: #ff4d4f;
-        color: white;
-      }
-
-      .like {
-        color: white;
-        background-color: #1890ff;
-      }
-    }
-
-    hr {
-      position: relative;
-      margin: 40px auto;
-      border: 2px dashed #d2ebfd;
-      width: calc(100% - 4px);
-    }
-
-    .theme-card {
-      margin-left: 20px;
-
-      .theme-body {
-        position: relative;
+  .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    font-size: 100%;
+    width: 40px;
+    text-align: center;
+    letter-spacing: -1px;
+    border-right: 1px solid rgba(0, 0, 0, 0.66);
+    user-select: none;
+    counter-reset: linenumber;
+    span {
+      pointer-events: none;
+      display: block;
+      counter-increment: linenumber;
+      &:before {
+        content: counter(linenumber);
+        color: #999;
+        display: block;
         text-align: center;
-
-        p {
-          font-size: 1.5rem;
-          font-weight: bold;
-          color: #19b1f5;
-        }
-
-        .left {
-          position: absolute;
-          left: 0;
-          font-size: 35px;
-        }
-
-        .right {
-          position: absolute;
-          right: 0;
-          font-size: 35px;
-        }
       }
-    }
-
-    .sticky-layout {
-      position: sticky;
-      top: 20px;
-      margin-left: 20px;
-    }
-
-    .article-signature {
-      border: 1px solid #ddd;
-      position: relative;
-      overflow: hidden;
-      margin: 30px 5px 10px 5px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      padding: 12px;
-      transition: all 0.4s;
-
-      &:hover {
-        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-        transform: translateY(-1px);
-      }
-
-      img {
-        margin-left: 10px;
-        width: 90px;
-        height: 90px;
-        border-radius: 50%;
-        transition: all 0.6s;
-
-        &:hover {
-          transform: rotate(-360deg);
-        }
-      }
-
-      .copyright {
-        padding-left: 20px;
-
-        .copyright-item {
-          display: -webkit-box;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
-          line-height: 28px;
-          font-size: 15px;
-          color: var(--theme-color);
-
-          a {
-            color: #99a9bf;
-            transition: all 0.4s;
-            cursor: pointer;
-
-            &:hover {
-              color: #19b1f5;
-            }
-          }
-
-          .copyright-title {
-            font-weight: bold;
-            color: #19b1f5;
-          }
-        }
-      }
-    }
-
-    .article-tags {
-      padding-left: 3px;
-      margin-top: 20px;
-      color: var(--theme-color);
-      font-size: 15px;
-
-      a {
-        border-radius: 4px;
-        font-size: 13px;
-        padding: 3px 12px;
-        text-decoration: none;
-        transition: all 0.4s;
-        background: #49b1f5;
-        margin-right: 8px;
-        color: white;
-        display: inline-block;
-      }
-    }
-
-    .previous-next-article {
-      width: 100%;
-      margin-top: 50px;
-      overflow: hidden;
-      background: black;
-      display: flex;
-      border-radius: 9px;
-
-      .previous-article,
-      .next-article {
-        width: 50%;
-
-        a {
-          height: 150px;
-          overflow: hidden;
-          display: block;
-          position: relative;
-
-          img {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            object-fit: cover;
-            opacity: 0.5;
-            transition: all 0.6s ease-in-out;
-
-            &:hover {
-              transform: scale(1.1);
-              opacity: 0.8;
-            }
-          }
-
-          .previous-article-info,
-          .next-article-info {
-            pointer-events: none;
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            padding: 20px 40px;
-            transform: translate(0, -50%);
-            color: white;
-            line-height: 28px;
-            box-sizing: border-box;
-
-            .label {
-              font-size: 13px;
-            }
-
-            .title {
-              font-weight: 500;
-              font-size: 14px;
-              display: -webkit-box;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              -webkit-line-clamp: 1;
-              -webkit-box-orient: vertical;
-            }
-          }
-
-          .next-article-info {
-            text-align: right;
-          }
-        }
-      }
-    }
-
-    .copyright {
-      padding-left: 20px;
-
-      .copyright-item {
-        display: -webkit-box;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        line-height: 28px;
-        font-size: 15px;
-        color: var(--text-color);
-
-        a {
-          color: #99a9bf;
-          transition: all 0.4s;
-          cursor: pointer;
-
-          &:hover {
-            color: #19b1f5;
-          }
-        }
-
-        .copyright-title {
-          font-weight: bold;
-          color: #19b1f5;
-        }
-      }
-    }
-
-    .hot-article-item {
-      display: flex;
-      justify-content: center;
-      align-content: center;
-      padding: 8px 0;
-    }
-
-    .hot-article-thumbail-link {
-      height: 58px;
-      width: 58px;
-      overflow: hidden;
-    }
-
-    .hot-article-thumbnail {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: all 0.4s ease;
-    }
-
-    .hot-article-thumbnail:hover {
-      transform: scale(1.1);
-    }
-
-    .hot-article-info {
-      flex: 1;
-      padding-left: 10px;
-      word-break: break-all;
-      display: inline-block;
-      align-self: center;
-      color: var(--theme-color);
-    }
-
-    .hot-article-title {
-      color: var(--text-color);
-      font-size: 13.5px;
-      text-decoration: none;
-      transition: color 0.4s;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      line-height: 1.5;
-      -webkit-line-clamp: 2;
-    }
-
-    .hot-article-title:hover {
-      color: var(--theme-color);
-    }
-
-    .hot-article-meta-data {
-      font-size: 12px;
-      color: rgb(133, 133, 133);
-      box-sizing: border-box;
-      line-height: 24px;
-      overflow: hidden;
-      -webkit-line-clamp: 1;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-    }
-
-    .hot-article-meta-data span {
-      margin-left: 4%;
     }
   }
-
+  b.name {
+    position: absolute;
+    top: 7px;
+    right: 45px;
+    z-index: 1;
+    color: #999;
+    pointer-events: none;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 1;
+    color: #ccc;
+    background-color: #525252;
+    border-radius: 6px;
+    display: none;
+    font-size: 14px;
+    width: 32px;
+    height: 24px;
+    outline: none;
+  }
 }
 </style>

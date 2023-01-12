@@ -54,8 +54,8 @@ public class BlogPageServiceImpl implements IBlogPageService {
      */
     @Override
     public List<BlogPageVo> queryList(BlogPageBo bo) {
-        LambdaQueryWrapper<BlogPage> lqw = buildQueryWrapper(bo);
-        return baseMapper.selectVoList(lqw);
+        List<BlogPage> blogPages = baseMapper.BlogPageList();
+        return BeanCopyUtils.copyList(blogPages,BlogPageVo.class);
     }
 
     private LambdaQueryWrapper<BlogPage> buildQueryWrapper(BlogPageBo bo) {

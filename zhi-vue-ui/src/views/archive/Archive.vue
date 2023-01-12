@@ -1,97 +1,96 @@
 <template>
-  <div class="archive">
-    <!-- 二次元封面 -->
-    <header-cover>
-      <div class="article-info">
-        <h1 class="article-title">归档</h1>
-      </div>
-    </header-cover>
-    <div class="container">
-      <a-card class="archive-card">
-        <a-timeline>
-          <a-timeline-item style="color: var(--theme-color);">
-            共发布了{{ state.count }}篇文章了
-          </a-timeline-item>
-
-          <a-timeline-item v-for="item in state.archiveList" :key="item.id">
-            <!-- 日期 -->
-            <span class="time">{{ $formatDate(item.createTime) }}</span>
-            <!-- 文章标题 -->
-            <router-link :to="`/articles/${item.id}`">
-              {{ item.articleTitle }}
-            </router-link>
-          </a-timeline-item>
-        </a-timeline>
-        <div class="pagination">
-          <a-pagination v-model:current="state.current" :total="state.count" :pageSize="10" @change="pageChange" />
-        </div>
-      </a-card>
+  <div>
+    <!-- banner -->
+    <div class="banner" :style="cover">
+      <h1 class="banner-title">归档</h1>
     </div>
+    <!-- 归档列表 -->
+    <v-card class="blog-container">
+      <timeline>
+        <timeline-title> 目前共计{{ count }}篇文章，继续加油 </timeline-title>
+        <timeline-item v-for="item of archiveList" :key="item.id">
+          <!-- 日期 -->
+          <span class="time">{{ item.createTime | date }}</span>
+          <!-- 文章标题 -->
+          <router-link
+            :to="'/articles/' + item.id"
+            style="color:#666;text-decoration: none"
+          >
+            {{ item.articleTitle }}
+          </router-link>
+        </timeline-item>
+      </timeline>
+      <!-- 分页按钮 -->
+      <v-pagination
+        color="#00C4B6"
+        v-model="current"
+        :length="Math.ceil(count / 10)"
+        total-visible="7"
+      />
+    </v-card>
   </div>
 </template>
-<script setup lang="ts">
-import { onMounted, reactive } from "vue";
-import HeaderCover from "@/components/component/HeaderCover.vue";
-import { getArchiveData } from "@/api/blog";
-import { archive } from "@/types/api/blog"
-const state = reactive({
-  archiveList: [] as archive[],
-  count: 0,
-  current: 1,
-});
-onMounted(() => {
-  getArchive();
-});
-const pageChange = (page: number, pageSize: number) => {
-  state.current = page;
-  console.log(state.current)
-  getArchive();
-};
-const getArchive = async () => {
-  const data = await getArchiveData(state.current)
-  state.archiveList = data.recordList;
-  state.count = data.count;
+
+<script>
+import { Timeline, TimelineItem, TimelineTitle } from "vue-cute-timeline";
+export default {
+  created() {
+    this.listArchives();
+  },
+  components: {
+    Timeline,
+    TimelineItem,
+    TimelineTitle
+  },
+  data: function() {
+    return {
+      current: 1,
+      count: 0,
+      archiveList: []
+    };
+  },
+  methods: {
+    listArchives() {
+      this.axios
+        .get("/api/articles/archives", {
+          params: { current: this.current }
+        })
+        .then(({ data }) => {
+          this.archiveList = data.data.recordList;
+          this.count = data.data.count;
+        });
+    }
+  },
+  computed: {
+    cover() {
+      var cover = "";
+      this.$store.state.blogInfo.pageList.forEach(item => {
+        if (item.pageLabel == "archive") {
+          cover = item.pageCover;
+        }
+      });
+      return "background: url(" + cover + ") center center / cover no-repeat";
+    }
+  },
+  watch: {
+    current(value) {
+      this.axios
+        .get("/api/articles/archives", {
+          params: { current: value }
+        })
+        .then(({ data }) => {
+          this.archiveList = data.data.recordList;
+          this.count = data.data.count;
+        });
+    }
+  }
 };
 </script>
-<style scoped lang="less">
-.archive {
-  width: 100%;
-  height: 100%;
-  background-color: var(--theme-background);
-  color: var(--theme-color);
 
-  .pagination {
-    text-align: center;
-  }
-
-  .time {
-    font-size: 0.75rem;
-    color: var(--theme-color);
-    margin-right: 1rem;
-  }
-
-  .container {
-    padding: 5% 10%;
-  }
-
-  .archive-card {
-    background: var(--theme-card-color);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
-    border: 1px solid var(--theme-card-color);
-  }
-
-  a {
-    color: var(--theme-color);
-    text-decoration: none;
-    font-size: 1.2rem;
-  }
-
-  a:hover {
-    font-size: 1.2rem;
-    color: #03a9f4 !important;
-    transform: scale(1.1);
-  }
+<style scoped>
+.time {
+  font-size: 0.75rem;
+  color: #555;
+  margin-right: 1rem;
 }
 </style>

@@ -1,95 +1,83 @@
 <template>
-  <div class="tag">
-    <!-- 二次元封面 -->
-    <header-cover>
-      <div class="article-info">
-        <h1 class="article-title">标签</h1>
-      </div>
-    </header-cover>
-    <!-- 标签列表 -->
-    <div class="container">
-      <a-card class="tag-card">
-        <div class="tag-cloud-title">标签 - {{ state.count }}</div>
-        <div class="tag-cloud">
-          <router-link :style="{ 'font-size': Math.floor(Math.random() * 10) + 18 + 'px' }"
-            v-for="item of state.tagList" :key="item.id" :to="`/tag/${item.id}`">
-            {{ item.tagName }}
-          </router-link>
-        </div>
-      </a-card>
+  <div>
+    <!-- banner -->
+    <div class="banner" :style="cover">
+      <h1 class="banner-title">标签</h1>
     </div>
+    <!-- 标签列表 -->
+    <v-card class="blog-container">
+      <div class="tag-cloud-title">标签 - {{ count }}</div>
+      <div class="tag-cloud">
+        <router-link
+          :style="{ 'font-size': Math.floor(Math.random() * 10) + 18 + 'px' }"
+          v-for="item of tagList"
+          :key="item.id"
+          :to="'/tags/' + item.id"
+        >
+          {{ item.tagName }}
+        </router-link>
+      </div>
+    </v-card>
   </div>
 </template>
 
-<script setup lang="ts">
-import 'animate.css'
-import {tag} from "@/types/api/blog"
-import { getTagsData } from "@/api/blog";
-import { onMounted, reactive } from "vue";
-import HeaderCover from "@/components/component/HeaderCover.vue";
-const state = reactive({
-  tagList: [] as tag[],
-  count: 0
-})
-const getTagList = async () => {
-  const data = await getTagsData()
-  state.tagList.push(...data.recordList);
-  state.count = data.count;
-}
-onMounted(() => {
-  getTagList()
-});
-
-</script>
-
-<style scoped lang="less">
-.tag {
-  width: 100%;
-  height: 100%;
-  background-color: var(--theme-background);
-  .container {
-    padding: 5% 10%;
-  }
-
-  .tag-card {
-    background: var(--theme-card-color);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
-    border: 1px solid var(--theme-card-color);
-  }
-
-
-  .tag-cloud-title {
-    line-height: 2;
-    font-size: 36px;
-    text-align: center;
-    color: var(--theme-color);
-  }
-
-
-  @media (max-width: 759px) {
-    .tag-cloud-title {
-      font-size: 25px;
+<script>
+export default {
+  created() {
+    this.listTags();
+  },
+  data: function() {
+    return {
+      tagList: [],
+      count: 0
+    };
+  },
+  methods: {
+    listTags() {
+      this.axios.get("/api/tags").then(({ data }) => {
+        this.tagList = data.data.recordList;
+        this.count = data.data.count;
+      });
+    }
+  },
+  computed: {
+    cover() {
+      var cover = "";
+      this.$store.state.blogInfo.pageList.forEach(item => {
+        if (item.pageLabel == "tag") {
+          cover = item.pageCover;
+        }
+      });
+      return "background: url(" + cover + ") center center / cover no-repeat";
     }
   }
+};
+</script>
 
-  .tag-cloud {
-    text-align: center;
+<style scoped>
+.tag-cloud-title {
+  line-height: 2;
+  font-size: 36px;
+  text-align: center;
+}
+@media (max-width: 759px) {
+  .tag-cloud-title {
+    font-size: 25px;
   }
-
-  .tag-cloud a {
-    color: var(--theme-color);
-    display: inline-block;
-    text-decoration: none;
-    padding: 0 8px;
-    line-height: 2;
-    transition: all 0.3s;
-  }
-
-  .tag-cloud a:hover {
-    color: #03a9f4 !important;
-    transform: scale(1.1);
-  }
+}
+.tag-cloud {
+  text-align: center;
+}
+.tag-cloud a {
+  color: #616161;
+  display: inline-block;
+  text-decoration: none;
+  padding: 0 8px;
+  line-height: 2;
+  transition: all 0.3s;
+}
+.tag-cloud a:hover {
+  color: #03a9f4 !important;
+  transform: scale(1.1);
 }
 </style>
