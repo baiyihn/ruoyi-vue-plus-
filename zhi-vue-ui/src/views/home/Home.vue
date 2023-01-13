@@ -303,29 +303,31 @@ export default {
     },
     infiniteHandler($state) {
       let md = require("markdown-it")();
-      this.axios
-        .get("/article/article/list", {
-          params: {
-            current: this.current
-          }
-        })
-        .then(({ data }) => {
-          if (data.data.length) {
-            // 去除markdown标签
-            data.data.forEach(item => {
-              item.articleContent = md
-                .render(item.articleContent)
-                .replace(/<\/?[^>]*>/g, "")
-                .replace(/[|]*\n/, "")
-                .replace(/&npsp;/gi, "");
-            });
-            this.articleList.push(...data.data);
-            this.current++;
-            $state.loaded();
-          } else {
-            $state.complete();
-          }
-        });
+        if (this.current<this.blogInfo.articleCount) {
+        this.axios
+              .get("/api/article/article/articles", {
+                  params: {
+                      current: this.current
+                  }
+              })
+              .then(({data}) => {
+                  if (data.data.length) {
+                      // 去除markdown标签
+                      data.data.forEach(item => {
+                          item.articleContent = md
+                              .render(item.articleContent)
+                              .replace(/<\/?[^>]*>/g, "")
+                              .replace(/[|]*\n/, "")
+                              .replace(/&npsp;/gi, "");
+                      });
+                      this.articleList.push(...data.data);
+                      this.current++;
+                      $state.loaded();
+                  } else {
+                      $state.complete();
+                  }
+              });
+      }
     }
   },
   computed: {

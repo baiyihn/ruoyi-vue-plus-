@@ -4,9 +4,11 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import com.zhi.blog.domain.Category;
 import com.zhi.blog.domain.Tag;
+import com.zhi.blog.dto.ArticleHomeDTO;
 import com.zhi.blog.mapper.CategoryMapper;
 import com.zhi.blog.mapper.TagMapper;
 import com.zhi.blog.utils.CategoryOrTag;
+import com.zhi.blog.utils.PageUtils;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -41,6 +43,13 @@ public class ArticleServiceImpl implements IArticleService {
     private final TagMapper tagMapper;
 
     private final CategoryOrTag categoryOrTag;
+
+
+    @Override
+    public List<ArticleHomeDTO> listArticles() {
+        return baseMapper.listArticles(PageUtils.getLimitCurrent(), PageUtils.getSize());
+    }
+
 
     /**
      * 查询文章列表

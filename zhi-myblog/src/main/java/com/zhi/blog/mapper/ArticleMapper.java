@@ -3,6 +3,7 @@ package com.zhi.blog.mapper;
 import com.zhi.blog.domain.Article;
 import com.zhi.blog.domain.Tag;
 import com.zhi.blog.domain.vo.ArticleVo;
+import com.zhi.blog.dto.ArticleHomeDTO;
 import com.zhi.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -18,6 +19,19 @@ import java.util.List;
  * @date 2023-01-07
  */
 public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, ArticleVo> {
+
+
+
+
+    /**
+     * 查询首页文章
+     *
+     * @param current 页码
+     * @param size    大小
+     * @return 文章列表
+     */
+    List<ArticleHomeDTO> listArticles(@Param("current") Long current, @Param("size") Long size);
+
 
 
     /**

@@ -300,6 +300,7 @@ export default {
       const that = this;
       //查询文章
       this.axios.get("/api" + this.$route.path).then(({ data }) => {
+          console.log("这里是Artical999999999999999999999999")
         document.title = data.data.articleTitle;
         //将markdown转换为Html
         this.markdownToHtml(data.data);

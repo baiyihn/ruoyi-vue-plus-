@@ -3,6 +3,11 @@ package com.zhi.blog.controller;
 import java.util.List;
 import java.util.Arrays;
 
+import cn.dev33.satoken.annotation.SaIgnore;
+import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.dto.ArchiveDTO;
+import com.zhi.blog.dto.ArticleHomeDTO;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.*;
@@ -37,10 +42,22 @@ public class ArticleController extends BaseController {
 
     private final IArticleService iArticleService;
 
+
+    /**
+     * 查看首页文章
+     *
+     */
+    @SaIgnore
+    @ApiOperation(value = "查看首页文章")
+    @GetMapping("/articles")
+    public R<List<ArticleHomeDTO>> listArticles() {
+        return R.ok(iArticleService.listArticles());
+    }
+
+
     /**
      * 查询文章列表列表
      */
-//    @SaCheckPermission("article:article:list")
     @GetMapping("/list")
     public TableDataInfo<ArticleVo> list(ArticleBo bo, PageQuery pageQuery) {
         return iArticleService.queryPageList(bo, pageQuery);

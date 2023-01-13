@@ -35,6 +35,12 @@ public class WebsiteConfigServiceImpl implements IWebsiteConfigService {
         Object websiteConfig = RedisUtils.getCacheObject(WEBSITE_CONFIG);
         if (Objects.nonNull(websiteConfig)){
             websiteConfigVO = JSON.parseObject(websiteConfig.toString(), WebsiteConfigVO.class);
+            //将图片改为url地址
+            websiteConfigVO.setWebsiteAvatar(websiteConfigMapper.websiteAvatar(Long.parseLong(websiteConfigVO.getWebsiteAvatar())));
+            websiteConfigVO.setAlipayQRCode(websiteConfigMapper.alipayQRCode(Long.parseLong(websiteConfigVO.getAlipayQRCode())));
+            websiteConfigVO.setTouristAvatar(websiteConfigMapper.touristAvatar(Long.parseLong(websiteConfigVO.getTouristAvatar())));
+            websiteConfigVO.setUserAvatar( websiteConfigMapper.userAvatar(Long.parseLong(websiteConfigVO.getUserAvatar())));
+            websiteConfigVO.setWeiXinQRCode(websiteConfigMapper.weiXinQRCode(Long.parseLong(websiteConfigVO.getWeiXinQRCode())));
         }else {
             //从数据库中加载
             String config = websiteConfigMapper.selectById(DEFAULT_CONFIG_ID).getConfig();

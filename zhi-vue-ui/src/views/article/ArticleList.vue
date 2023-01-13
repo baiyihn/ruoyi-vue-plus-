@@ -68,6 +68,7 @@
 <script>
 export default {
   created() {
+      console.log("这里是ArticalList999999999999999999999999")
     const path = this.$route.path;
     if (path.indexOf("/categories") != -1) {
       this.title = "分类";
