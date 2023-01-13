@@ -1,4 +1,4 @@
-package com.zhi.blog.utils;
+package com.zhi.common.utils.blog;
 
 import com.alibaba.fastjson.JSON;
 import eu.bitwalker.useragentutils.UserAgent;

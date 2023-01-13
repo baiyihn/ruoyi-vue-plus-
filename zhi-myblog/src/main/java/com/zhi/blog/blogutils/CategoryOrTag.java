@@ -1,4 +1,4 @@
-package com.zhi.blog.utils;
+package com.zhi.blog.blogutils;
 
 import com.zhi.blog.domain.Category;
 import com.zhi.blog.domain.Tag;

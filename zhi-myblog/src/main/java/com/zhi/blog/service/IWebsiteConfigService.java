@@ -10,11 +10,19 @@ import com.zhi.blog.domain.vo.WebsiteConfigVO;
 public interface IWebsiteConfigService {
 
     /**
-     * 获取网站配置
+     * 前端获取网站配置
      *
      * @return {@link WebsiteConfigVO} 网站配置
      */
     WebsiteConfigVO getWebsiteConfig();
+
+
+    /**
+     * 后台获取网站配置
+     *
+     * @return {@link WebsiteConfigVO} 网站配置
+     */
+    WebsiteConfigVO getAdminWebsiteConfig();
 
 
     /**

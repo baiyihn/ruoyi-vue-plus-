@@ -14,8 +14,7 @@ import com.zhi.blog.service.IBlogInfoService;
 import com.zhi.blog.service.IBlogPageService;
 import com.zhi.blog.service.IWebsiteConfigService;
 import com.zhi.blog.service.RedisService;
-import com.zhi.blog.utils.IpUtils;
-import com.zhi.common.core.domain.PageQuery;
+import com.zhi.common.utils.blog.IpUtils;
 import com.zhi.common.utils.redis.RedisUtils;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
@@ -29,9 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
-import static com.zhi.blog.constant.CommonConst.*;
-import static com.zhi.blog.constant.RedisPrefixConst.*;
-import static com.zhi.blog.enmus.ArticleStatusEnum.PUBLIC;
+import static com.zhi.common.constant.blog.CommonConst.*;
+import static com.zhi.common.constant.blog.RedisPrefixConst.*;
+import static com.zhi.common.enums.blog.ArticleStatusEnum.PUBLIC;
 
 /**
  * @author ftz-lover

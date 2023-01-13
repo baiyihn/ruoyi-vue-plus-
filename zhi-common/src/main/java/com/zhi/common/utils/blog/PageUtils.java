@@ -1,4 +1,4 @@
-package com.zhi.blog.utils;
+package com.zhi.common.utils.blog;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -14,6 +14,9 @@ import java.util.Objects;
 public class PageUtils {
 
     private static final ThreadLocal<Page<?>> PAGE_HOLDER = new ThreadLocal<>();
+
+
+
 
     public static void setCurrentPage(Page<?> page) {
         PAGE_HOLDER.set(page);
@@ -34,6 +37,7 @@ public class PageUtils {
     public static Long getSize() {
         return getPage().getSize();
     }
+
 
     public static Long getLimitCurrent() {
         return (getCurrent() - 1) * getSize();

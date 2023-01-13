@@ -60,9 +60,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             category_name,
             t.id AS tag_id,
             t.tag_name
-        FROM
+            FROM
             (
-                SELECT
+            SELECT
                     id,
                     article_cover,
                     article_title,
@@ -71,11 +71,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     is_top,
                     create_time,
                     category_id
-                FROM
+                    FROM
                     blog_article
-                WHERE is_delete = 0
-                  AND status = 1
-                ORDER BY
+                    WHERE is_delete = 0
+                    AND status = 1
+                    ORDER BY
                     is_top DESC,
                     id DESC
                     LIMIT #{current} , #{size}

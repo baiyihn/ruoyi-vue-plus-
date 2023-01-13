@@ -10,9 +10,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Objects;
-
-import static com.zhi.blog.constant.CommonConst.DEFAULT_CONFIG_ID;
-import static com.zhi.blog.constant.RedisPrefixConst.WEBSITE_CONFIG;
+import static com.zhi.common.constant.blog.CommonConst.DEFAULT_CONFIG_ID;
+import static com.zhi.common.constant.blog.RedisPrefixConst.WEBSITE_CONFIG;
 
 
 /**
@@ -27,6 +26,10 @@ public class WebsiteConfigServiceImpl implements IWebsiteConfigService {
     private WebsiteConfigMapper websiteConfigMapper;
 
 
+    /**
+     * 前台获取
+     * @return
+     */
 
     @Override
     public WebsiteConfigVO getWebsiteConfig() {
@@ -53,6 +56,18 @@ public class WebsiteConfigServiceImpl implements IWebsiteConfigService {
             websiteConfigVO.setWeiXinQRCode(websiteConfigMapper.weiXinQRCode(Long.parseLong(websiteConfigVO.getWeiXinQRCode())));
             RedisUtils.setCacheObject(WEBSITE_CONFIG, config);
         }
+        return websiteConfigVO;
+    }
+
+    /**
+     * 后台获取
+     * @return
+     */
+    @Override
+    public WebsiteConfigVO getAdminWebsiteConfig() {
+        WebsiteConfigVO websiteConfigVO;
+        String config = websiteConfigMapper.selectById(DEFAULT_CONFIG_ID).getConfig();
+        websiteConfigVO = JSON.parseObject(config, WebsiteConfigVO.class);
         return websiteConfigVO;
     }
 

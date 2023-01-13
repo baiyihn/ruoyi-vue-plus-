@@ -1,4 +1,4 @@
-package com.zhi.blog.constant;
+package com.zhi.common.constant.blog;
 
 
 /**

@@ -303,7 +303,7 @@ export default {
     },
     infiniteHandler($state) {
       let md = require("markdown-it")();
-        if (this.current<this.blogInfo.articleCount) {
+
         this.axios
               .get("/api/article/article/articles", {
                   params: {
@@ -327,7 +327,6 @@ export default {
                       $state.complete();
                   }
               });
-      }
     }
   },
   computed: {

@@ -23,11 +23,19 @@ public class WebsiteConfigController {
     private IWebsiteConfigService websiteConfigService;
 
     /**
-     * 获取网站配置
+     * 前台获取网站配置
      */
     @GetMapping("/config")
     public R<WebsiteConfigVO> getWebsiteConfig() {
         return R.ok(websiteConfigService.getWebsiteConfig());
+    }
+
+    /**
+     * 后台获取网站配置
+     */
+    @GetMapping("/admin/config")
+    public R<WebsiteConfigVO> getAdminWebsiteConfig() {
+        return R.ok(websiteConfigService.getAdminWebsiteConfig());
     }
 
 

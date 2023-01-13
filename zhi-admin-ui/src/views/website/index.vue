@@ -9,6 +9,7 @@
           label-position="left"
         >
 
+
           <el-form-item label="网站头像">
           <image-upload v-model="websiteConfigForm.websiteAvatar"/>
           </el-form-item>

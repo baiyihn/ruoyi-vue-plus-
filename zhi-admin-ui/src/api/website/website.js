@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询标签管理列表
 export function getWebsiteConfig(query) {
   return request({
-    url: '/website/config',
+    url: '/website/admin/config',
     method: 'get',
     params: query
   })

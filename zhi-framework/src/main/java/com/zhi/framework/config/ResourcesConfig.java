@@ -1,5 +1,5 @@
 package com.zhi.framework.config;
-
+import com.zhi.framework.handler.PageableHandlerInterceptor;
 import com.zhi.framework.interceptor.PlusWebInvokeTimeInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +22,8 @@ public class ResourcesConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 全局访问性能拦截
         registry.addInterceptor(new PlusWebInvokeTimeInterceptor());
+        //分页Page对象拦截
+        registry.addInterceptor(new PageableHandlerInterceptor());
     }
 
     @Override

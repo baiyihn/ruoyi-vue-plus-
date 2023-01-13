@@ -1,4 +1,4 @@
-package com.zhi.blog.enmus;
+package com.zhi.common.enums.blog;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
