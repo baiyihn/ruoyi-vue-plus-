@@ -3,6 +3,10 @@ package com.zhi.blog.controller;
 import java.util.List;
 import java.util.Arrays;
 
+import cn.dev33.satoken.annotation.SaIgnore;
+import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.dto.TagDTO;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.*;
@@ -36,6 +40,18 @@ import com.zhi.common.core.page.TableDataInfo;
 public class TagController extends BaseController {
 
     private final ITagService iTagService;
+
+    /**
+     * 前台查询标签列表
+     *
+     * @return {@link R<TagDTO>} 标签列表
+     */
+    @SaIgnore
+    @ApiOperation(value = "查询标签列表")
+    @GetMapping("/tags")
+    public R<PageResult<TagDTO>> listTags() {
+        return R.ok(iTagService.listTags());
+    }
 
     /**
      * 查询标签管理列表

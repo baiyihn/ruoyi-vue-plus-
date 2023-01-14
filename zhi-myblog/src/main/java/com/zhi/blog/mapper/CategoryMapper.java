@@ -2,7 +2,10 @@ package com.zhi.blog.mapper;
 
 import com.zhi.blog.domain.Category;
 import com.zhi.blog.domain.vo.CategoryVo;
+import com.zhi.blog.dto.CategoryDTO;
 import com.zhi.common.core.mapper.BaseMapperPlus;
+
+import java.util.List;
 
 /**
  * 分类管理Mapper接口
@@ -11,6 +14,13 @@ import com.zhi.common.core.mapper.BaseMapperPlus;
  * @date 2023-01-07
  */
 public interface CategoryMapper extends BaseMapperPlus<CategoryMapper, Category, CategoryVo> {
+
+    /**
+     * 查询分类和对应文章数量
+     *
+     * @return 分类列表
+     */
+    List<CategoryDTO> listCategoryDTO();
 
     /**
      * 根据id查询分类名称

@@ -45,13 +45,13 @@ public class ConditionVO {
      * 分类id
      */
     @ApiModelProperty(name = "categoryId", value = "分类id", dataType = "Integer")
-    private Integer categoryId;
+    private Long categoryId;
 
     /**
      * 标签id
      */
     @ApiModelProperty(name = "tagId", value = "标签id", dataType = "Integer")
-    private Integer tagId;
+    private Long tagId;
 
     /**
      * 相册id

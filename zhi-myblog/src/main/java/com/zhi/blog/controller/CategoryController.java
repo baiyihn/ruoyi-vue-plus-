@@ -3,6 +3,10 @@ package com.zhi.blog.controller;
 import java.util.List;
 import java.util.Arrays;
 
+import cn.dev33.satoken.annotation.SaIgnore;
+import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.dto.CategoryDTO;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.*;
@@ -36,6 +40,19 @@ import com.zhi.common.core.page.TableDataInfo;
 public class CategoryController extends BaseController {
 
     private final ICategoryService iCategoryService;
+
+    /**
+     * 查看前台分类列表
+     *
+     * @return {@link R<CategoryDTO>} 分类列表
+     */
+    @SaIgnore
+    @ApiOperation(value = "查看分类列表")
+    @GetMapping("/categories")
+    public R<PageResult<CategoryDTO>> listCategories() {
+        return R.ok(iCategoryService.listCategories());
+    }
+
 
     /**
      * 查询分类管理列表

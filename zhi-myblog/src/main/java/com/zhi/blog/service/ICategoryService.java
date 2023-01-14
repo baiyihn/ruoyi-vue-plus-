@@ -3,6 +3,8 @@ package com.zhi.blog.service;
 import com.zhi.blog.domain.Category;
 import com.zhi.blog.domain.vo.CategoryVo;
 import com.zhi.blog.domain.bo.CategoryBo;
+import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.dto.CategoryDTO;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 
@@ -16,6 +18,13 @@ import java.util.List;
  * @date 2023-01-07
  */
 public interface ICategoryService {
+
+    /**
+     * 查询前台分类列表
+     *
+     * @return 分类列表
+     */
+    PageResult<CategoryDTO> listCategories();
 
     /**
      * 查询分类管理

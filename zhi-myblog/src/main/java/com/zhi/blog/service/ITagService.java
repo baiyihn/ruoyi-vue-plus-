@@ -2,8 +2,10 @@ package com.zhi.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhi.blog.domain.Tag;
+import com.zhi.blog.domain.vo.PageResult;
 import com.zhi.blog.domain.vo.TagVo;
 import com.zhi.blog.domain.bo.TagBo;
+import com.zhi.blog.dto.TagDTO;
 import com.zhi.common.core.domain.R;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
@@ -18,6 +20,13 @@ import java.util.List;
  * @date 2023-01-08
  */
 public interface ITagService extends IService<Tag>  {
+
+    /**
+     * 查询前台标签列表
+     *
+     * @return 标签列表
+     */
+    PageResult<TagDTO> listTags();
 
     /**
      * 查询标签管理

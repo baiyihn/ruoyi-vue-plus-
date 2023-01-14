@@ -1,6 +1,8 @@
 package com.zhi.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.dto.CategoryDTO;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -30,6 +32,15 @@ import java.util.Collection;
 public class CategoryServiceImpl implements ICategoryService {
 
     private final CategoryMapper baseMapper;
+
+    /**
+     * 查看前台分类
+     * @return
+     */
+    @Override
+    public PageResult<CategoryDTO> listCategories() {
+        return new PageResult<>(baseMapper.listCategoryDTO(), Integer.parseInt(String.valueOf(baseMapper.selectCount(null))));
+    }
 
     /**
      * 查询分类管理

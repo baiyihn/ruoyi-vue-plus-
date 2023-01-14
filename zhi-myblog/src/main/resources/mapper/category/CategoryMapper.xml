@@ -13,6 +13,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy" column="update_by"/>
     </resultMap>
 
+    <select id="listCategoryDTO" resultType="com.zhi.blog.dto.CategoryDTO">
+        SELECT
+            c.id,
+            c.category_name,
+            COUNT( a.id ) AS article_count
+        FROM
+            blog_category c
+                LEFT JOIN ( SELECT id, category_id FROM blog_article WHERE is_delete = 0 AND `status` = 1 ) a ON c.id = a.category_id
+        GROUP BY
+            c.id
+    </select>
+
 
     <select id="selectNameById" resultType="string">
         select categoryName from blog_category where id = #{id}

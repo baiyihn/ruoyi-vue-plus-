@@ -2,12 +2,15 @@ package com.zhi.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.dto.TagDTO;
 import com.zhi.common.core.domain.R;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.zhi.common.utils.BeanCopyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.zhi.blog.domain.bo.TagBo;
@@ -31,6 +34,22 @@ import java.util.Collection;
 public class TagServiceImpl extends ServiceImpl<TagMapper,Tag> implements ITagService {
 
     private final TagMapper baseMapper;
+
+
+    /**
+     * 查询前台标签
+     * @return
+     */
+    @Override
+    public PageResult<TagDTO> listTags() {
+        // 查询标签列表
+        List<Tag> tagList = baseMapper.selectList(null);
+        // 转换DTO
+        List<TagDTO> tagDTOList = BeanCopyUtils.copyList(tagList, TagDTO.class);
+        // 查询标签数量
+        Long count = baseMapper.selectCount(null);
+        return new PageResult<>(tagDTOList, Integer.parseInt(String.valueOf(count)));
+    }
 
     /**
      * 查询标签管理
