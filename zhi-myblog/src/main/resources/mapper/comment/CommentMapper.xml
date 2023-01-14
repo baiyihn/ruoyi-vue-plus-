@@ -39,6 +39,7 @@
                 topic_id = #{commentVO.topicId}
             </if>
             AND type = #{commentVO.type}
+            AND c.state = 1
             AND parent_id IS NULL
         </where>
         ORDER BY

@@ -1,13 +1,13 @@
 package com.zhi.blog.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.zhi.blog.blogutils.CategoryOrTag;
+import com.zhi.blog.domain.Category;
 import com.zhi.blog.domain.Tag;
-import com.zhi.blog.dto.ArticleDTO;
-import com.zhi.blog.dto.ArticleHomeDTO;
-import com.zhi.blog.dto.ArticlePaginationDTO;
-import com.zhi.blog.dto.ArticleRecommendDTO;
+import com.zhi.blog.dto.*;
+import com.zhi.blog.dto.vo.ConditionVO;
 import com.zhi.blog.mapper.CategoryMapper;
 import com.zhi.blog.mapper.TagMapper;
+import com.zhi.blog.service.ITagService;
 import com.zhi.blog.service.RedisService;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
@@ -46,8 +46,10 @@ public class ArticleServiceImpl implements IArticleService {
 
     private final ArticleMapper baseMapper;
 
+    @Resource
     private final CategoryMapper categoryMapper;
 
+    @Resource
     private final TagMapper tagMapper;
 
     private final CategoryOrTag categoryOrTag;
@@ -57,6 +59,9 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Resource
     private HttpSession session;
+
+    @Resource
+    private ITagService tagService;
 
 
     /**
@@ -156,6 +161,41 @@ public class ArticleServiceImpl implements IArticleService {
         }
         return article;
     }
+
+
+
+
+
+    @Override
+    public ArticlePreviewListDTO listArticlesByCondition(ConditionVO condition) {
+        // 查询文章
+        List<ArticlePreviewDTO> articlePreviewDTOList = baseMapper.listArticlesByCondition(PageUtils.getLimitCurrent(), PageUtils.getSize(), condition);
+        //将文章图片转化为url
+        articlePreviewDTOList.forEach(item ->{
+            item.setArticleCover(baseMapper.ImgUrl(Long.parseLong(item.getArticleCover())));
+        });
+        // 搜索条件对应名(标签或分类名)
+        String name;
+        if (Objects.nonNull(condition.getCategoryId())) {
+            name = categoryMapper.selectOne(new LambdaQueryWrapper<Category>()
+                    .select(Category::getCategoryName)
+                    .eq(Category::getId, condition.getCategoryId()))
+                .getCategoryName();
+        } else {
+            name = tagService.getOne(new LambdaQueryWrapper<Tag>()
+                    .select(Tag::getTagName)
+                    .eq(Tag::getId, condition.getTagId()))
+                    .getTagName();
+        }
+        return ArticlePreviewListDTO.builder()
+            .articlePreviewDTOList(articlePreviewDTOList)
+            .name(name)
+            .build();
+    }
+
+
+
+
     /**
      * 更新文章浏览量
      *

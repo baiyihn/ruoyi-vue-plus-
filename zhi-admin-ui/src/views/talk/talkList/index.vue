@@ -36,6 +36,7 @@
           <!-- 说说信息 -->
           <div class="talk-content" v-html="item.content" />
           <!-- 图片列表 -->
+
           <el-row :gutter="4" class="talk-images" v-if="item.imgList">
             <el-col
               :md="8"
@@ -44,6 +45,7 @@
               :key="index"
             >
               <el-image
+                style="width: 400px;height: 250px"
                 class="images-items"
                 :src="img"
                 :preview-src-list="previewList"

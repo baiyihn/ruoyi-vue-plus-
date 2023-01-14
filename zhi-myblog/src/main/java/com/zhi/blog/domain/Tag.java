@@ -2,9 +2,7 @@ package com.zhi.blog.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.zhi.common.core.domain.BaseEntity;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 
 /**
@@ -17,6 +15,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @TableName("blog_tag")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Tag extends BaseEntity {
 
     private static final long serialVersionUID=1L;

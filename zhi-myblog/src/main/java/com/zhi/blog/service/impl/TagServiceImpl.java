@@ -1,6 +1,7 @@
 package com.zhi.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhi.common.core.domain.R;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
@@ -27,7 +28,7 @@ import java.util.Collection;
  */
 @RequiredArgsConstructor
 @Service
-public class TagServiceImpl implements ITagService {
+public class TagServiceImpl extends ServiceImpl<TagMapper,Tag> implements ITagService {
 
     private final TagMapper baseMapper;
 

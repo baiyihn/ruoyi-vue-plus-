@@ -1,5 +1,6 @@
 package com.zhi.blog.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhi.blog.domain.Tag;
 import com.zhi.blog.domain.vo.TagVo;
 import com.zhi.blog.domain.bo.TagBo;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author ftz
  * @date 2023-01-08
  */
-public interface ITagService {
+public interface ITagService extends IService<Tag>  {
 
     /**
      * 查询标签管理

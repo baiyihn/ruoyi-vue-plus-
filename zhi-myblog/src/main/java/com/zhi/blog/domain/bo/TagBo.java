@@ -3,8 +3,11 @@ package com.zhi.blog.domain.bo;
 import com.zhi.common.core.domain.BaseEntity;
 import com.zhi.common.core.validate.AddGroup;
 import com.zhi.common.core.validate.EditGroup;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.*;
 
 
@@ -17,6 +20,8 @@ import javax.validation.constraints.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class TagBo extends BaseEntity {
 
     /**

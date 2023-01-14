@@ -8,6 +8,8 @@ import com.zhi.blog.domain.vo.PageResult;
 import com.zhi.blog.dto.ArchiveDTO;
 import com.zhi.blog.dto.ArticleDTO;
 import com.zhi.blog.dto.ArticleHomeDTO;
+import com.zhi.blog.dto.ArticlePreviewListDTO;
+import com.zhi.blog.dto.vo.ConditionVO;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +75,19 @@ public class ArticleController extends BaseController {
         return R.ok(iArticleService.getArticleById(articleId));
     }
 
+
+    /**
+     * 根据条件查询文章
+     *
+     * @param condition 条件
+     * @return {@link Result<ArticlePreviewListDTO>} 文章列表
+     */
+    @SaIgnore
+    @ApiOperation(value = "根据条件查询文章")
+    @GetMapping("/articles/condition")
+    public R<ArticlePreviewListDTO> listArticlesByCondition(ConditionVO condition) {
+        return R.ok(iArticleService.listArticlesByCondition(condition));
+    }
 
 
     /**

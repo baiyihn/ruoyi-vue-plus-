@@ -88,7 +88,7 @@ export default {
   methods: {
     infiniteHandler($state) {
       this.axios
-        .get("/api/articles/condition", {
+        .get("/api/article/article/articles/condition", {
           params: {
             categoryId: this.$route.params.categoryId,
             tagId: this.$route.params.tagId,

@@ -5,6 +5,8 @@ import com.zhi.blog.domain.vo.ArticleVo;
 import com.zhi.blog.domain.bo.ArticleBo;
 import com.zhi.blog.dto.ArticleDTO;
 import com.zhi.blog.dto.ArticleHomeDTO;
+import com.zhi.blog.dto.ArticlePreviewListDTO;
+import com.zhi.blog.dto.vo.ConditionVO;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 
@@ -34,6 +36,14 @@ public interface IArticleService {
      * @return {@link ArticleDTO} 文章信息
      */
     ArticleDTO getArticleById(Integer articleId);
+
+    /**
+     * 根据条件查询文章列表
+     *
+     * @param condition 条件
+     * @return 文章列表
+     */
+    ArticlePreviewListDTO listArticlesByCondition(ConditionVO condition);
 
 
 

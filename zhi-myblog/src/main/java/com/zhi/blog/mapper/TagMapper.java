@@ -28,4 +28,7 @@ public interface TagMapper extends BaseMapperPlus<TagMapper, Tag, TagVo> {
     @Select("select count(*) from blog_article_tag where tag_id = #{id}")
     int ArticleTag(Long id);
 
+
+
+
 }

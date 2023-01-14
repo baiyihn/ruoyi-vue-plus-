@@ -5,7 +5,9 @@ import com.zhi.blog.domain.Tag;
 import com.zhi.blog.domain.vo.ArticleVo;
 import com.zhi.blog.dto.ArticleDTO;
 import com.zhi.blog.dto.ArticleHomeDTO;
+import com.zhi.blog.dto.ArticlePreviewDTO;
 import com.zhi.blog.dto.ArticleRecommendDTO;
+import com.zhi.blog.dto.vo.ConditionVO;
 import com.zhi.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -70,6 +72,17 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
      * @return 文章信息
      */
     ArticleDTO getArticleById(@Param("articleId") Integer articleId);
+
+
+    /**
+     * 根据条件查询文章
+     *
+     * @param current   页码
+     * @param size      大小
+     * @param condition 条件
+     * @return 文章列表
+     */
+    List<ArticlePreviewDTO> listArticlesByCondition(@Param("current") Long current, @Param("size") Long size, @Param("condition") ConditionVO condition);
 
 
 

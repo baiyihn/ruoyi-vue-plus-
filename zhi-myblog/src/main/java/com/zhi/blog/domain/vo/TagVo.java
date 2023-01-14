@@ -4,7 +4,9 @@ import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.zhi.common.annotation.ExcelDictFormat;
 import com.zhi.common.convert.ExcelDictConvert;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -15,6 +17,8 @@ import lombok.Data;
  */
 @Data
 @ExcelIgnoreUnannotated
+@AllArgsConstructor
+@NoArgsConstructor
 public class TagVo {
 
     private static final long serialVersionUID = 1L;
