@@ -52,7 +52,7 @@ export default {
   methods: {
     listArchives() {
       this.axios
-        .get("/api/articles/archives", {
+        .get("/api/article/article/articles/archives", {
           params: { current: this.current }
         })
         .then(({ data }) => {

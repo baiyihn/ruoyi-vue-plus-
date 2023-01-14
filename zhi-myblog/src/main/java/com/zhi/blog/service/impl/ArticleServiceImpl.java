@@ -1,8 +1,10 @@
 package com.zhi.blog.service.impl;
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhi.blog.blogutils.CategoryOrTag;
 import com.zhi.blog.domain.Category;
 import com.zhi.blog.domain.Tag;
+import com.zhi.blog.domain.vo.PageResult;
 import com.zhi.blog.dto.*;
 import com.zhi.blog.dto.vo.ConditionVO;
 import com.zhi.blog.mapper.CategoryMapper;
@@ -62,6 +64,22 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Resource
     private ITagService tagService;
+
+    /**
+     * 查看文章归档
+     */
+    @Override
+    public PageResult<ArchiveDTO> listArchives() {
+        Page<Article> page = new Page<>(PageUtils.getCurrent(), PageUtils.getSize());
+        // 获取分页数据
+        Page<Article> articlePage = baseMapper.selectPage(page, new LambdaQueryWrapper<Article>()
+            .select(Article::getId, Article::getArticleTitle, Article::getCreateTime)
+            .orderByDesc(Article::getCreateTime)
+            .eq(Article::getIsDelete, FALSE)
+            .eq(Article::getStatus, PUBLIC.getStatus()));
+        List<ArchiveDTO> archiveDTOList = BeanCopyUtils.copyList(articlePage.getRecords(), ArchiveDTO.class);
+        return new PageResult<>(archiveDTOList, (int) articlePage.getTotal());
+    }
 
 
     /**

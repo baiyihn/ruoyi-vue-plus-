@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 /**
@@ -23,7 +24,7 @@ public class ArchiveDTO {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 标题
@@ -33,6 +34,6 @@ public class ArchiveDTO {
     /**
      * 发表时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
 }

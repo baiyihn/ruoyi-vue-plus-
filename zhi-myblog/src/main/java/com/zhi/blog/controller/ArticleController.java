@@ -48,6 +48,19 @@ public class ArticleController extends BaseController {
 
 
     /**
+     * 查看文章归档
+     *
+     * @return {@link R<ArchiveDTO>} 文章归档列表
+     */
+    @SaIgnore
+    @ApiOperation(value = "查看文章归档")
+    @GetMapping("/articles/archives")
+    public R<PageResult<ArchiveDTO>> listArchives() {
+        return R.ok(iArticleService.listArchives());
+    }
+
+
+    /**
      * 查看博客前端首页文章
      *
      */

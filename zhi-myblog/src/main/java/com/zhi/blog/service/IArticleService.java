@@ -3,6 +3,8 @@ package com.zhi.blog.service;
 import com.zhi.blog.domain.Article;
 import com.zhi.blog.domain.vo.ArticleVo;
 import com.zhi.blog.domain.bo.ArticleBo;
+import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.dto.ArchiveDTO;
 import com.zhi.blog.dto.ArticleDTO;
 import com.zhi.blog.dto.ArticleHomeDTO;
 import com.zhi.blog.dto.ArticlePreviewListDTO;
@@ -20,6 +22,14 @@ import java.util.List;
  * @date 2023-01-07
  */
 public interface IArticleService {
+
+
+    /**
+     * 查询文章归档
+     *
+     * @return 文章归档
+     */
+    PageResult<ArchiveDTO> listArchives();
 
 
     /**
