@@ -24,7 +24,7 @@
 
     <select id="listComments" resultType="com.zhi.blog.dto.CommentDTO">
         SELECT
-        u.nickname,
+        u.nick_name,
         u.avatar,
         u.web_site,
         c.user_id,
@@ -55,11 +55,11 @@
         (
         SELECT
         c.user_id,
-        u.nickname,
+        u.nick_name,
         u.avatar,
         u.web_site,
         c.reply_user_id,
-        r.nickname AS reply_nickname,
+        r.nick_name AS reply_nickname,
         r.web_site AS reply_web_site,
         c.id,
         c.parent_id,
@@ -68,8 +68,8 @@
         row_number () over ( PARTITION BY parent_id ORDER BY create_time ASC ) row_num
         FROM
         blog_comment c
-        JOIN sys_user u ON c.user_id = u.id
-        JOIN sys_user r ON c.reply_user_id = r.id
+        JOIN sys_user u ON c.user_id = u.user_id
+        JOIN sys_user r ON c.reply_user_id = r.user_id
         WHERE
         c.state = 1
         AND
