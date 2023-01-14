@@ -6,6 +6,7 @@ import com.zhi.common.core.validate.EditGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.validation.constraints.*;
+import java.util.List;
 
 
 /**
@@ -26,9 +27,13 @@ public class TalkBo extends BaseEntity {
     private Long id;
 
     /**
+     * 发布者
+     */
+    private String createBy;
+
+    /**
      * 用户id
      */
-    @NotNull(message = "用户id不能为空", groups = { AddGroup.class, EditGroup.class })
     private Long userId;
 
     /**
@@ -46,6 +51,11 @@ public class TalkBo extends BaseEntity {
      * 是否置顶
      */
     private Integer isTop;
+
+    /**
+     * 图片集合
+     */
+    private List<String> ImgList;
 
 
 }

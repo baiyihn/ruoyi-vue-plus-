@@ -31,7 +31,7 @@ public class TalkServiceImpl implements ITalkService {
     private final TalkMapper baseMapper;
 
     /**
-     * 查询说说管理
+     * 根据id查询说说管理
      */
     @Override
     public TalkVo queryById(Long id){
@@ -39,15 +39,8 @@ public class TalkServiceImpl implements ITalkService {
         if (Objects.nonNull(talkVo.getImages())){
             List<String> list = Arrays.asList(talkVo.getImages().split(","));
             // 将图片转换为url路径
-            List<String> urlList = new ArrayList<>();
-            for (int i = 0;i<list.size();i++){
-                String url = baseMapper.imageUrl(Long.parseLong(list.get(i)));
-                urlList.add(url);
-                talkVo.setImages(url);
-            }
-            talkVo.setImgList(urlList);
+            talkVo.setImgList(list);
         }
-
         return talkVo;
     }
 
@@ -103,6 +96,11 @@ public class TalkServiceImpl implements ITalkService {
     @Override
     public Boolean insertByBo(TalkBo bo) {
         bo.setUserId(baseMapper.getUserIdByName(bo.getCreateBy()));
+        if (Objects.nonNull(bo.getImages())){
+            List<String> list = Arrays.asList(bo.getImages().split(","));
+            // 将图片转换为url路径
+            bo.setImgList(list);
+        }
         Talk add = BeanUtil.toBean(bo, Talk.class);
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
@@ -117,6 +115,12 @@ public class TalkServiceImpl implements ITalkService {
      */
     @Override
     public Boolean updateByBo(TalkBo bo) {
+        bo.setUserId(baseMapper.getUserIdByName(bo.getCreateBy()));
+        if (Objects.nonNull(bo.getImages())){
+            List<String> list = Arrays.asList(bo.getImages().split(","));
+            // 将图片转换为url路径
+            bo.setImgList(list);
+        }
         Talk update = BeanUtil.toBean(bo, Talk.class);
         validEntityBeforeSave(update);
         return baseMapper.updateById(update) > 0;

@@ -22,7 +22,7 @@ public class Talk extends BaseEntity {
     /**
      * 说说id
      */
-    @TableId(value = "id")
+    @TableId(value = "id" ,type = IdType.AUTO)
     private Long id;
     /**
      * 用户id

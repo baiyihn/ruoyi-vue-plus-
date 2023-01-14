@@ -33,10 +33,7 @@
               slot="reference"
             />
           </el-popover>
-
-            <image-upload v-model="talk.images"/>
-
-
+            <image-upload  style="padding-left: 50px" v-model="talk.images"/>
         </div>
         <div class="right-wrapper">
           <el-button
@@ -55,15 +52,15 @@
 </template>
 
 <script>
-import * as imageConversion from "image-conversion";
 import EmojiList from "../../../assets/js/emoji";
 import Editor from "../../../components/EditorTwo/Editor";
-import {getTalk} from "@/api/talk/talk";
+import {addTalk, getTalk, updateTalk} from "@/api/talk/talk";
 export default {
   components: {
     Editor
   },
   created() {
+    this.finduser();
     if (this.$route.query.id) {
       getTalk(this.$route.query.id).then(response =>{
         this.talk = response.data;
@@ -78,11 +75,14 @@ export default {
   },
   data: function() {
     return {
+      //当前登录用户名称
+      username:"",
       emojiList: EmojiList,
       talk: {
         id: null,
         content: "",
-        images: null
+        images: null,
+        create_by:""
       },
       uploadList: []
     };
@@ -106,30 +106,49 @@ export default {
         this.$message.error("说说内容不能为空");
         return false;
       }
-      // 转换图片
-      if (this.uploadList.length > 0) {
-        var imgList = [];
-        this.uploadList.forEach(item => {
-          imgList.push(item.url);
-        });
-        this.talk.images = JSON.stringify(imgList);
+      this.talk.createBy = this.username;
+      //修改说说
+      if (this.$route.query.id) {
+        updateTalk(this.talk).then(response =>{
+          console.log(888888888888888888888888)
+          if (response.code == 200){
+            this.$refs.editor.clear();
+            this.uploadList = [];
+            this.talk.images = null;
+            this.$modal.msgSuccess("修改成功")
+          }else {
+            this.$modal.msgError("修改失败")
+          }
+
+        })
       }
-      this.axios.post("/api/admin/talks", this.talk).then(({ data }) => {
-        if (data.flag) {
-          this.$refs.editor.clear();
-          this.uploadList = [];
-          this.$notify.success({
-            title: "成功",
-            message: data.message
-          });
-        } else {
-          this.$notify.error({
-            title: "失败",
-            message: data.message
-          });
+        //新增说说
+        addTalk(this.talk).then( response =>{
+          console.log(9999999999999999999)
+          if (response.code == 200){
+            this.$refs.editor.clear();
+            this.uploadList = [];
+            this.$modal.msgSuccess("新增成功")
+          }else {
+            this.$modal.msgError("新增失败")
+          }
+        })
+
+    },
+    /**  获取cookie中的作者名称   */
+    finduser(){
+      const strCookie = document.cookie;
+      const arrCookie=strCookie.split("; ");
+      let username;
+      for(let i=0; i<arrCookie.length; i++){
+        const arr=arrCookie[i].split("=");
+        if("username"==arr[0]){
+          username=arr[1];
+          break;
         }
-      });
-    }
+      }
+      this.username = username;
+    },
   },
   computed: {
   }
