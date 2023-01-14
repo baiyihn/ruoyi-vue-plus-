@@ -77,8 +77,8 @@ export default {
       this.axios.post("/api/messages", message);
     },
     listMessage() {
-      this.axios.get("/api/messages").then(({ data }) => {
-        if (data.flag) {
+      this.axios.get("/api/message/message/messages").then(({ data }) => {
+        if (data.code==200) {
           this.barrageList = data.data;
         }
       });

@@ -3,6 +3,9 @@ package com.zhi.blog.controller;
 import java.util.List;
 import java.util.Arrays;
 
+import cn.dev33.satoken.annotation.SaIgnore;
+import com.zhi.blog.dto.MessageDTO;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.*;
@@ -36,6 +39,18 @@ import com.zhi.common.core.page.TableDataInfo;
 public class MessageController extends BaseController {
 
     private final IMessageService iMessageService;
+
+    /**
+     * 查看前台留言列表
+     *
+     * @return {@link R<MessageDTO>} 留言列表
+     */
+    @SaIgnore
+    @ApiOperation(value = "查看留言列表")
+    @GetMapping("/messages")
+    public R<List<MessageDTO>> listMessages() {
+        return R.ok(iMessageService.listMessages());
+    }
 
     /**
      * 查询留言管理列表

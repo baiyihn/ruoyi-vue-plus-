@@ -1,11 +1,13 @@
 package com.zhi.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.zhi.blog.dto.MessageDTO;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.zhi.common.utils.BeanCopyUtils;
 import com.zhi.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Collection;
 
+import static com.zhi.common.constant.blog.CommonConst.TRUE;
+import static com.zhi.common.constant.blog.CommonConst.YES;
+
 /**
  * 留言管理Service业务层处理
  *
@@ -30,6 +35,19 @@ import java.util.Collection;
 public class MessageServiceImpl implements IMessageService {
 
     private final MessageMapper baseMapper;
+
+    /**
+     * 查看前台留言弹幕
+     * @return
+     */
+    @Override
+    public List<MessageDTO> listMessages() {
+        // 查询留言列表
+        List<Message> messageList = baseMapper.selectList(new LambdaQueryWrapper<Message>()
+            .select(Message::getId, Message::getNickname, Message::getAvatar, Message::getMessageContent, Message::getTime)
+            .eq(Message::getIsReview,YES));
+        return BeanCopyUtils.copyList(messageList, MessageDTO.class);
+    }
 
     /**
      * 查询留言管理

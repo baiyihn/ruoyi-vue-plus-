@@ -2,8 +2,10 @@ package com.zhi.blog.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.zhi.common.core.domain.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -15,6 +17,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("blog_message")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Message extends BaseEntity {
 
     private static final long serialVersionUID=1L;
@@ -22,7 +26,7 @@ public class Message extends BaseEntity {
     /**
      * 主键id
      */
-    @TableId(value = "id")
+    @TableId(value = "id" ,type = IdType.AUTO)
     private Long id;
     /**
      * 昵称

@@ -3,6 +3,7 @@ package com.zhi.blog.service;
 import com.zhi.blog.domain.FriendLink;
 import com.zhi.blog.domain.vo.FriendLinkVo;
 import com.zhi.blog.domain.bo.FriendLinkBo;
+import com.zhi.blog.dto.FriendLinkDTO;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 
@@ -16,6 +17,12 @@ import java.util.List;
  * @date 2023-01-12
  */
 public interface IFriendLinkService {
+    /**
+     * 查看前台友链列表
+     *
+     * @return 友链列表
+     */
+    List<FriendLinkDTO> listFriendLinks();
 
     /**
      * 查询友链管理

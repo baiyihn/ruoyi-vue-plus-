@@ -3,8 +3,11 @@ package com.zhi.blog.domain.bo;
 import com.zhi.common.core.domain.BaseEntity;
 import com.zhi.common.core.validate.AddGroup;
 import com.zhi.common.core.validate.EditGroup;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.*;
 
 
@@ -16,6 +19,8 @@ import javax.validation.constraints.*;
  */
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class FriendLinkBo extends BaseEntity {
 

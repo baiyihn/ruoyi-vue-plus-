@@ -2,8 +2,10 @@ package com.zhi.blog.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.zhi.common.core.domain.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -15,6 +17,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("blog_friend_link")
+@AllArgsConstructor
+@NoArgsConstructor
 public class FriendLink extends BaseEntity {
 
     private static final long serialVersionUID=1L;

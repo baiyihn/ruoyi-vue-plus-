@@ -3,6 +3,9 @@ package com.zhi.blog.controller;
 import java.util.List;
 import java.util.Arrays;
 
+import cn.dev33.satoken.annotation.SaIgnore;
+import com.zhi.blog.dto.FriendLinkDTO;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.*;
@@ -36,6 +39,18 @@ import com.zhi.common.core.page.TableDataInfo;
 public class FriendLinkController extends BaseController {
 
     private final IFriendLinkService iFriendLinkService;
+
+    /**
+     * 查看前台友链列表
+     *
+     * @return {@link R<FriendLinkDTO>} 友链列表
+     */
+    @SaIgnore
+    @ApiOperation(value = "查看友链列表")
+    @GetMapping("/links")
+    public R<List<FriendLinkDTO>> listFriendLinks() {
+        return R.ok(iFriendLinkService.listFriendLinks());
+    }
 
     /**
      * 查询友链管理列表

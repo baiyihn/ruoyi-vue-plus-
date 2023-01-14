@@ -4,7 +4,9 @@ import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.zhi.common.annotation.ExcelDictFormat;
 import com.zhi.common.convert.ExcelDictConvert;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -14,6 +16,8 @@ import lombok.Data;
  * @date 2023-01-11
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @ExcelIgnoreUnannotated
 public class MessageVo {
 

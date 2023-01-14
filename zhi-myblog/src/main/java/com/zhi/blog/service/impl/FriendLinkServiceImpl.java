@@ -1,11 +1,13 @@
 package com.zhi.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.zhi.blog.dto.FriendLinkDTO;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.zhi.common.utils.BeanCopyUtils;
 import com.zhi.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,17 @@ import java.util.Collection;
 public class FriendLinkServiceImpl implements IFriendLinkService {
 
     private final FriendLinkMapper baseMapper;
+
+    /**
+     * 查看前台友链
+     * @return
+     */
+    @Override
+    public List<FriendLinkDTO> listFriendLinks() {
+        // 查询友链列表
+        List<FriendLink> friendLinkList = baseMapper.selectList(null);
+        return BeanCopyUtils.copyList(friendLinkList, FriendLinkDTO.class);
+    }
 
     /**
      * 查询友链管理

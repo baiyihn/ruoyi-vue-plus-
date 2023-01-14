@@ -14,6 +14,11 @@ public class CommonConst {
     public static  final  int STATE = 1;
 
     /**
+     * 系统是否
+     */
+    public static final String YES = "Y";
+
+    /**
      * 否
      */
     public static final int FALSE = 0;

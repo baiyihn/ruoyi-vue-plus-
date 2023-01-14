@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     listFriendLink() {
-      this.axios.get("/api/links").then(({ data }) => {
+      this.axios.get("/api/friendLink/friendLink/links").then(({ data }) => {
         this.friendLinkList = data.data;
       });
     }

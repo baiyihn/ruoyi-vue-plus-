@@ -3,6 +3,7 @@ package com.zhi.blog.service;
 import com.zhi.blog.domain.Message;
 import com.zhi.blog.domain.vo.MessageVo;
 import com.zhi.blog.domain.bo.MessageBo;
+import com.zhi.blog.dto.MessageDTO;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 
@@ -16,6 +17,13 @@ import java.util.List;
  * @date 2023-01-11
  */
 public interface IMessageService {
+
+    /**
+     * 查看前台留言弹幕
+     *
+     * @return 留言列表
+     */
+    List<MessageDTO> listMessages();
 
     /**
      * 查询留言管理
