@@ -348,12 +348,14 @@ export default {
 
       }else {
         this.newArticleContent = this.form.articleContent;
+        this.newArticleTitle = this.form.articleTitle;
         this.loading = true;
         this.reset();
         getArticle(this.articleId).then(response => {
           this.loading = false;
           this.form = response.data;
           this.form.articleContent = this.newArticleContent;
+          this.form.articleTitle = this.newArticleTitle;
           this.open = true;
           this.title = "修改文章列表";
         });
