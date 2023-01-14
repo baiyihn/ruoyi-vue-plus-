@@ -285,7 +285,7 @@ export default {
           break;
       }
       this.axios
-        .get("/api/comments", {
+        .get("/api/comment/comment/comments", {
           params: param
         })
         .then(({ data }) => {

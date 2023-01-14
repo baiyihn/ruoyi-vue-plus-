@@ -91,7 +91,7 @@ export default {
   methods: {
     getTalkById() {
       this.axios
-        .get("/api/talks/" + this.$route.params.talkId)
+        .get("/api/talk/talk/" + this.$route.params.talkId)
         .then(({ data }) => {
           this.talkInfo = data.data;
           this.previewList = this.talkInfo.imgList;

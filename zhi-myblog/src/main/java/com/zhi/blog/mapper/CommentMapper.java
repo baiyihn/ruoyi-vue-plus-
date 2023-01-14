@@ -79,6 +79,6 @@ public interface CommentMapper extends BaseMapperPlus<CommentMapper, Comment, Co
      * @param topicIdList 说说id列表
      * @return {@link List<CommentCountDTO>}说说评论量
      */
-    List<CommentCountDTO> listCommentCountByTopicIds(List<Integer> topicIdList);
+    List<CommentCountDTO> listCommentCountByTopicIds(@Param("topicIdList") List<Integer> topicIdList);
 
 }

@@ -102,7 +102,7 @@ export default {
   methods: {
     listTalks() {
       this.axios
-        .get("/api/talks", {
+        .get("/api/talk/talk/talks", {
           params: {
             current: this.current,
             size: this.size

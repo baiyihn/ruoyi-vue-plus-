@@ -94,7 +94,8 @@ public class TalkController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("talk:talk:query")
+//    @SaCheckPermission("talk:talk:query")
+    @SaIgnore
     @GetMapping("/{id}")
     public R<TalkVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {

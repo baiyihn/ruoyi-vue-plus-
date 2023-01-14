@@ -81,24 +81,34 @@ public class TalkServiceImpl implements ITalkService {
         List<TalkDTO> talkDTOList = baseMapper.listTalks(PageUtils.getLimitCurrent(), PageUtils.getSize());
 
         // 查询说说评论量
-//        List<Integer> talkIdList = talkDTOList.stream()
-//            .map(TalkDTO::getId)
-//            .collect(Collectors.toList());
-//        Map<Integer, Integer> commentCountMap = commentMapper.listCommentCountByTopicIds(talkIdList)
-//            .stream()
-//            .collect(Collectors.toMap(CommentCountDTO::getId, CommentCountDTO::getCommentCount));
+        List<Integer> topicIdList = talkDTOList.stream()
+            .map(TalkDTO::getId)
+            .collect(Collectors.toList());
+        System.out.println(topicIdList.size()+"这是数量");
+        Map<Integer, Integer> commentCountMap = commentMapper.listCommentCountByTopicIds(topicIdList)
+            .stream()
+            .collect(Collectors.toMap(CommentCountDTO::getId, CommentCountDTO::getCommentCount));
 
 
-        // 查询说说点赞量
-//        Map<String, Object> likeCountMap = redisService.hGetAll(TALK_LIKE_COUNT);
-//        talkDTOList.forEach(item -> {
-//            item.setLikeCount((Integer) likeCountMap.get(item.getId().toString()));
-//            item.setCommentCount(commentCountMap.get(item.getId()));
-//            // 转换图片格式
-//            if (Objects.nonNull(item.getImages())) {
-//                item.setImgList(JSON.parseObject(item.getImages(), List.class));
-//            }
-//        });
+         //查询说说点赞量
+        Map<String, Object> likeCountMap = redisService.hGetAll(TALK_LIKE_COUNT);
+        talkDTOList.forEach(item -> {
+            item.setLikeCount((Integer) likeCountMap.get(item.getId().toString()));
+            item.setCommentCount(commentCountMap.get(item.getId()));
+            // 转换图片格式
+            if (Objects.nonNull(item.getImages())) {
+                List<String> list = Arrays.asList(item.getImages().split(","));
+                // 将图片转换为url路径
+                List<String> urlList = new ArrayList<>();
+                for (int i = 0;i<list.size();i++){
+                    String url = baseMapper.imageUrl(Long.parseLong(list.get(i)));
+                    urlList.add(url);
+                    item.setImages(url);
+                }
+                item.setImgList(urlList);
+
+            }
+        });
         return new PageResult<>(talkDTOList, Integer.parseInt(String.valueOf(count)));
     }
 
