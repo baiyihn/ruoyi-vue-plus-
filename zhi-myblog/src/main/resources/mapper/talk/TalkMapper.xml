@@ -16,5 +16,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy" column="update_by"/>
     </resultMap>
 
+    <select id="listTalks" resultType="com.zhi.blog.dto.TalkDTO">
+        SELECT
+            t.id,
+            u.nick_name,
+            u.avatar,
+            t.content,
+            t.images,
+            t.create_time
+        FROM
+            blog_talk t
+            JOIN sys_user u ON t.user_id = u.user_id
+
+        ORDER BY
+            t.id DESC
+            LIMIT #{current},#{size}
+    </select>
+
 
 </mapper>

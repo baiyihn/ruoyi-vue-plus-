@@ -2,13 +2,18 @@ package com.zhi.blog.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.zhi.blog.blogutils.CategoryOrTag;
 import com.zhi.blog.domain.Tag;
+import com.zhi.blog.dto.ArticleDTO;
 import com.zhi.blog.dto.ArticleHomeDTO;
+import com.zhi.blog.dto.ArticlePaginationDTO;
+import com.zhi.blog.dto.ArticleRecommendDTO;
 import com.zhi.blog.mapper.CategoryMapper;
 import com.zhi.blog.mapper.TagMapper;
+import com.zhi.blog.service.RedisService;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.zhi.common.exception.base.BaseException;
 import com.zhi.common.utils.BeanCopyUtils;
 import com.zhi.common.utils.StringUtils;
 import com.zhi.common.utils.blog.PageUtils;
@@ -19,8 +24,15 @@ import com.zhi.blog.domain.vo.ArticleVo;
 import com.zhi.blog.domain.Article;
 import com.zhi.blog.mapper.ArticleMapper;
 import com.zhi.blog.service.IArticleService;
-
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import static com.zhi.common.constant.blog.CommonConst.ARTICLE_SET;
+import static com.zhi.common.constant.blog.CommonConst.FALSE;
+import static com.zhi.common.constant.blog.RedisPrefixConst.ARTICLE_LIKE_COUNT;
+import static com.zhi.common.constant.blog.RedisPrefixConst.ARTICLE_VIEWS_COUNT;
+import static com.zhi.common.enums.blog.ArticleStatusEnum.PUBLIC;
 
 /**
  * 文章列表Service业务层处理
@@ -40,11 +52,126 @@ public class ArticleServiceImpl implements IArticleService {
 
     private final CategoryOrTag categoryOrTag;
 
+    @Resource
+    private RedisService redisService;
 
+    @Resource
+    private HttpSession session;
+
+
+    /**
+     * 查看博客前端首页文章
+     *
+     */
     @Override
     public List<ArticleHomeDTO> listArticles() {
         return baseMapper.listArticles(PageUtils.getLimitCurrent(), PageUtils.getSize());
     }
+
+
+
+    /**
+     * 博客前端根据id查看文章
+     *
+     * @param articleId 文章id
+     * @return {@link ArticleDTO} 文章信息
+     */
+    @Override
+    public ArticleDTO getArticleById(Integer articleId) {
+        // 查询推荐文章
+        CompletableFuture<List<ArticleRecommendDTO>> recommendArticleList = CompletableFuture
+            .supplyAsync(
+                () -> {
+                    List<ArticleRecommendDTO> articleRecommendDTOS = baseMapper.listRecommendArticles(articleId);
+                    articleRecommendDTOS.forEach(item ->{
+                        item.setArticleCover(baseMapper.ImgUrl(Long.parseLong(item.getArticleCover())));
+                    });
+                    return articleRecommendDTOS;
+                }
+            );
+
+
+
+        // 查询最新文章
+        CompletableFuture<List<ArticleRecommendDTO>> newestArticleList = CompletableFuture
+            .supplyAsync(() -> {
+                List<Article> articleList = baseMapper.selectList(new LambdaQueryWrapper<Article>()
+                    .select(Article::getId, Article::getArticleTitle, Article::getArticleCover, Article::getCreateTime)
+                    .eq(Article::getIsDelete, FALSE)
+                    .eq(Article::getStatus, PUBLIC.getStatus())
+                    .orderByDesc(Article::getId)
+                    .last("limit 5"));
+                // 将前台图片转换为url
+                articleList.forEach(item ->{
+                    item.setArticleCover(baseMapper.ImgUrl(Long.parseLong(item.getArticleCover())));
+                });
+                return BeanCopyUtils.copyList(articleList, ArticleRecommendDTO.class);
+            });
+        // 查询id对应文章
+        ArticleDTO article = baseMapper.getArticleById(articleId);
+        if (Objects.isNull(article)) {
+            throw new BaseException("文章不存在");
+        }
+        // 更新文章浏览量
+        updateArticleViewsCount(articleId);
+        // 查询上一篇下一篇文章
+        Article lastArticle = baseMapper.selectOne(new LambdaQueryWrapper<Article>()
+            .select(Article::getId, Article::getArticleTitle, Article::getArticleCover)
+            .eq(Article::getIsDelete, FALSE)
+            .eq(Article::getStatus, PUBLIC.getStatus())
+            .lt(Article::getId, articleId)
+            .orderByDesc(Article::getId)
+            .last("limit 1"));
+        Article nextArticle = baseMapper.selectOne(new LambdaQueryWrapper<Article>()
+            .select(Article::getId, Article::getArticleTitle, Article::getArticleCover)
+            .eq(Article::getIsDelete, FALSE)
+            .eq(Article::getStatus, PUBLIC.getStatus())
+            .gt(Article::getId, articleId)
+            .orderByAsc(Article::getId)
+            .last("limit 1"));
+        // 将图片转换为url
+        if (Objects.nonNull(lastArticle)){
+            lastArticle.setArticleCover(baseMapper.ImgUrl(Long.parseLong(lastArticle.getArticleCover())));
+        }
+        if (Objects.nonNull(nextArticle)){
+            nextArticle.setArticleCover(baseMapper.ImgUrl(Long.parseLong(nextArticle.getArticleCover())));
+        }
+
+
+
+        article.setLastArticle(BeanCopyUtils.copyObject(lastArticle, ArticlePaginationDTO.class));
+        article.setNextArticle(BeanCopyUtils.copyObject(nextArticle, ArticlePaginationDTO.class));
+        // 封装点赞量和浏览量
+        Double score = redisService.zScore(ARTICLE_VIEWS_COUNT, articleId);
+        if (Objects.nonNull(score)) {
+            article.setViewsCount(score.intValue());
+        }
+        article.setLikeCount((Integer) redisService.hGet(ARTICLE_LIKE_COUNT, articleId.toString()));
+        // 封装文章信息
+        try {
+            article.setRecommendArticleList(recommendArticleList.get());
+            article.setNewestArticleList(newestArticleList.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return article;
+    }
+    /**
+     * 更新文章浏览量
+     *
+     * @param articleId 文章id
+     */
+    public void updateArticleViewsCount(Integer articleId) {
+        // 判断是否第一次访问，增加浏览量
+        Set<Integer> articleSet = (Set<Integer>) Optional.ofNullable(session.getAttribute(ARTICLE_SET)).orElse(new HashSet<>());
+        if (!articleSet.contains(articleId)) {
+            articleSet.add(articleId);
+            session.setAttribute(ARTICLE_SET, articleSet);
+            // 浏览量+1
+            redisService.zIncr(ARTICLE_VIEWS_COUNT, articleId, 1D);
+        }
+    }
+
 
 
     /**

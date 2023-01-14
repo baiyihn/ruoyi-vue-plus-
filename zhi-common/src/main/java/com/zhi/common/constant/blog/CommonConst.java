@@ -8,6 +8,10 @@ package com.zhi.common.constant.blog;
  * @date 2021/07/27
  */
 public class CommonConst {
+    /**
+     * 已审核
+     */
+    public static  final  int STATE = 1;
 
     /**
      * 否

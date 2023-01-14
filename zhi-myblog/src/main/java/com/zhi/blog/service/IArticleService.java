@@ -3,6 +3,7 @@ package com.zhi.blog.service;
 import com.zhi.blog.domain.Article;
 import com.zhi.blog.domain.vo.ArticleVo;
 import com.zhi.blog.domain.bo.ArticleBo;
+import com.zhi.blog.dto.ArticleDTO;
 import com.zhi.blog.dto.ArticleHomeDTO;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
@@ -20,11 +21,20 @@ public interface IArticleService {
 
 
     /**
-     * 查询首页文章
+     * 查看博客前端首页文章
      *
-     * @return 文章列表
      */
     List<ArticleHomeDTO> listArticles();
+
+
+    /**
+     * 博客前端根据id查看文章
+     *
+     * @param articleId 文章id
+     * @return {@link ArticleDTO} 文章信息
+     */
+    ArticleDTO getArticleById(Integer articleId);
+
 
 
     /**

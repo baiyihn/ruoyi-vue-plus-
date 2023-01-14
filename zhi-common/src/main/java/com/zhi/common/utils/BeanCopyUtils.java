@@ -28,6 +28,26 @@ import java.util.Map;
 public class BeanCopyUtils {
 
     /**
+     * 复制对象
+     *
+     * @param source 源
+     * @param target 目标
+     * @return {@link T}
+     */
+    public static <T> T copyObject(Object source, Class<T> target) {
+        T temp = null;
+        try {
+            temp = target.newInstance();
+            if (null != source) {
+                org.springframework.beans.BeanUtils.copyProperties(source, temp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
+    /**
      * 单对象基于class创建拷贝
      *
      * @param source 数据来源实体

@@ -26,9 +26,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <id property="ossId" column="oss_id"></id>
             <result property="url" column="url"></result>
         </association>
-
     </resultMap>
 
+
+    <resultMap id="articleResultMap" type="com.zhi.blog.dto.ArticleDTO">
+        <id column="id" property="id"/>
+        <result column="article_cover" property="articleCover"/>
+        <result column="article_title" property="articleTitle"/>
+        <result column="article_content" property="articleContent"/>
+        <result column="type" property="type"/>
+        <result column="original_url" property="originalUrl"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="category_name" property="categoryName"/>
+        <collection property="tagDTOList" ofType="com.zhi.blog.dto.TagDTO">
+            <id column="tag_id" property="id"/>
+            <result column="tag_name" property="tagName"/>
+        </collection>
+    </resultMap>
 
     <resultMap id="articleHomeResultMap" type="com.zhi.blog.dto.ArticleHomeDTO">
         <id column="id" property="id"/>
@@ -87,6 +103,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY
             a.is_top DESC,
             a.id DESC
+    </select>
+
+
+
+
+    <select id="getArticleById" resultMap="articleResultMap">
+        SELECT
+            a.id,
+            o.url as article_cover,
+            article_title,
+            article_content,
+            a.type,
+            a.original_url,
+            a.create_time,
+            a.update_time,
+            a.category_id,
+            category_name,
+            t.id AS tag_id,
+            t.tag_name
+        FROM
+            blog_article a
+                JOIN blog_category c ON a.category_id = c.id
+                JOIN blog_article_tag atg ON a.id = atg.article_id
+                JOIN blog_tag t ON t.id = atg.tag_id
+                JOIN sys_oss o ON a.article_cover = o.oss_id
+        WHERE
+            a.id = #{articleId}
+          AND a.is_delete = 0
+          AND a.status = 1
     </select>
 
 

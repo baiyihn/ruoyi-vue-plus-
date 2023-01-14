@@ -272,7 +272,7 @@ export default {
         });
     },
     listHomeTalks() {
-      this.axios.get("/api/home/talks").then(({ data }) => {
+      this.axios.get("/api/talk/talk/home/talks").then(({ data }) => {
         this.talkList = data.data;
       });
     },

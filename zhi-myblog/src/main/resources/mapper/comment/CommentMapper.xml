@@ -22,5 +22,103 @@
         <result property="updateBy" column="update_by"/>
     </resultMap>
 
+    <select id="listComments" resultType="com.zhi.blog.dto.CommentDTO">
+        SELECT
+        u.nickname,
+        u.avatar,
+        u.web_site,
+        c.user_id,
+        c.id,
+        c.comment_content,
+        c.create_time
+        FROM
+        blog_comment c
+        JOIN sys_user u ON c.user_id = u.user_id
+        <where>
+            <if test="commentVO.topicId != null">
+                topic_id = #{commentVO.topicId}
+            </if>
+            AND type = #{commentVO.type}
+            AND parent_id IS NULL
+        </where>
+        ORDER BY
+        c.id DESC
+        LIMIT #{current},#{size}
+    </select>
+
+
+
+    <select id="listReplies" resultType="com.zhi.blog.dto.ReplyDTO">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        c.user_id,
+        u.nickname,
+        u.avatar,
+        u.web_site,
+        c.reply_user_id,
+        r.nickname AS reply_nickname,
+        r.web_site AS reply_web_site,
+        c.id,
+        c.parent_id,
+        c.comment_content,
+        c.create_time,
+        row_number () over ( PARTITION BY parent_id ORDER BY create_time ASC ) row_num
+        FROM
+        blog_comment c
+        JOIN sys_user u ON c.user_id = u.id
+        JOIN sys_user r ON c.reply_user_id = r.id
+        WHERE
+        c.state = 1
+        AND
+        parent_id IN
+        (
+        <foreach collection="commentIdList" item="commentId" separator=",">
+            #{commentId}
+        </foreach>
+        )
+        ) t
+        WHERE
+        4 > row_num
+    </select>
+
+
+    <select id="listReplyCountByCommentId" resultType="com.zhi.blog.dto.ReplyCountDTO">
+        SELECT
+        parent_id as comment_id,
+        count(1) AS reply_count
+        FROM
+        blog_comment
+        WHERE
+        state = 1
+        AND
+        parent_id IN
+        <foreach open="(" collection="commentIdList" item="commentId" separator="," close=")">
+            #{commentId}
+        </foreach>
+        GROUP BY
+        parent_id
+    </select>
+
+
+    <select id="listCommentCountByTopicIds" resultType="com.zhi.blog.dto.CommentCountDTO">
+        SELECT
+        topic_id as id,
+        COUNT( 1 ) AS comment_count
+        FROM
+        blog_comment
+        WHERE
+        topic_id IN
+        <foreach open="(" collection="topicIdList" item="topicId" separator="," close=")">
+            #{topicId}
+        </foreach>
+        AND
+        parent_id IS NULL
+        GROUP BY
+        topic_id
+    </select>
+
 
 </mapper>

@@ -2,13 +2,21 @@ package com.zhi.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSON;
+import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.dto.CommentCountDTO;
+import com.zhi.blog.dto.TalkDTO;
+import com.zhi.blog.mapper.CommentMapper;
+import com.zhi.blog.service.RedisService;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhi.common.utils.StringUtils;
+import com.zhi.common.utils.blog.HTMLUtils;
+import com.zhi.common.utils.blog.PageUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.zhi.blog.domain.bo.TalkBo;
 import com.zhi.blog.domain.vo.TalkVo;
@@ -16,7 +24,11 @@ import com.zhi.blog.domain.Talk;
 import com.zhi.blog.mapper.TalkMapper;
 import com.zhi.blog.service.ITalkService;
 
+import javax.annotation.Resource;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.zhi.common.constant.blog.RedisPrefixConst.TALK_LIKE_COUNT;
 
 /**
  * 说说管理Service业务层处理
@@ -29,6 +41,67 @@ import java.util.*;
 public class TalkServiceImpl implements ITalkService {
 
     private final TalkMapper baseMapper;
+
+    @Resource
+    private RedisService redisService;
+
+    @Resource
+    private CommentMapper commentMapper;
+
+
+    /**
+     * 博客前端首页说说
+     * @return
+     */
+    @Override
+    public List<String> listHomeTalks() {
+        // 查询最新10条说说
+        return baseMapper.selectList(new LambdaQueryWrapper<Talk>()
+                .orderByDesc(Talk::getIsTop)
+                .orderByDesc(Talk::getId)
+                .last("limit 10"))
+            .stream()
+            .map(item -> item.getContent().length() > 200 ? HTMLUtils.deleteTag(item.getContent().substring(0, 200)) : HTMLUtils.deleteTag(item.getContent()))
+            .collect(Collectors.toList());
+    }
+
+
+    /**
+     * 博客前端说说列表
+     * @return
+     */
+    @Override
+    public PageResult<TalkDTO> listTalks() {
+        // 查询说说总量
+        Long count = baseMapper.selectCount(new LambdaQueryWrapper<>());
+        if (count == 0) {
+            return new PageResult<>();
+        }
+        // 分页查询说说
+        List<TalkDTO> talkDTOList = baseMapper.listTalks(PageUtils.getLimitCurrent(), PageUtils.getSize());
+
+        // 查询说说评论量
+//        List<Integer> talkIdList = talkDTOList.stream()
+//            .map(TalkDTO::getId)
+//            .collect(Collectors.toList());
+//        Map<Integer, Integer> commentCountMap = commentMapper.listCommentCountByTopicIds(talkIdList)
+//            .stream()
+//            .collect(Collectors.toMap(CommentCountDTO::getId, CommentCountDTO::getCommentCount));
+
+
+        // 查询说说点赞量
+//        Map<String, Object> likeCountMap = redisService.hGetAll(TALK_LIKE_COUNT);
+//        talkDTOList.forEach(item -> {
+//            item.setLikeCount((Integer) likeCountMap.get(item.getId().toString()));
+//            item.setCommentCount(commentCountMap.get(item.getId()));
+//            // 转换图片格式
+//            if (Objects.nonNull(item.getImages())) {
+//                item.setImgList(JSON.parseObject(item.getImages(), List.class));
+//            }
+//        });
+        return new PageResult<>(talkDTOList, Integer.parseInt(String.valueOf(count)));
+    }
+
 
     /**
      * 根据id查询说说管理

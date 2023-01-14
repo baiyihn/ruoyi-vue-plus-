@@ -3,6 +3,10 @@ package com.zhi.blog.controller;
 import java.util.List;
 import java.util.Arrays;
 
+import cn.dev33.satoken.annotation.SaIgnore;
+import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.dto.TalkDTO;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.*;
@@ -36,6 +40,34 @@ import com.zhi.common.core.page.TableDataInfo;
 public class TalkController extends BaseController {
 
     private final ITalkService iTalkService;
+
+
+    /**
+     * 查看博客首页说说
+     *
+     * @return {@link R<String>}
+     */
+    @ApiOperation(value = "查看首页说说")
+    @SaIgnore
+    @GetMapping("/home/talks")
+    public R<List<String>> listHomeTalks() {
+        return R.ok(iTalkService.listHomeTalks());
+    }
+
+
+
+
+    /**
+     * 博客前端查看说说列表
+     *
+     * @return {@link R<TalkDTO>}
+     */
+    @SaIgnore
+    @GetMapping("/talks")
+    public R<PageResult<TalkDTO>> listTalks() {
+        return R.ok(iTalkService.listTalks());
+    }
+
 
     /**
      * 查询说说管理列表

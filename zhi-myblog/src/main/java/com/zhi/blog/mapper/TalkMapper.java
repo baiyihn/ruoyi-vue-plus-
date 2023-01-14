@@ -2,6 +2,7 @@ package com.zhi.blog.mapper;
 
 import com.zhi.blog.domain.Talk;
 import com.zhi.blog.domain.vo.TalkVo;
+import com.zhi.blog.dto.TalkDTO;
 import com.zhi.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -15,6 +16,15 @@ import java.util.List;
  * @date 2023-01-13
  */
 public interface TalkMapper extends BaseMapperPlus<TalkMapper, Talk, TalkVo> {
+
+    /**
+     * 获取说说列表
+     *
+     * @param current 页码
+     * @param size    大小
+     * @return {@link List<TalkDTO>}
+     */
+    List<TalkDTO> listTalks(@Param("current") Long current, @Param("size") Long size);
 
 
 

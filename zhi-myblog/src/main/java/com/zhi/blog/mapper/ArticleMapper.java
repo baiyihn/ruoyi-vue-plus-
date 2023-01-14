@@ -3,7 +3,9 @@ package com.zhi.blog.mapper;
 import com.zhi.blog.domain.Article;
 import com.zhi.blog.domain.Tag;
 import com.zhi.blog.domain.vo.ArticleVo;
+import com.zhi.blog.dto.ArticleDTO;
 import com.zhi.blog.dto.ArticleHomeDTO;
+import com.zhi.blog.dto.ArticleRecommendDTO;
 import com.zhi.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -31,6 +33,43 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
      * @return 文章列表
      */
     List<ArticleHomeDTO> listArticles(@Param("current") Long current, @Param("size") Long size);
+
+
+    /**
+     * 查看文章的推荐文章
+     *
+     * @param articleId 文章id
+     * @return 文章列表
+     */
+    @Select(" SELECT\n" +
+        "          id,\n" +
+        "          article_title,\n" +
+        "          article_cover,\n" +
+        "          create_time\n" +
+        "        FROM\n" +
+        "         (\n" +
+        "          SELECT DISTINCT article_id FROM\n" +
+        "                 ( \n" +
+        "\t\t\t\t\t\t\t\t SELECT tag_id FROM blog_article_tag WHERE article_id = #{articleId}) t \n" +
+        "\t\t\t\t\t\t\t\t JOIN blog_article_tag t1 ON t.tag_id = t1.tag_id    \n" +
+        "\t\t\t\t         WHERE\n" +
+        "                 article_id != #{articleId}\t\t\t\t\t\t\t\t \n" +
+        "         ) t2\n" +
+        "           JOIN blog_article a ON t2.article_id = a.id\n" +
+        "           WHERE a.is_delete = 0\n" +
+        "           ORDER BY\n" +
+        "           is_top DESC,id DESC\n" +
+        "           LIMIT 6")
+    List<ArticleRecommendDTO> listRecommendArticles(@Param("articleId") Integer articleId);
+
+
+    /**
+     * 根据id查询文章
+     *
+     * @param articleId 文章id
+     * @return 文章信息
+     */
+    ArticleDTO getArticleById(@Param("articleId") Integer articleId);
 
 
 
@@ -99,6 +138,11 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
     Long getUserIdByName(String username);
 
 
+    /**
+     * 将文章图片转换为url
+     */
+    @Select("select o.url from sys_oss o where o.oss_id = #{url}")
+    String ImgUrl(Long url);
 
 
 

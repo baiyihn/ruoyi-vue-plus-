@@ -6,7 +6,9 @@ import java.util.Arrays;
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.zhi.blog.domain.vo.PageResult;
 import com.zhi.blog.dto.ArchiveDTO;
+import com.zhi.blog.dto.ArticleDTO;
 import com.zhi.blog.dto.ArticleHomeDTO;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
@@ -44,7 +46,7 @@ public class ArticleController extends BaseController {
 
 
     /**
-     * 查看首页文章
+     * 查看博客前端首页文章
      *
      */
     @SaIgnore
@@ -53,6 +55,24 @@ public class ArticleController extends BaseController {
     public R<List<ArticleHomeDTO>> listArticles() {
         return R.ok(iArticleService.listArticles());
     }
+
+
+
+
+    /**
+     * 博客前端根据id查看文章
+     *
+     * @param articleId 文章id
+     * @return {@link R<ArticleDTO>} 文章信息
+     */
+    @SaIgnore
+    @ApiOperation(value = "根据id查看文章")
+    @ApiImplicitParam(name = "articleId", value = "文章id", required = true, dataType = "Integer")
+    @GetMapping("/articles/{articleId}")
+    public R<ArticleDTO> getArticleById(@PathVariable("articleId") Integer articleId) {
+        return R.ok(iArticleService.getArticleById(articleId));
+    }
+
 
 
     /**

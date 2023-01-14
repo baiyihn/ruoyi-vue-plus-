@@ -3,6 +3,11 @@ package com.zhi.blog.controller;
 import java.util.List;
 import java.util.Arrays;
 
+import cn.dev33.satoken.annotation.SaIgnore;
+import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.dto.CommentDTO;
+import com.zhi.blog.dto.vo.CommentVO;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.*;
@@ -36,6 +41,19 @@ import com.zhi.common.core.page.TableDataInfo;
 public class CommentController extends BaseController {
 
     private final ICommentService iCommentService;
+
+
+    /**
+     * 查询博客前台评论
+     * @param commentVO 评论信息
+     */
+    @SaIgnore
+    @ApiOperation(value = "查询评论")
+    @GetMapping("/comments")
+    public R<PageResult<CommentDTO>> listComments(CommentVO commentVO) {
+        return R.ok(iCommentService.listComments(commentVO));
+    }
+
 
     /**
      * 查询评论管理列表
