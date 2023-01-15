@@ -22,17 +22,17 @@ public class ReplyDTO {
     /**
      * 评论id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 父评论id
      */
-    private Integer parentId;
+    private Long parentId;
 
     /**
      * 用户id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 用户昵称
@@ -52,7 +52,7 @@ public class ReplyDTO {
     /**
      * 被回复用户id
      */
-    private Integer replyUserId;
+    private Long replyUserId;
 
     /**
      * 被回复用户昵称

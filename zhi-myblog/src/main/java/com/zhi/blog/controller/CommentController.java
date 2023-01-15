@@ -10,6 +10,7 @@ import com.zhi.blog.dto.vo.CommentVO;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,23 @@ public class CommentController extends BaseController {
     public R<PageResult<CommentDTO>> listComments(CommentVO commentVO) {
         return R.ok(iCommentService.listComments(commentVO));
     }
+
+
+
+    /**
+     * 博客前台添加评论
+     *
+     * @param commentVO 评论信息
+     * @return {@link R<>}
+     */
+    @SaIgnore
+    @ApiOperation(value = "添加评论")
+    @PostMapping("/comments")
+    public R<?> saveComment(@Valid @RequestBody CommentVO commentVO) {
+        iCommentService.saveComment(commentVO);
+        return R.ok();
+    }
+
 
 
     /**

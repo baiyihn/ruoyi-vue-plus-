@@ -3,15 +3,19 @@ package com.zhi.blog.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.zhi.blog.domain.vo.PageResult;
+import com.zhi.blog.domain.vo.WebsiteConfigVO;
 import com.zhi.blog.dto.CommentDTO;
 import com.zhi.blog.dto.ReplyCountDTO;
 import com.zhi.blog.dto.ReplyDTO;
 import com.zhi.blog.dto.vo.CommentVO;
+import com.zhi.blog.service.IBlogInfoService;
+import com.zhi.blog.service.IWebsiteConfigService;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhi.common.utils.StringUtils;
+import com.zhi.common.utils.blog.HTMLUtils;
 import com.zhi.common.utils.blog.PageUtils;
 import com.zhi.system.service.RedisService;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +31,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-import static com.zhi.common.constant.blog.CommonConst.STATE;
+import static com.zhi.common.constant.blog.CommonConst.*;
 import static com.zhi.common.constant.blog.RedisPrefixConst.COMMENT_LIKE_COUNT;
 
 /**
@@ -46,6 +51,12 @@ public class CommentServiceImpl implements ICommentService {
 
     @Resource
     private RedisService redisService;
+
+
+    @Resource
+    private IWebsiteConfigService websiteConfigService;
+
+
 
     /**
      * 查询博客前台评论
@@ -70,18 +81,18 @@ public class CommentServiceImpl implements ICommentService {
         // 查询redis的评论点赞数据
         Map<String, Object> likeCountMap = redisService.hGetAll(COMMENT_LIKE_COUNT);
         // 提取评论id集合
-        List<Integer> commentIdList = commentDTOList.stream()
-            .map(CommentDTO::getId)
+        List<Long> commentIdList = commentDTOList.stream()
+            .map((CommentDTO::getId))
             .collect(Collectors.toList());
         // 根据评论id集合查询回复数据
         List<ReplyDTO> replyDTOList = baseMapper.listReplies(commentIdList);
         // 封装回复点赞量
         replyDTOList.forEach(item -> item.setLikeCount((Integer) likeCountMap.get(item.getId().toString())));
         // 根据评论id分组回复数据
-        Map<Integer, List<ReplyDTO>> replyMap = replyDTOList.stream()
+        Map<Long, List<ReplyDTO>> replyMap = replyDTOList.stream()
             .collect(Collectors.groupingBy(ReplyDTO::getParentId));
         // 根据评论id查询回复量
-        Map<Integer, Integer> replyCountMap = baseMapper.listReplyCountByCommentId(commentIdList)
+        Map<Long, Integer> replyCountMap = baseMapper.listReplyCountByCommentId(commentIdList)
             .stream().collect(Collectors.toMap(ReplyCountDTO::getCommentId, ReplyCountDTO::getReplyCount));
         // 封装评论数据
         commentDTOList.forEach(item -> {
@@ -90,6 +101,34 @@ public class CommentServiceImpl implements ICommentService {
             item.setReplyCount(replyCountMap.get(item.getId()));
         });
         return new PageResult<>(commentDTOList, Integer.parseInt(String.valueOf(commentCount)));
+    }
+
+
+    /**
+     * 博客前台添加评论
+     * @param commentVO 评论对象
+     */
+    @Override
+    public void saveComment(CommentVO commentVO) {
+        // 判断是否需要审核
+        WebsiteConfigVO websiteConfig = websiteConfigService.getWebsiteConfig();
+        Integer isReview = websiteConfig.getIsCommentReview();
+        // 过滤标签
+        commentVO.setCommentContent(HTMLUtils.deleteTag(commentVO.getCommentContent()));
+        Comment comment = Comment.builder()
+            .userId(commentVO.getId())
+            .replyUserId(commentVO.getReplyUserId())
+            .topicId(commentVO.getTopicId())
+            .commentContent(commentVO.getCommentContent())
+            .parentId(commentVO.getParentId())
+            .type(commentVO.getType())
+            .state(isReview == TRUE ? 2 : 1)
+            .build();
+            baseMapper.insert(comment);
+        // 判断是否开启邮箱通知,通知用户
+//        if (websiteConfig.getIsEmailNotice().equals(TRUE)) {
+//            CompletableFuture.runAsync(() -> notice(comment));
+//        }
     }
 
 

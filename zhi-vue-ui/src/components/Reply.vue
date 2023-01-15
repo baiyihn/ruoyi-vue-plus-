@@ -79,7 +79,8 @@ export default {
         type: this.type,
         replyUserId: this.replyUserId,
         parentId: this.parentId,
-        commentContent: this.commentContent
+        commentContent: this.commentContent,
+        id: this.$store.state.userId
       };
       switch (this.type) {
         case 1:
@@ -90,8 +91,8 @@ export default {
           break;
       }
       this.commentContent = "";
-      this.axios.post("/api/comments", comment).then(({ data }) => {
-        if (data.flag) {
+      this.axios.post("/api/comment/comment/comments", comment).then(({ data }) => {
+        if (data.code == 200) {
           this.$emit("reloadReply", this.index);
           this.$toast({ type: "success", message: "回复成功" });
         } else {

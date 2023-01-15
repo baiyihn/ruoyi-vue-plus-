@@ -39,7 +39,7 @@ public interface CommentMapper extends BaseMapperPlus<CommentMapper, Comment, Co
      * @param commentIdList 评论id集合
      * @return 回复集合
      */
-    List<ReplyDTO> listReplies(@Param("commentIdList") List<Integer> commentIdList);
+    List<ReplyDTO> listReplies(@Param("commentIdList") List<Long> commentIdList);
 
     /**
      * 根据评论id查询回复总量
@@ -47,7 +47,7 @@ public interface CommentMapper extends BaseMapperPlus<CommentMapper, Comment, Co
      * @param commentIdList 评论id集合
      * @return 回复数量
      */
-    List<ReplyCountDTO> listReplyCountByCommentId(@Param("commentIdList") List<Integer> commentIdList);
+    List<ReplyCountDTO> listReplyCountByCommentId(@Param("commentIdList") List<Long> commentIdList);
 
 
 

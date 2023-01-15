@@ -24,12 +24,12 @@ public class CommentDTO {
     /**
      * 评论id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 用户id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 用户昵称

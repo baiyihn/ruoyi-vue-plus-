@@ -2,8 +2,7 @@ package com.zhi.blog.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.zhi.common.core.domain.BaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 
 /**
@@ -13,8 +12,11 @@ import lombok.EqualsAndHashCode;
  * @date 2023-01-10
  */
 @Data
+@Builder
 @EqualsAndHashCode(callSuper = true)
 @TableName("blog_comment")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comment extends BaseEntity {
 
     private static final long serialVersionUID=1L;
@@ -22,7 +24,7 @@ public class Comment extends BaseEntity {
     /**
      * 主键
      */
-    @TableId(value = "id")
+    @TableId(value = "id" ,type = IdType.AUTO)
     private Long id;
     /**
      * 评论用户Id
@@ -51,7 +53,7 @@ public class Comment extends BaseEntity {
     /**
      * 评论主题id
      */
-    private Long topicId;
+    private Integer topicId;
     /**
      * 评论ip
      */

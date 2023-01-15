@@ -27,6 +27,14 @@ public interface ICommentService {
      */
     PageResult<CommentDTO> listComments(CommentVO commentVO);
 
+
+    /**
+     * 博客前台添加评论
+     *
+     * @param commentVO 评论对象
+     */
+    void saveComment(CommentVO commentVO);
+
     /**
      * 查询评论管理
      */

@@ -24,15 +24,18 @@ import javax.validation.constraints.NotNull;
 public class CommentVO {
 
     /**
+     * 评论用户id
+     */
+    private Long id;
+
+    /**
      * 回复用户id
      */
-    @ApiModelProperty(name = "replyUserId", value = "回复用户id", dataType = "Integer")
-    private Integer replyUserId;
+    private Long replyUserId;
 
     /**
      * 评论主题id
      */
-    @ApiModelProperty(name = "topicId", value = "主题id", dataType = "Integer")
     private Integer topicId;
 
     /**
@@ -46,7 +49,7 @@ public class CommentVO {
      * 父评论id
      */
     @ApiModelProperty(name = "parentId", value = "评论父id", dataType = "Integer")
-    private Integer parentId;
+    private Long parentId;
 
     /**
      * 类型

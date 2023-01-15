@@ -323,7 +323,9 @@ export default {
       const arr = path.split("/");
       var comment = {
         commentContent: this.commentContent,
-        type: this.type
+        type: this.type,
+        id :this.$store.state.userId
+
       };
       switch (this.type) {
         case 1:
@@ -334,8 +336,8 @@ export default {
           break;
       }
       this.commentContent = "";
-      this.axios.post("/api/comments", comment).then(({ data }) => {
-        if (data.flag) {
+      this.axios.post("/api/comment/comment/comments", comment).then(({ data }) => {
+        if (data.code == 200) {
           // 查询最新评论
           this.current = 1;
           this.listComments();
@@ -359,7 +361,7 @@ export default {
       }
       // 发送请求
       this.axios
-        .post("/api/comments/" + comment.id + "/like")
+        .post("/api/comment/comment/comments" + comment.id + "/like")
         .then(({ data }) => {
           if (data.flag) {
             // 判断是否点赞
@@ -374,7 +376,7 @@ export default {
     },
     reloadReply(index) {
       this.axios
-        .get("/api/comments/" + this.commentList[index].id + "/replies", {
+        .get("/api/comment/comment/comments" + this.commentList[index].id + "/replies", {
           params: {
             current: this.$refs.page[index].current,
             size: 5

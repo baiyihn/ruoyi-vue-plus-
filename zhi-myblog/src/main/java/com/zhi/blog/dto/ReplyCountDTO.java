@@ -21,7 +21,7 @@ public class ReplyCountDTO {
     /**
      * 评论id
      */
-    private Integer commentId;
+    private Long commentId;
 
     /**
      * 回复数量
