@@ -9,16 +9,16 @@
       </div>
       <v-row class="info-wrapper">
         <v-col md="3" cols="12">
-          <button id="pick-avatar">
+          <button id="pick-avatar" @click="uploadAvatar">
             <v-avatar size="140">
               <img :src="this.$store.state.avatar" />
             </v-avatar>
           </button>
-          <avatar-cropper
-            @uploaded="uploadAvatar"
-            trigger="#pick-avatar"
-            upload-url="/api/users/avatar"
-          />
+<!--          <avatar-cropper-->
+<!--            @uploaded="uploadAvatar"-->
+<!--            trigger="#pick-avatar"-->
+<!--            upload-url="/api/users/avatar"-->
+<!--          />-->
         </v-col>
         <v-col md="7" cols="12">
           <v-text-field
@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import AvatarCropper from "vue-avatar-cropper";
+// import AvatarCropper from "vue-avatar-cropper";
 export default {
-  components: { AvatarCropper },
+  // components: { AvatarCropper },
   data: function() {
     return {
       userInfo: {
@@ -89,13 +89,14 @@ export default {
         }
       });
     },
-    uploadAvatar(data) {
-      if (data.flag) {
-        this.$store.commit("updateAvatar", data.data);
-        this.$toast({ type: "success", message: "上传成功" });
-      } else {
-        this.$toast({ type: "error", message: data.message });
-      }
+    uploadAvatar() {
+        this.$toast({ type: "success", message: "🚆✈暂未开放头像修改功能哦❤" });
+      // if (data.flag) {
+      //   this.$store.commit("updateAvatar", data.data);
+      //   this.$toast({ type: "success", message: "上传成功" });
+      // } else {
+      //   this.$toast({ type: "error", message: data.message });
+      // }
     },
     openEmailModel() {
       this.$store.state.emailFlag = true;

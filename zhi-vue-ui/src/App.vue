@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <!-- 导航栏 -->
+      <!-- 导航栏 -->
     <TopNavBar></TopNavBar>
     <!-- 侧边导航栏 -->
     <SideNavBar></SideNavBar>
@@ -66,7 +66,7 @@ export default {
       this.axios.get("/api/blogInfo").then(({ data }) => {
         this.$store.commit("checkBlogInfo", data.data);
       });
-    }
+    },
   },
   computed: {
     blogInfo() {

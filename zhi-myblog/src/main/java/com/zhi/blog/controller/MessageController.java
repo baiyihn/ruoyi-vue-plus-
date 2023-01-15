@@ -5,9 +5,11 @@ import java.util.Arrays;
 
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.zhi.blog.dto.MessageDTO;
+import com.zhi.blog.dto.vo.MessageVO;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,17 @@ import com.zhi.common.core.page.TableDataInfo;
 public class MessageController extends BaseController {
 
     private final IMessageService iMessageService;
+
+    /**
+     * 前台添加留言
+     */
+    @SaIgnore
+    @ApiOperation(value = "添加留言")
+    @PostMapping("/messages")
+    public R<?> saveMessage(@Valid @RequestBody MessageVO messageVO) {
+        iMessageService.saveMessage(messageVO);
+        return R.ok();
+    }
 
     /**
      * 查看前台留言列表

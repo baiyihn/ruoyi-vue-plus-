@@ -2,6 +2,8 @@ package com.zhi.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.zhi.blog.dto.MessageDTO;
+import com.zhi.blog.dto.vo.MessageVO;
+import com.zhi.blog.service.IWebsiteConfigService;
 import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,6 +11,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhi.common.utils.BeanCopyUtils;
 import com.zhi.common.utils.StringUtils;
+import com.zhi.common.utils.blog.IpUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.zhi.blog.domain.bo.MessageBo;
@@ -17,12 +20,13 @@ import com.zhi.blog.domain.Message;
 import com.zhi.blog.mapper.MessageMapper;
 import com.zhi.blog.service.IMessageService;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 import java.util.Collection;
 
-import static com.zhi.common.constant.blog.CommonConst.TRUE;
-import static com.zhi.common.constant.blog.CommonConst.YES;
+import static com.zhi.common.constant.blog.CommonConst.*;
 
 /**
  * 留言管理Service业务层处理
@@ -35,6 +39,31 @@ import static com.zhi.common.constant.blog.CommonConst.YES;
 public class MessageServiceImpl implements IMessageService {
 
     private final MessageMapper baseMapper;
+
+    @Resource
+    private IWebsiteConfigService websiteConfigService;
+
+    @Resource
+    private HttpServletRequest request;
+
+
+    /**
+     * 前台添加留言
+     * @param messageVO
+     */
+    @Override
+    public void saveMessage(MessageVO messageVO) {
+        // 判断是否需要审核
+        Integer isReview = websiteConfigService.getWebsiteConfig().getIsMessageReview();
+        // 获取用户ip
+        String ipAddress = IpUtils.getIpAddress(request);
+        String ipSource = IpUtils.getIpSource(ipAddress);
+        Message message = BeanCopyUtils.copyObject(messageVO, Message.class);
+        message.setIpAddress(ipAddress);
+        message.setIsReview(isReview == TRUE ? YES : NO );
+        message.setIpSource(ipSource);
+        baseMapper.insert(message);
+    }
 
     /**
      * 查看前台留言弹幕

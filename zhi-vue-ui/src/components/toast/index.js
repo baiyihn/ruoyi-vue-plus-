@@ -16,7 +16,7 @@ Toast.install = function(Vue) {
 
   // 通过Vue的原型注册一个方法
   // 让所有实例共享这个方法 <br>    // 其中的duration是持续时间
-  Vue.prototype.$toast = (options, duration = 2000) => {
+  Vue.prototype.$toast = (options, duration = 3000) => {
     instance.message = options.message;
     instance.type = options.type;
     instance.show = true;

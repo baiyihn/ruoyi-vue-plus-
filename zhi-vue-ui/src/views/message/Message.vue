@@ -74,7 +74,7 @@ export default {
       };
       this.barrageList.push(message);
       this.messageContent = "";
-      this.axios.post("/api/messages", message);
+      this.axios.post("/api/message/message/messages", message);
     },
     listMessage() {
       this.axios.get("/api/message/message/messages").then(({ data }) => {

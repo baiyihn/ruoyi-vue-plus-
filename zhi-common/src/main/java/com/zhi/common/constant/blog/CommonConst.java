@@ -21,6 +21,12 @@ public class CommonConst {
      */
     public static final String YES = "Y";
 
+
+    /**
+     * 系统否
+     */
+    public static final String NO = "N";
+
     /**
      * 否
      */

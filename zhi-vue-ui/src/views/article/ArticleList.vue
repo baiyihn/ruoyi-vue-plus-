@@ -6,6 +6,7 @@
     </div>
     <div class="article-list-wrapper">
       <v-row>
+
         <v-col md="4" cols="12" v-for="item of articleList" :key="item.id">
           <!-- 文章 -->
           <v-card class="animated zoomIn article-item-card">
@@ -55,6 +56,8 @@
             </div>
           </v-card>
         </v-col>
+
+
       </v-row>
       <!-- 无限加载 -->
       <infinite-loading @infinite="infiniteHandler">
@@ -68,7 +71,6 @@
 <script>
 export default {
   created() {
-      console.log("这里是ArticalList999999999999999999999999")
     const path = this.$route.path;
     if (path.indexOf("/categories") != -1) {
       this.title = "分类";
