@@ -33,10 +33,10 @@
               <i class="iconfont el-icon-mymima" /> 私密
             </span>
           </div>
+
           <!-- 说说信息 -->
           <div class="talk-content" v-html="item.content" />
           <!-- 图片列表 -->
-
           <el-row :gutter="4" class="talk-images" v-if="item.imgList">
             <el-col
               :md="8"

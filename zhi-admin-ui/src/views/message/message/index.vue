@@ -121,7 +121,7 @@
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.isReview"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column v-if="this.websiteConfigForm.isCommentReview == 1" label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button v-if="scope.row.isReview=='Y'?false:true" type="success" size="small" @click="audit(scope.row)">通过</el-button>
           <el-button v-if="scope.row.isReview=='Y'?true:false" type="danger" size="small" @click="Unaudit(scope.row)">驳回</el-button>
@@ -186,12 +186,15 @@
 <script>
 import {listMessage, getMessage, delMessage, addMessage, updateMessage, auditMessage} from "@/api/message/message";
 import {auditComment} from "@/api/comment/comment";
+import {getWebsiteConfig} from "@/api/website/website";
 
 export default {
   name: "Message",
   dicts: ['sys_yes_no'],
   data() {
     return {
+      //网站配置信息
+      websiteConfigForm:{},
       // 按钮loading
       buttonLoading: false,
       // 遮罩层
@@ -259,6 +262,7 @@ export default {
   },
   created() {
     this.getList();
+    this. getWebsiteConfig();
   },
   methods: {
     /** 查询留言管理列表 */
@@ -405,6 +409,12 @@ export default {
       }).finally(() => {
         this.loading = false;
       });
+    },
+    //获取网站配置信息
+    getWebsiteConfig() {
+      getWebsiteConfig().then(response=>{
+        this.websiteConfigForm = response.data;
+      })
     },
 
 

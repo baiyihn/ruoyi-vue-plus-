@@ -67,7 +67,14 @@
     <el-table v-loading="loading" :data="commentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="评论用户" align="center" prop="nickname" />
-      <el-table-column label="评论内容" align="center" prop="commentContent" />
+
+      <el-table-column label="评论内容" align="center" prop="commentContent"  >
+        <template slot-scope="scope">
+          <div class="talk-content" v-html="scope.row.commentContent" />
+        </template>
+
+      </el-table-column>>
+
       <el-table-column label="回复用户" align="center" prop="replyUserName" >
         <template slot-scope="scope">
           <span>{{scope.row.replyUserName== null ? '无' :scope.row.replyUserName}}</span>
@@ -88,10 +95,10 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="审核" align="center" class-name="small-padding fixed-width">
+      <el-table-column v-if="this.websiteConfigForm.isCommentReview == 1" label="审核" align="center" class-name="small-padding fixed-width">
 
         <template slot-scope="scope">
-          <el-button v-if="scope.row.state==3?true:false" type="success" size="small" @click="audit(scope.row)">通过</el-button>
+          <el-button v-if="scope.row.state != 1 ?true:false" type="success" size="small" @click="audit(scope.row)">通过</el-button>
           <el-button v-if="scope.row.state==3?false:true" type="danger" size="small" @click="Unaudit(scope.row)">驳回</el-button>
 <!--          <el-button-->
 <!--            size="mini"-->
@@ -182,13 +189,15 @@
 
 <script>
 import {auditComment, listComment, getComment, delComment, addComment, updateComment } from "@/api/comment/comment";
-import {delArticle} from "@/api/article/article";
+import {getWebsiteConfig} from "@/api/website/website";
 
 export default {
   name: "Comment",
   dicts: ['commen_type', 'comment_status'],
   data() {
     return {
+      //网站配置信息
+      websiteConfigForm:{},
       // 按钮loading
       buttonLoading: false,
       // 遮罩层
@@ -274,6 +283,8 @@ export default {
   },
   created() {
     this.getList();
+    this.getWebsiteConfig();
+
   },
   methods: {
     /** 查询评论管理列表 */
@@ -283,6 +294,9 @@ export default {
         this.commentList = response.rows;
         this.total = response.total;
         this.loading = false;
+
+
+
       });
     },
     // 取消按钮
@@ -423,6 +437,12 @@ export default {
       }).finally(() => {
         this.loading = false;
       });
+    },
+    //获取网站配置信息
+    getWebsiteConfig() {
+      getWebsiteConfig().then(response=>{
+        this.websiteConfigForm = response.data;
+      })
     },
   }
 };
