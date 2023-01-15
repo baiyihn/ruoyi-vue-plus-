@@ -6,6 +6,7 @@ import com.zhi.common.constant.UserConstants;
 import com.zhi.common.core.domain.BaseEntity;
 import com.zhi.common.enums.SensitiveStrategy;
 import com.zhi.common.xss.Xss;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -118,6 +119,16 @@ public class SysUser extends BaseEntity {
      * 备注
      */
     private String remark;
+
+    /**
+     * 个人简介
+     */
+    private String intro;
+
+    /**
+     * 个人网站
+     */
+    private String webSite;
 
     /**
      * 部门对象

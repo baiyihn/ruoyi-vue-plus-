@@ -1,6 +1,7 @@
 package com.zhi.web.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.secure.BCrypt;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.tree.Tree;
@@ -23,6 +24,7 @@ import com.zhi.common.utils.StringUtils;
 import com.zhi.common.utils.poi.ExcelUtil;
 import com.zhi.system.domain.vo.SysUserExportVo;
 import com.zhi.system.domain.vo.SysUserImportVo;
+import com.zhi.system.domain.vo.UserInfoVO;
 import com.zhi.system.listener.SysUserImportListener;
 import com.zhi.system.service.ISysDeptService;
 import com.zhi.system.service.ISysPostService;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +58,20 @@ public class SysUserController extends BaseController {
     private final ISysRoleService roleService;
     private final ISysPostService postService;
     private final ISysDeptService deptService;
+
+
+    /**
+     * 博客前台用户修改信息
+     */
+    @SaIgnore
+    @PutMapping("/users/info")
+    public R BlogupdateUserInfo(@Valid @RequestBody UserInfoVO userInfoVO){
+        userService.updateBlogUserInfo(userInfoVO);
+        return R.ok();
+    }
+
+
+
 
     /**
      * 获取用户列表

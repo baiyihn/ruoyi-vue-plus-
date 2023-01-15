@@ -69,14 +69,19 @@ export default {
         nickname: this.$store.state.nickname,
         intro: this.$store.state.intro,
         webSite: this.$store.state.webSite,
-        loginType: this.$store.state.loginType
+        loginType: this.$store.state.loginType,
+        id : this.$store.state.userId
+
       }
     };
   },
   methods: {
     updataUserInfo() {
-      this.axios.put("/api/users/info", this.userInfo).then(({ data }) => {
-        if (data.flag) {
+        console.log(this.$store.state.userId+"456465");
+        console.log(this.$store.state.nickname);
+
+        this.axios.put("/api/system/user/users/info", this.userInfo).then(({ data }) => {
+        if (data.code == 200) {
           this.$store.commit("updateUserInfo", this.userInfo);
           this.$toast({ type: "success", message: "修改成功" });
         } else {

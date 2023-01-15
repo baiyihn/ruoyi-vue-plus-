@@ -23,6 +23,7 @@ import com.zhi.common.utils.StringUtils;
 import com.zhi.system.domain.SysPost;
 import com.zhi.system.domain.SysUserPost;
 import com.zhi.system.domain.SysUserRole;
+import com.zhi.system.domain.vo.UserInfoVO;
 import com.zhi.system.mapper.*;
 import com.zhi.system.service.ISysUserService;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,19 @@ public class SysUserServiceImpl implements ISysUserService {
     private final SysPostMapper postMapper;
     private final SysUserRoleMapper userRoleMapper;
     private final SysUserPostMapper userPostMapper;
+
+
+
+    @Override
+    public void updateBlogUserInfo(UserInfoVO userInfoVO) {
+        // 封装用户信息
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(userInfoVO.getId());
+        sysUser.setNickName(userInfoVO.getNickname());
+        sysUser.setIntro(userInfoVO.getIntro());
+        sysUser.setWebSite(userInfoVO.getWebSite());
+        baseMapper.updateById(sysUser);
+    }
 
     @Override
     public TableDataInfo<SysUser> selectPageUserList(SysUser user, PageQuery pageQuery) {

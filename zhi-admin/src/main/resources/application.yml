@@ -94,6 +94,33 @@ spring:
     deserialization:
       # 允许对象忽略json中不存在的属性
       fail_on_unknown_properties: false
+  # mq配置
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3 #最大重试次数
+          initial-interval: 3000 #重试间隔时间（单位毫秒）
+  # 邮箱配置
+  mail:
+    host: smtp.qq.com
+    username: 2831826106@qq.com
+    password: fhodvdcimghpdfie
+    default-encoding: UTF-8
+    port: 587
+    properties:
+      mail:
+      smtp:
+      auth: true
+      socketFactory:
+      class: javax.net.ssl.SSLSocketFactory
+
+
 
 # Sa-Token配置
 sa-token:
@@ -232,4 +259,8 @@ lock4j:
   acquire-timeout: 3000
   # 分布式锁的超时时间，默认为 30 秒
   expire: 30000
+
+
+
+
 

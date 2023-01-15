@@ -36,6 +36,8 @@
         <alibaba-ttl.version>2.14.2</alibaba-ttl.version>
         <xxl-job.version>2.3.1</xxl-job.version>
         <lombok.version>1.18.24</lombok.version>
+        <rabbitmq.version>2.4.1</rabbitmq.version>
+        <mail.version>2.4.1</mail.version>
 
         <!-- 统一 guava 版本 解决隐式漏洞问题 -->
         <guava.version>31.1-jre</guava.version>
@@ -272,6 +274,20 @@
                 <groupId>com.zhi</groupId>
                 <artifactId>zhi-sms</artifactId>
                 <version>${zhi-vue-plus.version}</version>
+            </dependency>
+
+            <!-- RabbitMq模块 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+                <version>${rabbitmq.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+                <version>${mail.version}</version>
             </dependency>
 
             <!-- demo模块 -->

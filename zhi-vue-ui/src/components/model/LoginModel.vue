@@ -134,7 +134,7 @@ export default {
                             that.$store.commit("closeModel");
                             that.$toast({ type: "success", message: "登录成功" });
                         } else {
-                            that.$toast({ type: "error", message: data.message });
+                            that.$toast({ type: "error", message: data.msg });
                         }
                     });
                 }

@@ -8,11 +8,19 @@
         <!-- 用户名 -->
         <v-text-field
           v-model="username"
-          label="邮箱号"
-          placeholder="请输入您的邮箱号"
+          label="用户名"
+          placeholder="请输入您的用户名"
           clearable
           @keyup.enter="register"
         />
+          <!-- 邮箱号 -->
+          <v-text-field
+              v-model="email"
+              label="邮箱号"
+              placeholder="请输入您的邮箱号"
+              clearable
+              @keyup.enter="register"
+          />
         <!-- 验证码 -->
         <div class="mt-7 send-wrapper">
           <v-text-field
@@ -63,6 +71,7 @@ export default {
       username: "",
       code: "",
       password: "",
+      email:"",
       flag: true,
       codeMsg: "发送",
       time: 60,
@@ -85,13 +94,13 @@ export default {
           that.countDown();
           that.axios
             .get("/api/users/code", {
-              params: { username: that.username }
+              params: { email: that.email }
             })
             .then(({ data }) => {
-              if (data.flag) {
+              if (data.code == 200) {
                 that.$toast({ type: "success", message: "发送成功" });
               } else {
-                that.$toast({ type: "error", message: data.message });
+                that.$toast({ type: "error", message: data.msg });
               }
             });
         }
@@ -114,7 +123,7 @@ export default {
     },
     register() {
       var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-      if (!reg.test(this.username)) {
+      if (!reg.test(this.email)) {
         this.$toast({ type: "error", message: "邮箱格式不正确" });
         return false;
       }
@@ -129,14 +138,15 @@ export default {
       const user = {
         username: this.username,
         password: this.password,
+        email: this.email,
         code: this.code
       };
-      this.axios.post("/api/register", user).then(({ data }) => {
-        if (data.flag) {
+      this.axios.post("/api/blog/register", user).then(({ data }) => {
+        if (data.code == 200) {
           let param = new URLSearchParams();
           param.append("username", user.username);
           param.append("password", user.password);
-          this.axios.post("/api/login", param).then(({ data }) => {
+          this.axios.post("/api/blog/login", param).then(({ data }) => {
             this.username = "";
             this.password = "";
             this.$store.commit("login", data.data);
@@ -167,7 +177,7 @@ export default {
     }
   },
   watch: {
-    username(value) {
+    email(value) {
       var reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
       if (reg.test(value)) {
         this.flag = false;

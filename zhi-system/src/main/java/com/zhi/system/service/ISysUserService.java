@@ -3,6 +3,7 @@ package com.zhi.system.service;
 import com.zhi.common.core.domain.PageQuery;
 import com.zhi.common.core.domain.entity.SysUser;
 import com.zhi.common.core.page.TableDataInfo;
+import com.zhi.system.domain.vo.UserInfoVO;
 
 import java.util.List;
 
@@ -12,6 +13,13 @@ import java.util.List;
  * @author Lion Li
  */
 public interface ISysUserService {
+
+
+    /**
+     * 博客前台修改用户信息
+     * @param userInfoVO
+     */
+     void updateBlogUserInfo(UserInfoVO userInfoVO);
 
 
     TableDataInfo<SysUser> selectPageUserList(SysUser user, PageQuery pageQuery);

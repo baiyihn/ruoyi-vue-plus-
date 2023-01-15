@@ -8,6 +8,17 @@ package com.zhi.common.constant;
 public interface Constants {
 
     /**
+     * 默认sys系统用户注册
+     */
+    String TYPE = "sys_user";
+
+
+    /**
+     * 默认注册用户头像
+     */
+    String AVATAR = "https://s1.ax1x.com/2023/01/15/pSQf91A.jpg";
+
+    /**
      * UTF-8 字符集
      */
     String UTF8 = "UTF-8";

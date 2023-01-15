@@ -1,7 +1,7 @@
-package com.zhi.blog.service.impl;
+package com.zhi.system.service.impl;
 
 
-import com.zhi.blog.service.RedisService;
+import com.zhi.system.service.RedisService;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResults;

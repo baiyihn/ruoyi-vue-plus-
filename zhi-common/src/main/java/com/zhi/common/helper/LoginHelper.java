@@ -5,6 +5,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.zhi.common.constant.UserConstants;
+import com.zhi.common.core.domain.model.BlogLoginUser;
 import com.zhi.common.core.domain.model.LoginUser;
 import com.zhi.common.enums.DeviceType;
 import com.zhi.common.enums.UserType;
@@ -31,6 +32,8 @@ public class LoginHelper {
     public static final String JOIN_CODE = ":";
     public static final String LOGIN_USER_KEY = "loginUser";
 
+    public static final String BLOG_LOGIN_USER_KEY = "blogLoginUser";
+
     /**
      * 登录系统
      *
@@ -54,12 +57,16 @@ public class LoginHelper {
         setLoginUser(loginUser);
     }
 
+
+
+
     /**
      * 设置用户数据(多级缓存)
      */
     public static void setLoginUser(LoginUser loginUser) {
         StpUtil.getTokenSession().set(LOGIN_USER_KEY, loginUser);
     }
+
 
     /**
      * 获取用户(多级缓存)

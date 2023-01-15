@@ -31,7 +31,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -87,9 +89,12 @@ public class SysLoginService {
      * 前台登录验证
      */
     public BlogLoginUser bloglogin(String username,String password){
+        HttpServletRequest request = ServletUtils.getRequest();
         SysUser user = loadUserByUsername(username);
         checkLogin(LoginType.PASSWORD, username, () -> !BCrypt.checkpw(password, user.getPassword()));
         BlogLoginUser blogLoginUser = buildBlogLoginUser(user);
+        asyncService.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
+        recordLoginInfo(user.getUserId(), username);
         return blogLoginUser;
 
     }
