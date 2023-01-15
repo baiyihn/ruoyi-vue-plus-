@@ -7,8 +7,10 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.zhi.common.constant.CacheConstants;
 import com.zhi.common.constant.Constants;
+import com.zhi.common.core.domain.R;
 import com.zhi.common.core.domain.dto.RoleDTO;
 import com.zhi.common.core.domain.entity.SysUser;
+import com.zhi.common.core.domain.model.BlogLoginUser;
 import com.zhi.common.core.domain.model.LoginUser;
 import com.zhi.common.core.domain.model.XcxLoginUser;
 import com.zhi.common.core.service.LogininforService;
@@ -79,6 +81,17 @@ public class SysLoginService {
         asyncService.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
         recordLoginInfo(user.getUserId(), username);
         return StpUtil.getTokenValue();
+    }
+
+    /**
+     * 前台登录验证
+     */
+    public BlogLoginUser bloglogin(String username,String password){
+        SysUser user = loadUserByUsername(username);
+        checkLogin(LoginType.PASSWORD, username, () -> !BCrypt.checkpw(password, user.getPassword()));
+        BlogLoginUser blogLoginUser = buildBlogLoginUser(user);
+        return blogLoginUser;
+
     }
 
     public String smsLogin(String phonenumber, String smsCode) {
@@ -227,6 +240,21 @@ public class SysLoginService {
         List<RoleDTO> roles = BeanUtil.copyToList(user.getRoles(), RoleDTO.class);
         loginUser.setRoles(roles);
         return loginUser;
+    }
+
+    /**
+     * 构建前台登录用户
+     */
+    private BlogLoginUser buildBlogLoginUser(SysUser user) {
+        BlogLoginUser blogLoginUser = new BlogLoginUser();
+        blogLoginUser.setId(user.getUserId());
+        blogLoginUser.setEmail(user.getEmail());
+        blogLoginUser.setAvatar(user.getAvatar());
+        blogLoginUser.setNickname(user.getNickName());
+        blogLoginUser.setIpAddress(user.getLoginIp());
+        blogLoginUser.setUsername(user.getUserName());
+        return blogLoginUser;
+
     }
 
     /**

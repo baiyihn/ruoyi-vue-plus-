@@ -41,6 +41,8 @@ public class SysLoginController {
     private final ISysUserService userService;
     private final SysPermissionService permissionService;
 
+
+
     /**
      * 登录方法
      *
@@ -56,6 +58,15 @@ public class SysLoginController {
             loginBody.getUuid());
         ajax.put(Constants.TOKEN, token);
         return R.ok(ajax);
+    }
+
+    /**
+     * 前台博客登录
+     */
+    @SaIgnore
+    @PostMapping("/blog/login")
+    public R blogLogin(String username,String password){
+        return R.ok(loginService.bloglogin(username,password));
     }
 
     /**
@@ -98,6 +109,15 @@ public class SysLoginController {
     public R<Void> logout() {
         loginService.logout();
         return R.ok("退出成功");
+    }
+
+    /**
+     * 博客前台退出登录
+     */
+    @SaIgnore
+    @GetMapping("/blogLogout")
+    public R blogLogout(){
+        return R.ok("推出成功");
     }
 
     /**

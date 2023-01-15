@@ -158,8 +158,8 @@ export default {
       if (this.$route.path == "/user") {
         this.$router.go(-1);
       }
-      this.axios.get("/api/logout").then(({ data }) => {
-        if (data.flag) {
+      this.axios.get("/api/blogLogout").then(({ data }) => {
+        if (data.code == 200) {
           this.$store.commit("logout");
           this.$toast({ type: "success", message: "注销成功" });
         } else {
