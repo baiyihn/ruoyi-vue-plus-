@@ -1,20 +1,12 @@
-## 平台简介
-[![码云Gitee](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/badge/star.svg?theme=blue)](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus)
-[![GitHub](https://img.shields.io/github/stars/JavaLionLi/RuoYi-Vue-Plus.svg?style=social&label=Stars)](https://github.com/JavaLionLi/RuoYi-Vue-Plus)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/blob/master/LICENSE)
-[![使用IntelliJ IDEA开发维护](https://img.shields.io/badge/IntelliJ%20IDEA-提供支持-blue.svg)](https://www.jetbrains.com/?from=RuoYi-Vue-Plus)
-<br>
-[![RuoYi-Vue-Plus](https://img.shields.io/badge/RuoYi_Vue_Plus-4.4.0-success.svg)](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.7-blue.svg)]()
-[![JDK-8+](https://img.shields.io/badge/JDK-8-green.svg)]()
-[![JDK-11](https://img.shields.io/badge/JDK-11-green.svg)]()
+## 博客简介
 
-> RuoYi-Vue-Plus 是重写 RuoYi-Vue 针对 `分布式集群` 场景全方位升级(不兼容原框架)
 
-> 项目代码、文档 均开源免费可商用 遵循开源协议在项目中保留开源协议文件即可<br>
-活到老写到老 为兴趣而开源 为学习而开源 为让大家真正可以学到技术而开源
+> 使用RuoYi-Vue-Plus 作为博客的后端框架
 
-> 系统演示: [传送门](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=4836388&doc_id=1469725)
+> 项目代码、文档 均开源免费遵循开源协议在项目中保留开源协议文件即可<br>
+
+
+> 系统演示:哈哈没有钱买服务器~等后续哦，下面也有博客图片
 
 | 功能介绍     | 使用技术                | 文档地址                                                                                              | 特性注意事项                     |
 |----------|---------------------|---------------------------------------------------------------------------------------------------|----------------------------|
@@ -55,108 +47,55 @@
 | 部署方式     | Docker              | [Docker文档](https://docs.docker.com/)                                                              | 容器编排 一键部署业务集群              |
 | 国际化      | SpringMessage       | [SpringMVC文档](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc)   | Spring标准国际化方案              |
 
-## 参考文档
 
-使用框架前请仔细阅读文档重点注意事项
-<br>
->[初始化项目 必看](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=4164117&doc_id=1469725)
->>[https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=4164117&doc_id=1469725](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=4164117&doc_id=1469725)
->
->[专栏与视频 入门必看](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=5473272&doc_id=1469725)
->>[https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=5473272&doc_id=1469725](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=5473272&doc_id=1469725)
->
->[部署项目 必看](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=4219382&doc_id=1469725)
->>[https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=4219382&doc_id=1469725](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=4219382&doc_id=1469725)
-> 
->[参考文档 Wiki](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages)
->>[https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages)
 
-## 软件架构图
-
-![Plus部署架构图](https://images.gitee.com/uploads/images/2021/1112/202137_673ac5d2_1766278.png "Plus部署架构图.png")
-## 贡献代码
-
-欢迎各路英雄豪杰 `PR` 代码 请提交到 `dev` 开发分支 统一测试发版
-
-框架定位为 `通用后台管理系统(分布式集群强化)` 原则上不接受业务 `PR`
-
-### 其他
-
-* 同步升级 RuoYi-Vue
-* GitHub 地址 [RuoYi-Vue-Plus-github](https://github.com/JavaLionLi/RuoYi-Vue-Plus)
-* 单模块 分支 [RuoYi-Vue-Plus-fast](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/tree/fast/)
-* 微服务 分支 [RuoYi-Cloud-Plus](https://gitee.com/JavaLionLi/RuoYi-Cloud-Plus)
-* 用户扩展项目 [扩展项目列表](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages?sort_id=4478302&doc_id=1469725)
 
 ## 加群与捐献
->[加群与捐献](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/加群与捐献?sort_id=4104598)
->>[https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/加群与捐献?sort_id=4104598](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/加群与捐献?sort_id=4104598)
+https://s1.ax1x.com/2023/01/16/pSlsT0g.jpg
 
 ## 捐献作者
-作者为兼职做开源,平时还需要工作,如果帮到了您可以请作者吃个盒饭  
-<img src="https://images.gitee.com/uploads/images/2022/0218/213734_b1b8197f_1766278.jpeg" width="300px" height="450px" />
-<img src="https://images.gitee.com/uploads/images/2021/0525/101713_3d18b119_1766278.jpeg" width="300px" height="450px" />
+开源博主创作不易！
 
-## 业务功能
+https://s1.ax1x.com/2023/01/16/pSlsj10.jpg
+https://s1.ax1x.com/2023/01/16/pSlsXpq.jpg
 
-| 功能 | 介绍 |
-|---|---|
-| 用户管理 | 用户是系统操作者，该功能主要完成系统用户配置。 |
-| 部门管理 | 配置系统组织机构（公司、部门、小组），树结构展现支持数据权限。 |
-| 岗位管理 | 配置系统用户所属担任职务。 |
-| 菜单管理 | 配置系统菜单，操作权限，按钮权限标识等。 |
-| 角色管理 | 角色菜单权限分配、设置角色按机构进行数据范围权限划分。 |
-| 字典管理 | 对系统中经常使用的一些较为固定的数据进行维护。 |
-| 参数管理 | 对系统动态配置常用参数。 |
-| 通知公告 | 系统通知公告信息发布维护。 |
-| 操作日志 | 系统正常操作日志记录和查询；系统异常信息日志记录和查询。 |
-| 登录日志 | 系统登录日志记录查询包含登录异常。 |
-| 文件管理 | 系统文件上传、下载等管理。 |
-| 定时任务 | 在线（添加、修改、删除)任务调度包含执行结果日志。 |
-| 代码生成 | 前后端代码的生成（java、html、xml、sql）支持CRUD下载 。 |
-| 系统接口 | 根据业务代码自动生成相关的api接口文档。 |
-| 服务监控 | 监视集群系统CPU、内存、磁盘、堆栈、在线日志、Spring相关配置等。 |
-| 缓存监控 | 对系统的缓存信息查询，命令统计等。 |
-| 在线构建器 | 拖动表单元素生成相应的HTML代码。 |
-| 连接池监视 | 监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。 |
-| 使用案例 | 系统的一些功能案例 |
 
 ## 演示图例
 
 <table border="1" cellpadding="1" cellspacing="1" style="width:500px">
     <tbody>
         <tr>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-972235bcbe3518dedd351ff0e2ee7d1031c.png" width="1920" /></td>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-5e0097702fa91e2e36391de8127676a7fa1.png" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/50ebedf1b436434b92a6c77b142c758d.jpeg" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/b80d5455ec054708a19495dae1043e22.jpeg" width="1920" /></td>
         </tr>
         <tr>
             <td>
-            <p><img src="https://oscimg.oschina.net/oscnet/up-e56e3828f48cd9886d88731766f06d5f3c1.png" width="1920" /></p>
+            <p><img src="https://img-blog.csdnimg.cn/cc8e9143373e48c8a194d2212a9ab074.jpeg" width="1920" /></p>
             </td>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-0715990ea1a9f254ec2138fcd063c1f556a.png" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/ab6c4ee828ce41b8bce1da4cb27967d1.jpeg" width="1920" /></td>
         </tr>
         <tr>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-eaf5417ccf921bb64abb959e3d8e290467f.png" width="1920" /></td>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-fc285cf33095ebf8318de6999af0f473861.png" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/fa5c4f57ccfa41cea8f5ecbe904a0794.jpeg" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/7d20cfbaf9a44cef8af698fcd1bbe87c.jpeg" width="1920" /></td>
         </tr>
         <tr>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-60c83fd8bd61c29df6dbf47c88355e9c272.png" width="1920" /></td>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-7f731948c8b73c7d90f67f9e1c7a534d5c3.png" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/42e59e2afc154f3791020244ec063228.jpeg" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/b3965e9072944422a1a0613aa6102ac6.png" width="1920" /></td>
         </tr>
         <tr>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-e4de89b5e2d20c52d3c3a47f9eb88eb8526.png" width="1920" /></td>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-8791d823a508eb90e67c604f36f57491a67.png" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/6ae67995ba81407e9c8062f0b8457b2d.png" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/b4cc03e1c76749cfaff51543a57641b4.png" width="1920" /></td>
         </tr>
         <tr>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-4589afd99982ead331785299b894174feb6.png" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/b4cc03e1c76749cfaff51543a57641b4.png" width="1920" /></td>
             <td><img src="https://oscimg.oschina.net/oscnet/up-8ea177cdacaea20995daf2f596b15232561.png" width="1920" /></td>
         </tr>
         <tr>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-32d1d04c55c11f74c9129fbbc58399728c4.png" width="1920" /></td>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-04fa118f7631b7ae6fd72299ca0a1430a63.png" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/b4cc03e1c76749cfaff51543a57641b4.png" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/0c16fd70c8794ec680c01cdd1649dcd8.jpeg" width="1920" /></td>
         </tr>
         <tr>
-            <td><img src="https://oscimg.oschina.net/oscnet/up-fe7e85b65827802bfaadf3acd42568b58c7.png" width="1920" /></td>
+            <td><img src="https://img-blog.csdnimg.cn/b9aa2b270a88450db454dcf53983f746.png" width="1920" /></td>
             <td><img src="https://oscimg.oschina.net/oscnet/up-eff2b02a54f8188022d8498cfe6af6fcc06.png" width="1920" /></td>
         </tr>
     </tbody>
