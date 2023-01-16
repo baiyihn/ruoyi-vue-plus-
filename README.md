@@ -51,14 +51,14 @@
 
 
 ## 加群与捐献
-https://s1.ax1x.com/2023/01/16/pSlsT0g.jpg
+<img src="https://s1.ax1x.com/2023/01/16/pSlsT0g.jpg"  width = "200" height = "350">
 
 ## 捐献作者
 开源博主创作不易！
-
-https://s1.ax1x.com/2023/01/16/pSlsj10.jpg
-https://s1.ax1x.com/2023/01/16/pSlsXpq.jpg
-
+<tr>
+<td><img src="https://s1.ax1x.com/2023/01/16/pSlsj10.jpg"  width = "250" height = "300"></td>
+<td><img src="https://s1.ax1x.com/2023/01/16/pSlsXpq.jpg"  width = "300" height = "320"></td>
+        </tr>
 
 ## 演示图例
 
