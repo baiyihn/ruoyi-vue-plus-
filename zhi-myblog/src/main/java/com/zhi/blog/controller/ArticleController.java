@@ -10,6 +10,7 @@ import com.zhi.blog.dto.ArticleDTO;
 import com.zhi.blog.dto.ArticleHomeDTO;
 import com.zhi.blog.dto.ArticlePreviewListDTO;
 import com.zhi.blog.dto.vo.ConditionVO;
+import com.zhi.blog.dto.vo.LikeVO;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,21 @@ import com.zhi.common.core.page.TableDataInfo;
 public class ArticleController extends BaseController {
 
     private final IArticleService iArticleService;
+
+
+    /**
+     * 点赞文章
+     *
+     * @return {@link R<>}
+     */
+    @SaIgnore
+    @ApiOperation(value = "点赞文章")
+    @PostMapping("/articles/like")
+    public R<?> saveArticleLike(@RequestBody LikeVO likeVO) {
+        System.out.println(likeVO.getUserid());
+        iArticleService.saveArticleLike(likeVO.getArticleId(),likeVO.getUserid());
+        return R.ok();
+    }
 
 
     /**
@@ -93,7 +109,7 @@ public class ArticleController extends BaseController {
      * 根据条件查询文章
      *
      * @param condition 条件
-     * @return {@link Result<ArticlePreviewListDTO>} 文章列表
+     * @return {@link R<ArticlePreviewListDTO>} 文章列表
      */
     @SaIgnore
     @ApiOperation(value = "根据条件查询文章")

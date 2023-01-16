@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">RuoYi-Vue-Plus后台管理系统</h3>
+      <h3 class="title">Water-zhi博客系统</h3>
       <el-form-item prop="username">
         <el-input
           v-model="loginForm.username"
@@ -56,7 +56,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2018-2022 ruoyi.vip All Rights Reserved.</span>
+      <span>Copyright © 2023 1.15</span>
     </div>
   </div>
 </template>
@@ -173,6 +173,7 @@ export default {
 .login-form {
   border-radius: 6px;
   background: #ffffff;
+  opacity:0.85;
   width: 400px;
   padding: 25px 25px 5px 25px;
   .el-input {

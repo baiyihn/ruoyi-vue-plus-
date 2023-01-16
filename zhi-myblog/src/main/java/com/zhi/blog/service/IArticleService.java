@@ -1,6 +1,5 @@
 package com.zhi.blog.service;
 
-import com.zhi.blog.domain.Article;
 import com.zhi.blog.domain.vo.ArticleVo;
 import com.zhi.blog.domain.bo.ArticleBo;
 import com.zhi.blog.domain.vo.PageResult;
@@ -22,6 +21,14 @@ import java.util.List;
  * @date 2023-01-07
  */
 public interface IArticleService {
+
+
+    /**
+     * 点赞文章
+     *
+     * @param articleId 文章id
+     */
+    void saveArticleLike(Integer articleId,Long userid);
 
 
     /**

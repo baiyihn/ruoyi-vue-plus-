@@ -18,6 +18,7 @@ import com.zhi.common.exception.base.BaseException;
 import com.zhi.common.utils.BeanCopyUtils;
 import com.zhi.common.utils.StringUtils;
 import com.zhi.common.utils.blog.PageUtils;
+import com.zhi.common.utils.redis.RedisUtils;
 import com.zhi.system.service.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,14 +27,15 @@ import com.zhi.blog.domain.vo.ArticleVo;
 import com.zhi.blog.domain.Article;
 import com.zhi.blog.mapper.ArticleMapper;
 import com.zhi.blog.service.IArticleService;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import static com.zhi.common.constant.blog.CommonConst.ARTICLE_SET;
 import static com.zhi.common.constant.blog.CommonConst.FALSE;
-import static com.zhi.common.constant.blog.RedisPrefixConst.ARTICLE_LIKE_COUNT;
-import static com.zhi.common.constant.blog.RedisPrefixConst.ARTICLE_VIEWS_COUNT;
+import static com.zhi.common.constant.blog.RedisPrefixConst.*;
 import static com.zhi.common.enums.blog.ArticleStatusEnum.PUBLIC;
 
 /**
@@ -64,6 +66,31 @@ public class ArticleServiceImpl implements IArticleService {
 
     @Resource
     private ITagService tagService;
+
+
+    /**
+     * 文章点赞
+     * @param articleId 文章id
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void saveArticleLike(Integer articleId,Long userid) {
+        // 判断是否点赞
+        String articleLikeKey = ARTICLE_USER_LIKE + userid;
+
+        if (RedisUtils.hasKey(articleLikeKey)) {
+            // 点过赞则删除文章id
+            RedisUtils.deleteObject(articleLikeKey);
+            // 文章点赞量-1
+            RedisUtils.decrAtomicValue(ARTICLE_LIKE_COUNT);
+        } else {
+            // 未点赞则增加文章id
+            RedisUtils.setCacheObject(articleLikeKey, articleId);
+            // 文章点赞量+1
+            RedisUtils.incrAtomicValue(ARTICLE_LIKE_COUNT);
+        }
+    }
+
 
     /**
      * 查看文章归档
@@ -160,8 +187,6 @@ public class ArticleServiceImpl implements IArticleService {
             nextArticle.setArticleCover(baseMapper.ImgUrl(Long.parseLong(nextArticle.getArticleCover())));
         }
 
-
-
         article.setLastArticle(BeanCopyUtils.copyObject(lastArticle, ArticlePaginationDTO.class));
         article.setNextArticle(BeanCopyUtils.copyObject(nextArticle, ArticlePaginationDTO.class));
         // 封装点赞量和浏览量
@@ -169,7 +194,7 @@ public class ArticleServiceImpl implements IArticleService {
         if (Objects.nonNull(score)) {
             article.setViewsCount(score.intValue());
         }
-        article.setLikeCount((Integer) redisService.hGet(ARTICLE_LIKE_COUNT, articleId.toString()));
+        article.setLikeCount(RedisUtils.getCacheObject(ARTICLE_LIKE_COUNT));
         // 封装文章信息
         try {
             article.setRecommendArticleList(recommendArticleList.get());

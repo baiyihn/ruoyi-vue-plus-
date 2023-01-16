@@ -1,0 +1,13 @@
+
+.back-to-top{
+	cursor: pointer;
+    position: fixed;
+    right: 80px;
+    top: -900px;
+    z-index: 2;
+    width: 70px;
+    height: 900px;
+    background: url(../img/scroll.png);
+    transition: all .5s ease-in-out;
+    opacity: 1;
+}

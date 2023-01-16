@@ -292,7 +292,11 @@ export default {
       commentType: 1,
       articleHref: window.location.href,
       clipboard: null,
-      commentCount: 0
+      commentCount: 0,
+      form: {
+      articleId: null,
+      userid : this.$store.state.userId
+      },
     };
   },
   methods: {
@@ -350,11 +354,12 @@ export default {
         this.$store.state.loginFlag = true;
         return false;
       }
-      //发送请求
+      this.form.articleId = this.$route.path.toString().split("/")[2];
+        //发送请求
       this.axios
-        .post("/api/articles/" + this.article.id + "/like")
+        .post("/api/article/article/articles/like",this.form)
         .then(({ data }) => {
-          if (data.flag) {
+          if (data.code == 200) {
             //判断是否点赞
             if (
               this.$store.state.articleLikeSet.indexOf(this.article.id) != -1
