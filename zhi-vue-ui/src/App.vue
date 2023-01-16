@@ -1,19 +1,5 @@
 <template>
     <v-app id="app">
-
-
-        <!--主题切换-->
-        <div class="theme-switch" @click="check">
-            <v-img v-if="!isSon" width="50" height="50" src="https://s1.ax1x.com/2023/01/16/pSlxa4J.png"
-                   style="font-size: 40px;"/>
-            <v-img v-if="isSon" width="50" height="50" src="https://s1.ax1x.com/2023/01/16/pSljjoQ.png"
-                   style="font-size: 40px;"/>
-        </div>
-
-        <transition name="slide-up">
-            <ToggleDay v-show="showAnimation"></ToggleDay>
-        </transition>
-
         <!-- 导航栏 -->
         <TopNavBar></TopNavBar>
         <!-- 侧边导航栏 -->
@@ -40,6 +26,16 @@
         <Player v-if="blogInfo.websiteConfig.isMusicPlayer == 1 && !isMobile"/>
         <!-- 聊天室 -->
         <ChatRoom v-if="blogInfo.websiteConfig.isChatRoom == 1"></ChatRoom>
+        <!--主题切换-->
+        <div class="theme-switch" @click="check">
+            <v-img v-if="!isSon" width="50" height="50" src="https://s1.ax1x.com/2023/01/16/pSlxa4J.png"
+                   style="font-size: 40px;"/>
+            <v-img v-if="isSon" width="50" height="50" src="https://s1.ax1x.com/2023/01/16/pSljjoQ.png"
+                   style="font-size: 40px;"/>
+        </div>
+        <transition name="slide-up">
+            <ToggleDay v-show="showAnimation"></ToggleDay>
+        </transition>
     </v-app>
 </template>
 <script>
@@ -58,7 +54,6 @@ import ChatRoom from "./components/ChatRoom";
 import ToggleDay from "./components/base/toggle_day/ToggleDay.vue";
 
 export default {
-
     created() {
         // 获取博客信息
         this.getBlogInfo();
@@ -72,7 +67,6 @@ export default {
             timer: null
         };
     },
-
     components: {
         TopNavBar,
         Player,
