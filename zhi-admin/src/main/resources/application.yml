@@ -106,6 +106,7 @@ spring:
           enabled: true
           max-attempts: 3 #最大重试次数
           initial-interval: 3000 #重试间隔时间（单位毫秒）
+  # es配置 若搜索模式为mysql可删除
   # 邮箱配置
   mail:
     host: smtp.qq.com
@@ -119,6 +120,16 @@ spring:
       auth: true
       socketFactory:
       class: javax.net.ssl.SSLSocketFactory
+  elasticsearch:
+    uris: 127.0.0.1:9200
+management:
+  health:
+    elasticsearch:
+      enabled: false
+
+# 搜索模式 可选 elasticsearch或mysql
+search:
+  mode: mysql
 
 
 

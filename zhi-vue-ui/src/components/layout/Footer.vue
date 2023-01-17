@@ -9,6 +9,9 @@
       <a href="https://beian.miit.gov.cn/" target="_blank">
         {{ blogInfo.websiteConfig.websiteRecordNo }}
       </a>
+
+
+
     </div>
   </v-footer>
 </template>
@@ -53,4 +56,5 @@ export default {
     background-position: 0 50%;
   }
 }
+
 </style>

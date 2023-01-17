@@ -38,6 +38,7 @@
         <lombok.version>1.18.24</lombok.version>
         <rabbitmq.version>2.4.1</rabbitmq.version>
         <mail.version>2.4.1</mail.version>
+        <elasticsearch.version>2.4.1</elasticsearch.version>
 
         <!-- 统一 guava 版本 解决隐式漏洞问题 -->
         <guava.version>31.1-jre</guava.version>
@@ -281,6 +282,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-amqp</artifactId>
                 <version>${rabbitmq.version}</version>
+            </dependency>
+
+            <!-- elasticsearch-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
             </dependency>
 
 
