@@ -2,6 +2,7 @@ package com.zhi.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhi.blog.domain.vo.PageResult;
 import com.zhi.blog.domain.vo.WebsiteConfigVO;
 import com.zhi.blog.dto.CommentDTO;
@@ -145,8 +146,16 @@ public class CommentServiceImpl implements ICommentService {
      */
     @Override
     public TableDataInfo<CommentVo> queryPageList(CommentBo bo, PageQuery pageQuery) {
-        List<CommentVo> commentVos = baseMapper.queryCommentList();
-        return TableDataInfo.build(commentVos);
+        LambdaQueryWrapper<Comment> lqw = buildQueryWrapper(bo);
+        Page<CommentVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
+        for(CommentVo commentVo :result.getRecords()){
+            commentVo.setNickname(baseMapper.getNickNameById(commentVo.getUserId()));
+            commentVo.setArticleTitle(baseMapper.getArticleTitleByTopic(commentVo.getTopicId()));
+            commentVo.setReplyUserName(baseMapper.getNickNameById(commentVo.getReplyUserId()));
+        }
+        return TableDataInfo.build(result);
+
+
     }
 
     /**

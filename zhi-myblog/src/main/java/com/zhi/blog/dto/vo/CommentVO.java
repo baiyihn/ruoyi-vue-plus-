@@ -36,7 +36,7 @@ public class CommentVO {
     /**
      * 评论主题id
      */
-    private Integer topicId;
+    private Long topicId;
 
     /**
      * 评论内容

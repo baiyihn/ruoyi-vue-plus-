@@ -53,7 +53,7 @@ public class Comment extends BaseEntity {
     /**
      * 评论主题id
      */
-    private Integer topicId;
+    private Long topicId;
     /**
      * 评论ip
      */

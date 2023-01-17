@@ -50,27 +50,11 @@ public interface CommentMapper extends BaseMapperPlus<CommentMapper, Comment, Co
     List<ReplyCountDTO> listReplyCountByCommentId(@Param("commentIdList") List<Long> commentIdList);
 
 
-
-
-
     /**
      * 根据id修改评论状态
      */
     @Update("update blog_comment set state = #{status} where id = #{id} ")
     int UpdateCommentStatusById(@Param("id") Long id , @Param("status") int status);
-
-    /**
-     * 查询全部评论
-     */
-    @Select("select c.*," +
-        "u.nick_name," +
-        "u1.nick_name as replyUserName ," +
-        "a.article_title as articleTitle  " +
-        "from blog_comment c " +
-        "left join sys_user u on c.user_id = u.user_id " +
-        "left join sys_user u1 on c.reply_user_id = u1.user_id " +
-        "left join blog_article a on c.topic_id = a.id")
-     List<CommentVo> queryCommentList();
 
 
     /**
@@ -80,5 +64,18 @@ public interface CommentMapper extends BaseMapperPlus<CommentMapper, Comment, Co
      * @return {@link List<CommentCountDTO>}说说评论量
      */
     List<CommentCountDTO> listCommentCountByTopicIds(@Param("topicIdList") List<Integer> topicIdList);
+
+
+    /**
+     * 根据id查询用户昵称
+     */
+    @Select("select u.nick_name from sys_user u  where u.user_id = #{id}")
+    String getNickNameById(Long id);
+
+    /**
+     * 根据评论主题获取文章标题
+     */
+    @Select("select a.article_title as articleTitle from blog_article a where a.id = #{id}")
+    String getArticleTitleByTopic(Long id);
 
 }

@@ -17,30 +17,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="用户ip" prop="ipAddress">
-        <el-input
-          v-model="queryParams.ipAddress"
-          placeholder="请输入用户ip"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="用户地址" prop="ipSource">
-        <el-input
-          v-model="queryParams.ipSource"
-          placeholder="请输入用户地址"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="弹幕速度" prop="time">
-        <el-input
-          v-model="queryParams.time"
-          placeholder="请输入弹幕速度"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="是否审核" prop="isReview">
         <el-select v-model="queryParams.isReview" placeholder="请选择是否审核" clearable>
           <el-option
