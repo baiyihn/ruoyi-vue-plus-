@@ -90,7 +90,8 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
      * 查询全部文章列表
      * @return
      */
-    @Select("  select a.id,a.user_id,a.category_id,o.url as article_cover,a.article_title,a.article_content,a.type,a.original_url,a.is_top,a.is_delete,a.status,a.create_time,a.update_time,a.like_count,a.views_count,a.create_by,a.update_by,c.category_name as categoryName,u.user_name as username\n" +
+    @Select("  select a.id,a.user_id,a.category_id,o.url as article_cover,a.article_title,a.article_content,a.type,a.original_url,a.is_top,a.is_delete,a.status," +
+        "a.create_time,a.update_time,a.like_count,a.views_count,a.create_by,a.update_by,c.category_name as categoryName,u.user_name as username\n" +
         "        from blog_article a\n" +
         "        left join blog_category c on a.category_id = c.id\n" +
         "        left join sys_user u       on a.user_id = u.user_id\n" +
@@ -156,6 +157,18 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
      */
     @Select("select o.url from sys_oss o where o.oss_id = #{url}")
     String ImgUrl(Long url);
+
+    /**
+     * 根据分类id查询分类名称
+     */
+    @Select("select c.category_name from blog_category c where c.id = #{id} ")
+    String selectCategoryNameById(Long id);
+
+    /**
+     * 根据id获取当前用户名
+     */
+    @Select("select u.user_name from sys_user u where u.user_id = #{id}")
+    String getUsernameById(Long id);
 
 
 

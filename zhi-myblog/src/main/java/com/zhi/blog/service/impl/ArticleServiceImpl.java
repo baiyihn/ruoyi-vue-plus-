@@ -273,14 +273,15 @@ public class ArticleServiceImpl implements IArticleService {
      */
     @Override
     public TableDataInfo<ArticleVo> queryPageList(ArticleBo bo, PageQuery pageQuery) {
-        //   文章对应的全部标签
-        List<Article> articles = baseMapper.queryArticle();
-        for(Article article:articles){
-            article.setTagNameList(baseMapper.queryArticleTags(article.getId()));
+        LambdaQueryWrapper<Article> lqw = buildQueryWrapper(bo);
+        Page<ArticleVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
+        for(ArticleVo articleVo :result.getRecords()){
+            articleVo.setArticleCover(baseMapper.ImgUrl(Long.parseLong(articleVo.getArticleCover())));
+            articleVo.setCategoryName(baseMapper.selectCategoryNameById(articleVo.getCategoryId()));
+            articleVo.setUsername(baseMapper.getUsernameById(articleVo.getUserId()));
+            articleVo.setTagNameList(baseMapper.queryArticleTags(articleVo.getId()));
         }
-        return TableDataInfo.build(BeanCopyUtils.copyList(articles, ArticleVo.class));
-//        LambdaQueryWrapper<Article> lqw = buildQueryWrapper(bo);
-//        Page<ArticleVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
+        return TableDataInfo.build(result);
     }
 
     /**
