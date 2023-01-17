@@ -32,7 +32,7 @@ public class SysUser extends BaseEntity {
     /**
      * 用户ID
      */
-    @TableId(value = "user_id")
+    @TableId(value = "user_id" ,type = IdType.AUTO)
     private Long userId;
 
     /**
