@@ -55,7 +55,7 @@ import ToggleDay from "./components/base/toggle_day/ToggleDay.vue";
 
 export default {
     created() {
-        // 获取博客信息
+        //  获取博客信息
         this.getBlogInfo();
         // 上传访客信息
         this.axios.post("/api/blogInfo/report");

@@ -30,7 +30,7 @@ public class CategoryOrTag {
     private  TagMapper tagMapper;
 
     /**
-     * 新增分类或者标签
+     *  新增分类或者标签
      */
     public void  AddCateOrTag(ArticleBo bo){
         // 如果是新增的分类则先新增这个新分类

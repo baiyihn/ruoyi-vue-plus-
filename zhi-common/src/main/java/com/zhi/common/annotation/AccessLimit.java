@@ -15,7 +15,7 @@ public @interface AccessLimit {
     /**
      * 单位时间（秒）
      *
-     * @return int
+     * @return  int
      */
     int seconds();
 

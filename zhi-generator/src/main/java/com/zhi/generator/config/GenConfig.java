@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class GenConfig {
 
     /**
-     * 作者
+     *  作者
      */
     public static String author;
 

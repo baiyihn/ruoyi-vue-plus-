@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class SysCache {
 
     /**
-     * 缓存名称
+     *  缓存名称
      */
     private String cacheName = "";
 

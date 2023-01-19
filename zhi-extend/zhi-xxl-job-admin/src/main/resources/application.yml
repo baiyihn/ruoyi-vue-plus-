@@ -7,7 +7,7 @@ spring:
   application:
     name: zhi-xxl-job-admin
   profiles:
-    active: prod
+    active: dev
   mvc:
     servlet:
       load-on-startup: 0

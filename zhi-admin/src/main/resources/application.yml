@@ -70,7 +70,7 @@ spring:
     # 国际化资源文件路径
     basename: i18n/messages
   profiles:
-    active: prod
+    active: dev
   # 文件上传
   servlet:
     multipart:
@@ -96,7 +96,7 @@ spring:
       fail_on_unknown_properties: false
   # mq配置
   rabbitmq:
-    host: 8.130.45.202
+    host: 127.0.0.1
     port: 5672
     username: guest
     password: guest
