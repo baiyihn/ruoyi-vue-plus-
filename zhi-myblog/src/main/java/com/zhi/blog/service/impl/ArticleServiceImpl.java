@@ -77,12 +77,10 @@ public class ArticleServiceImpl implements IArticleService {
      * 文章点赞
      * @param articleId 文章id
      */
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveArticleLike(Integer articleId,Long userid) {
         // 判断是否点赞
         String articleLikeKey = ARTICLE_USER_LIKE + userid;
-
         if (RedisUtils.hasKey(articleLikeKey)) {
             // 点过赞则删除文章id
             RedisUtils.deleteObject(articleLikeKey);
@@ -199,7 +197,18 @@ public class ArticleServiceImpl implements IArticleService {
         if (Objects.nonNull(score)) {
             article.setViewsCount(score.intValue());
         }
-        article.setLikeCount(RedisUtils.getCacheObject(ARTICLE_LIKE_COUNT));
+
+        if (Objects.nonNull(RedisUtils.getCacheObject(ARTICLE_LIKE_COUNT))){
+            article.setLikeCount(RedisUtils.getCacheObject(ARTICLE_LIKE_COUNT));
+        } else {
+            //  初始文章点赞量
+            RedisUtils.setCacheObject(ARTICLE_LIKE_COUNT,0);
+        }
+
+
+
+
+
         // 封装文章信息
         try {
             article.setRecommendArticleList(recommendArticleList.get());
