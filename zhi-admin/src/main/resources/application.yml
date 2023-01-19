@@ -70,7 +70,7 @@ spring:
     # 国际化资源文件路径
     basename: i18n/messages
   profiles:
-    active: @profiles.active@
+    active: prod
   # 文件上传
   servlet:
     multipart:
@@ -96,7 +96,7 @@ spring:
       fail_on_unknown_properties: false
   # mq配置
   rabbitmq:
-    host: 127.0.0.1
+    host: 8.130.45.202
     port: 5672
     username: guest
     password: guest
@@ -225,8 +225,8 @@ swagger:
     version: '版本号: ${zhi-vue-plus.version}'
     # 作者信息
     contact:
-      name: Lion Li
-      email: crazylionli@163.com
+      name: water-zhi
+      email: 2831826106@qq.com
       url: https://gitee.com/JavaLionLi/RuoYi-Vue-Plus
   components:
     # 鉴权方式配置

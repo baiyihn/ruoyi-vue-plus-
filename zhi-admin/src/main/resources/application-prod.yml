@@ -3,9 +3,9 @@ spring.servlet.multipart.location: /ruoyi/server/temp
 --- # xxl-job 配置
 xxl.job:
   # 执行器开关
-  enabled: true
+  enabled: false
   # 调度中心地址：如调度中心集群部署存在多个地址则用逗号分隔。
-  admin-addresses: http://localhost:9100/xxl-job-admin
+  admin-addresses: http://8.130.45.202:9100/xxl-job-admin
   # 执行器通讯TOKEN：非空时启用
   access-token: xxl-job
   executor:
@@ -41,7 +41,7 @@ spring:
           driverClassName: com.mysql.cj.jdbc.Driver
           # jdbc 所有参数配置参考 https://lionli.blog.csdn.net/article/details/122018562
           # rewriteBatchedStatements=true 批处理优化 大幅提升批量插入更新删除性能(对数据库有性能损耗 使用批量操作应考虑性能问题)
-          url: jdbc:mysql://localhost:3306/ry-vue-blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true
+          url: jdbc:mysql://8.130.45.202:3306/ry-vue-blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true
           username: root
           password: root
         # 从库数据源
@@ -49,7 +49,7 @@ spring:
           lazy: true
           type: ${spring.datasource.type}
           driverClassName: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhost:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true
+          url: jdbc:mysql://8.130.45.202:3306/ry-vue?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true
           username:
           password:
 #        oracle:
@@ -92,13 +92,13 @@ spring:
 spring:
   redis:
     # 地址
-    host: localhost
+    host: 8.130.45.202
     # 端口，默认为6379
     port: 6379
     # 数据库索引
     database: 0
     # 密码(如没有密码请注释掉)
-    # password:
+    password: redis
     # 连接超时时间
     timeout: 10s
     # 是否开启ssl

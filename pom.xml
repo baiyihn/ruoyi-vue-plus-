@@ -17,7 +17,7 @@
         <spring-boot.version>2.7.6</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
+        <java.version>1.8</java.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         <spring-boot.mybatis>2.2.2</spring-boot.mybatis>
         <springdoc.version>1.6.13</springdoc.version>
@@ -434,10 +434,7 @@
                 <profiles.active>dev</profiles.active>
                 <logging.level>debug</logging.level>
             </properties>
-            <activation>
-                <!-- 默认环境 -->
-                <activeByDefault>true</activeByDefault>
-            </activation>
+
         </profile>
         <profile>
             <id>prod</id>
@@ -445,6 +442,10 @@
                 <profiles.active>prod</profiles.active>
                 <logging.level>warn</logging.level>
             </properties>
+            <activation>
+                <!-- 默认环境 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 

@@ -81,12 +81,9 @@ public class TalkServiceImpl implements ITalkService {
         List<Integer> topicIdList = talkDTOList.stream()
             .map(TalkDTO::getId)
             .collect(Collectors.toList());
-        System.out.println(topicIdList.size()+"这是数量");
         Map<Integer, Integer> commentCountMap = commentMapper.listCommentCountByTopicIds(topicIdList)
             .stream()
             .collect(Collectors.toMap(CommentCountDTO::getId, CommentCountDTO::getCommentCount));
-
-
          //查询说说点赞量
         Map<String, Object> likeCountMap = redisService.hGetAll(TALK_LIKE_COUNT);
         talkDTOList.forEach(item -> {
