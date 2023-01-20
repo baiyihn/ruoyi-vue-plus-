@@ -17,15 +17,13 @@ import com.zhi.common.utils.ServletUtils;
 import com.zhi.common.utils.StringUtils;
 import com.zhi.common.utils.redis.RedisUtils;
 import com.zhi.system.domain.vo.UserVO;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
-
 import static com.zhi.common.constant.Constants.AVATAR;
+import static com.zhi.common.constant.Constants.FIRSTPASSWORD;
 import static com.zhi.common.constant.Constants.TYPE;
 import static com.zhi.common.constant.blog.RedisPrefixConst.USER_CODE_KEY;
 
@@ -38,6 +36,7 @@ import static com.zhi.common.constant.blog.RedisPrefixConst.USER_CODE_KEY;
 @RequiredArgsConstructor
 @Service
 public class SysRegisterService {
+
 
     private final ISysUserService userService;
     private final ISysConfigService configService;
@@ -79,6 +78,25 @@ public class SysRegisterService {
             throw new UserException("user.register.error");
         }
         asyncService.recordLogininfor(username, Constants.REGISTER, MessageUtils.message("user.register.success"), request);
+    }
+
+    /**
+     * 第三方登录注册
+     */
+    public void OauthRegister(SysUser sysUser){
+        HttpServletRequest request = ServletUtils.getRequest();
+        // 校验用户是否存在
+        if (OauthCheckUser(sysUser)){
+            throw new BaseException("用户名已被注册！");
+        }
+        sysUser.setPassword(BCrypt.hashpw(FIRSTPASSWORD));
+        sysUser.setUserType(TYPE);
+        boolean regFlag = userService.registerUser(sysUser);
+        if (!regFlag) {
+            throw new UserException("user.register.error");
+        }
+        asyncService.recordLogininfor(sysUser.getUserName(), Constants.REGISTER, MessageUtils.message("user.register.success"), request);
+
     }
 
 
@@ -143,6 +161,15 @@ public class SysRegisterService {
         }
         //查询用户名是否存在
         SysUser sysUser = userService.selectUserByUserName(user.getUsername());
+        return Objects.nonNull(sysUser);
+    }
+
+    /**
+     * 第三放登录验证用户是否存在
+     */
+    private Boolean OauthCheckUser(SysUser user){
+        //查询用户名是否存在
+        SysUser sysUser = userService.selectUserByUserName(user.getUserName());
         return Objects.nonNull(sysUser);
     }
 

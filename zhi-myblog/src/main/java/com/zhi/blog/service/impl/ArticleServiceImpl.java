@@ -27,7 +27,6 @@ import com.zhi.blog.domain.vo.ArticleVo;
 import com.zhi.blog.domain.Article;
 import com.zhi.blog.mapper.ArticleMapper;
 import com.zhi.blog.service.IArticleService;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;

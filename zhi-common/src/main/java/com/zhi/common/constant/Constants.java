@@ -7,6 +7,12 @@ package com.zhi.common.constant;
  */
 public interface Constants {
 
+
+    /**
+     * 初始密码
+     */
+     String FIRSTPASSWORD = "123456";
+
     /**
      * 默认sys系统用户注册
      */

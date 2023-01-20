@@ -101,7 +101,11 @@ const routes = [
   {
     path: "/oauth/login/weibo",
     component: resolve => require(["../components/OauthLogin.vue"], resolve)
-  }
+  },
+  {
+    path: "/oauth/login/gitee",
+    component: () =>import("../components/Oauth/loginByGitee/index")
+  },
 ];
 
 const router = new VueRouter({

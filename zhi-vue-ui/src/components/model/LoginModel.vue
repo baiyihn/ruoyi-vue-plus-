@@ -42,6 +42,13 @@
                 <div v-if="socialLoginList.length > 0">
                     <div class="social-login-title">社交账号登录</div>
                     <div class="social-login-wrapper">
+                        <!-- gitee登录 -->
+                        <a
+                            v-if="showLogin('gitee')"
+                            class="mr-3 iconfont icongitee-fill-round"
+                            style="color:#e05244"
+                            @click="giteeLogin"
+                        />
                         <!-- 微博登录 -->
                         <a
                             v-if="showLogin('weibo')"
@@ -177,6 +184,13 @@ export default {
             //     this.config.WEIBO_REDIRECT_URI,
             //     "_self"
             // );
+        },
+        giteeLogin() {
+         this.axios.get("/api/oauth/login/GITEE").then( ({ data }) => {
+             window.location.href = data.data;
+             // this.$router.push({path : '/oauth/login/gitee',query:{url:data.msg}})
+         })
+
         }
     }
 };
