@@ -5,6 +5,7 @@ import com.zhi.common.constant.CacheConstants;
 import com.zhi.common.constant.Constants;
 import com.zhi.common.constant.UserConstants;
 import com.zhi.common.core.domain.entity.SysUser;
+import com.zhi.common.core.domain.model.BlogLoginUser;
 import com.zhi.common.core.domain.model.RegisterBody;
 import com.zhi.common.core.service.LogininforService;
 import com.zhi.common.enums.UserType;
@@ -41,6 +42,10 @@ public class SysRegisterService {
     private final ISysUserService userService;
     private final ISysConfigService configService;
     private final LogininforService asyncService;
+
+    private final SysLoginService loginService;
+
+
 
     @Autowired
     private RedisService redisService;
@@ -83,19 +88,23 @@ public class SysRegisterService {
     /**
      * 第三方登录注册
      */
-    public void OauthRegister(SysUser sysUser){
+    public BlogLoginUser OauthRegister(SysUser sysUser){
         HttpServletRequest request = ServletUtils.getRequest();
         // 校验用户是否存在
         if (OauthCheckUser(sysUser)){
-            throw new BaseException("用户名已被注册！");
+            //如果已经存在则直接登录
+            return loginService.blogLoginUser(sysUser);
         }
         sysUser.setPassword(BCrypt.hashpw(FIRSTPASSWORD));
         sysUser.setUserType(TYPE);
+        sysUser.setRemark("暂无");
         boolean regFlag = userService.registerUser(sysUser);
         if (!regFlag) {
             throw new UserException("user.register.error");
         }
+
         asyncService.recordLogininfor(sysUser.getUserName(), Constants.REGISTER, MessageUtils.message("user.register.success"), request);
+        return loginService.buildBlogLoginUser(sysUser);
 
     }
 

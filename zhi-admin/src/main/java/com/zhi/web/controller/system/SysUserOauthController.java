@@ -5,9 +5,12 @@ import com.alibaba.fastjson.JSON;
 import com.xkcoding.justauth.AuthRequestFactory;
 import com.zhi.common.core.domain.R;
 import com.zhi.common.core.domain.entity.SysUser;
+import com.zhi.common.core.domain.model.BlogLoginUser;
 import com.zhi.common.utils.BeanCopyUtils;
 import com.zhi.common.utils.StringUtils;
+import com.zhi.system.service.SysLoginService;
 import com.zhi.system.service.SysRegisterService;
+import io.undertow.servlet.spec.HttpServletResponseImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.config.AuthSource;
@@ -20,10 +23,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,6 +48,8 @@ public class SysUserOauthController {
     private final AuthRequestFactory factory;
 
     private final SysRegisterService registerService;
+
+    private final SysLoginService loginService;
 
 
     /**
@@ -78,15 +83,18 @@ public class SysUserOauthController {
      */
     @SaIgnore
     @RequestMapping("/{type}/callback")
-    public R login(@PathVariable String type, AuthCallback callback) {
+    public void login(@PathVariable String type, AuthCallback callback , HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
         AuthRequest authRequest = factory.get(type);
-        AuthResponse response = authRequest.login(callback);
-        String s = JSONUtil.toJsonStr(response.getData());
+        AuthResponse authResponse = authRequest.login(callback);
+        String s = JSONUtil.toJsonStr(authResponse.getData());
         SysUser sysUser = JSON.parseObject(s,SysUser.class);
-        //新用户注册
-        registerService.OauthRegister(sysUser);
-        return R.ok("登陆成功，初始密码为123456");
+        BlogLoginUser blogLoginUser = registerService.OauthRegister(sysUser);
+        httpServletResponse.sendRedirect("http://localhost:8081/oauth/login/gitee?userid="+blogLoginUser.getId());
+
     }
+
+
+
 
 
 

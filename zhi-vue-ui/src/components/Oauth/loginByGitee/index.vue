@@ -1,6 +1,7 @@
 <template>
     <div v-loading="loading" style="height: 100%;width: 100%;">
-        正在加载中...
+
+
     </div>
 </template>
 
@@ -12,25 +13,30 @@ export default {
     data() {
         return {
             loading: true,
-            type: "",
-            callback:"",
-            url:"",
+
+
+
         }
     },
     mounted() {
-        this.loading = true;
-        this.type = "GITEE";
-        this.callback = this.$route.query.url;
-        this.axios.post("/api/GITEE/callback",this.type,this.callback).then(({data}) =>{
+        //获取用户id
+        this.userid = this.$route.query.userid;
+        let param = new URLSearchParams();
+        param.append("userid",  this.userid);
+        this.axios.post("/api/oauth/login/",param).then(({data}) =>{
             if (data.code == 200) {
+                this.username = "";
+                this.password = "";
                 this.$store.commit("login", data.data);
                 this.$store.commit("closeModel");
-                this.$router.push({name:'/'})
+                this.$router.push("/")
+                this.$toast({ type: "success", message: "登录成功" });
             } else {
                 this.$toast({ type: "error", message: data.msg });
             }
-            this.loading = false;
         })
+
+
 
     }
 

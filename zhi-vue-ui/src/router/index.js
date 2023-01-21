@@ -6,6 +6,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    name:"Home",
     component: resolve => require(["../views/home/Home.vue"], resolve)
   },
   {
@@ -93,6 +94,10 @@ const routes = [
     meta: {
       title: "个人中心"
     }
+  },
+  {
+    path: "/callback",
+    component: () =>import("../components/Oauth/callback/index")
   },
   {
     path: "/oauth/login/qq",

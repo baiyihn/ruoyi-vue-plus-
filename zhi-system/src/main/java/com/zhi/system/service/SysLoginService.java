@@ -99,6 +99,30 @@ public class SysLoginService {
 
     }
 
+    /**
+     * 第三方登录
+     * @return
+     */
+    public BlogLoginUser blogLoginUser(SysUser sysUser){
+        String username = sysUser.getUserName();
+        HttpServletRequest request = ServletUtils.getRequest();
+        SysUser user = loadUserByUsername(sysUser.getUserName());
+        BlogLoginUser blogLoginUser = buildBlogLoginUser(user);
+        asyncService.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"), request);
+        recordLoginInfo(user.getUserId(), username);
+        return blogLoginUser;
+    }
+
+    /**
+     * 根据用户id获取登录用户信息
+     * @return
+     */
+    public BlogLoginUser getLoginUserById(Long userid){
+        SysUser sysUser = userService.selectUserById(userid);
+        BlogLoginUser blogLoginUser = buildBlogLoginUser(sysUser);
+        return blogLoginUser;
+    }
+
     public String smsLogin(String phonenumber, String smsCode) {
         // 通过手机号查找用户
         SysUser user = loadUserByPhonenumber(phonenumber);
@@ -250,7 +274,7 @@ public class SysLoginService {
     /**
      * 构建前台登录用户
      */
-    private BlogLoginUser buildBlogLoginUser(SysUser user) {
+    public BlogLoginUser buildBlogLoginUser(SysUser user) {
         BlogLoginUser blogLoginUser = new BlogLoginUser();
         blogLoginUser.setId(user.getUserId());
         blogLoginUser.setEmail(user.getEmail());

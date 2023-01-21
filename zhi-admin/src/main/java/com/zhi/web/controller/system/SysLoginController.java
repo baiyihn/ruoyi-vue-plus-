@@ -15,11 +15,9 @@ import com.zhi.system.service.ISysUserService;
 import com.zhi.system.service.SysLoginService;
 import com.zhi.system.service.SysPermissionService;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
@@ -72,6 +70,15 @@ public class SysLoginController {
     @PostMapping("/blog/login")
     public R blogLogin(String username,String password){
         return R.ok(loginService.bloglogin(username,password));
+    }
+
+    /**
+     * 根据用户id返回用户信息
+     */
+    @SaIgnore
+    @PostMapping("/oauth/login")
+    public R oauthLogin(String userid){
+        return R.ok( loginService.getLoginUserById(Long.valueOf(userid)));
     }
 
     /**

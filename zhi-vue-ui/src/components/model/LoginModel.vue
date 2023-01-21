@@ -187,10 +187,8 @@ export default {
         },
         giteeLogin() {
          this.axios.get("/api/oauth/login/GITEE").then( ({ data }) => {
-             window.location.href = data.data;
-             // this.$router.push({path : '/oauth/login/gitee',query:{url:data.msg}})
+             window.location = data.data;
          })
-
         }
     }
 };
