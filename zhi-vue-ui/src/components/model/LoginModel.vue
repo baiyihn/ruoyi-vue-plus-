@@ -151,39 +151,9 @@ export default {
         },
         qqLogin() {
             this.$toast({ type: "success", message: "🚆✈暂未开放此改功能哦❤" });
-            //保留当前路径
-            // this.$store.commit("saveLoginUrl", this.$route.path);
-            // if (
-            //     navigator.userAgent.match(
-            //         /(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i
-            //     )
-            // ) {
-            //     // eslint-disable-next-line no-undef
-            //     QC.Login.showPopup({
-            //         appId: this.config.QQ_APP_ID,
-            //         redirectURI: this.config.QQ_REDIRECT_URI
-            //     });
-            // } else {
-            //     window.open(
-            //         "https://graph.qq.com/oauth2.0/show?which=Login&display=pc&client_id=" +
-            //         +this.config.QQ_APP_ID +
-            //         "&response_type=token&scope=all&redirect_uri=" +
-            //         this.config.QQ_REDIRECT_URI,
-            //         "_self"
-            //     );
-            // }
         },
         weiboLogin() {
             this.$toast({ type: "success", message: "🚆✈暂未开放此改功能哦❤" });
-            //保留当前路径
-            // this.$store.commit("saveLoginUrl", this.$route.path);
-            // window.open(
-            //     "https://api.weibo.com/oauth2/authorize?client_id=" +
-            //     this.config.WEIBO_APP_ID +
-            //     "&response_type=code&redirect_uri=" +
-            //     this.config.WEIBO_REDIRECT_URI,
-            //     "_self"
-            // );
         },
         giteeLogin() {
          this.axios.get("/api/oauth/login/GITEE").then( ({ data }) => {

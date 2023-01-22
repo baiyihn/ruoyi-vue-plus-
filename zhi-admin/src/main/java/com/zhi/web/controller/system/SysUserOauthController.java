@@ -49,6 +49,7 @@ public class SysUserOauthController {
 
     private final SysRegisterService registerService;
 
+
     private final SysLoginService loginService;
 
 

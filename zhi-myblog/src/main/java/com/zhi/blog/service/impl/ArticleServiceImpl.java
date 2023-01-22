@@ -58,13 +58,13 @@ public class ArticleServiceImpl implements IArticleService {
     private final CategoryOrTag categoryOrTag;
 
     @Resource
-    private RedisService redisService;
+    private final RedisService redisService;
 
     @Resource
-    private HttpSession session;
+    private final HttpSession session;
 
     @Resource
-    private ITagService tagService;
+    private final ITagService tagService;
 
 
 

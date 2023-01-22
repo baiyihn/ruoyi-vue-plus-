@@ -4,6 +4,7 @@ import com.zhi.blog.domain.Category;
 import com.zhi.blog.domain.vo.CategoryVo;
 import com.zhi.blog.dto.CategoryDTO;
 import com.zhi.common.core.mapper.BaseMapperPlus;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @author ftz
  * @date 2023-01-07
  */
+
 public interface CategoryMapper extends BaseMapperPlus<CategoryMapper, Category, CategoryVo> {
 
     /**
