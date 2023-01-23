@@ -193,4 +193,12 @@ public class WebSocketServiceImpl {
         }
     }
 
+
+    @OnError
+    public void onError(Throwable error) {
+        System.out.println("onError......"+error.getMessage());
+
+    }
+
+
 }
