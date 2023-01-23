@@ -1,6 +1,7 @@
 package com.zhi.framework.config;
 import com.zhi.framework.handler.PageableHandlerInterceptor;
 import com.zhi.framework.interceptor.PlusWebInvokeTimeInterceptor;
+import io.undertow.util.PathMatcher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -48,6 +49,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
         // 添加映射路径，拦截一切请求
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
+
         // 返回新的CorsFilter
         return new CorsFilter(source);
     }

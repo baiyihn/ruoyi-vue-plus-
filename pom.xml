@@ -41,6 +41,7 @@
         <elasticsearch.version>2.4.1</elasticsearch.version>
         <commons-pool2.version>2.8.0</commons-pool2.version>
         <justauth-spring-boot.version>1.4.0</justauth-spring-boot.version>
+        <websocket.version>2.4.1</websocket.version>
 
         <!-- 统一 guava 版本 解决隐式漏洞问题 -->
         <guava.version>31.1-jre</guava.version>
@@ -312,6 +313,12 @@
                 <groupId>com.xkcoding.justauth</groupId>
                 <artifactId>justauth-spring-boot-starter</artifactId>
                 <version>${justauth-spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-websocket</artifactId>
+                <version>${websocket.version}</version>
             </dependency>
 
             <!-- demo模块 -->
