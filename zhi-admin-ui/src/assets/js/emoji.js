@@ -1,5 +1,5 @@
 export default {
-  "[微笑]": "https://static.talkxj.com/emoji/smile.jpg",
+  "[微笑]": "😀",
 
   "[笑]": " https://static.talkxj.com/emoji/dx.jpg",
 

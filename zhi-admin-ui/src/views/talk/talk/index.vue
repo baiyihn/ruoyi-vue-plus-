@@ -16,17 +16,16 @@
           <el-popover placement="bottom-start" width="460" trigger="click">
             <span
               class="emoji-item"
-              v-for="(value, key, index) of emojiList"
+              v-for="(value, key, index) of newEmojiList"
               :key="index"
               @click="addEmoji(key, value)"
             >
-              <img
-                :src="value"
-                :title="key"
+              <div
                 class="emoji"
                 width="24"
-                height="24"
-              />
+                height="24">
+                {{value}}
+              </div>
             </span>
             <i
               class="iconfont el-icon-present"
@@ -53,6 +52,7 @@
 
 <script>
 import EmojiList from "../../../assets/js/emoji";
+import NewEmoji from "@/assets/js/newEmoji";
 import Editor from "../../../components/EditorTwo/Editor";
 import {addTalk, getTalk, updateTalk} from "@/api/talk/talk";
 export default {
@@ -78,6 +78,7 @@ export default {
       //当前登录用户名称
       username:"",
       emojiList: EmojiList,
+      newEmojiList:NewEmoji,
       talk: {
         id: null,
         content: "",
@@ -90,12 +91,9 @@ export default {
   methods: {
 
     addEmoji(key, value) {
+      console.log(key+"6666666666"+value)
       this.$refs.editor.addText(
-        "<img src= '" +
-        value +
-        "' width='24'height='24' alt=" +
-        key +
-        " style='margin: 0 1px;vertical-align: text-bottom'/>"
+        value
       );
     },
     upload(response) {
