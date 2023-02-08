@@ -55,7 +55,6 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "点赞文章")
     @PostMapping("/articles/like")
     public R<?> saveArticleLike(@RequestBody LikeVO likeVO) {
-        System.out.println(likeVO.getUserid());
         iArticleService.saveArticleLike(likeVO.getArticleId(),likeVO.getUserid());
         return R.ok();
     }

@@ -94,6 +94,7 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
 
+
     /**
      * 查看文章归档
      */
@@ -141,9 +142,6 @@ public class ArticleServiceImpl implements IArticleService {
                     return articleRecommendDTOS;
                 }
             );
-
-
-
         // 查询最新文章
         CompletableFuture<List<ArticleRecommendDTO>> newestArticleList = CompletableFuture
             .supplyAsync(() -> {
@@ -203,11 +201,6 @@ public class ArticleServiceImpl implements IArticleService {
             //  初始文章点赞量
             RedisUtils.setCacheObject(ARTICLE_LIKE_COUNT,0);
         }
-
-
-
-
-
         // 封装文章信息
         try {
             article.setRecommendArticleList(recommendArticleList.get());
