@@ -1,5 +1,6 @@
 package com.zhi;
 
+import cn.easyes.starter.register.EsMapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.metrics.buffering.BufferingApplicationStartup;
@@ -11,8 +12,8 @@ import org.springframework.boot.context.metrics.buffering.BufferingApplicationSt
  */
 
 @SpringBootApplication
+@EsMapperScan("com.zhi.blog.easyesMapper")
 public class RuoYiApplication {
-
     public static void main(String[] args) {
         System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication application = new SpringApplication(RuoYiApplication.class);

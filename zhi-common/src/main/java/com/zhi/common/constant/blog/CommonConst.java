@@ -17,7 +17,7 @@ public class CommonConst {
     public static  final  int STATE = 1;
 
     /**
-     * 系统是否
+     * 系统是
      */
     public static final String YES = "Y";
 
@@ -26,6 +26,11 @@ public class CommonConst {
      * 系统否
      */
     public static final String NO = "N";
+
+    /**
+     * 对
+     */
+    public static final String ISTRUE = "true";
 
     /**
      * 否

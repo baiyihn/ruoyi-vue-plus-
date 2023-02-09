@@ -26,7 +26,7 @@ import static com.zhi.common.enums.blog.ArticleStatusEnum.PUBLIC;
 @Service("mySqlSearchStrategyImpl")
 public class MySqlSearchStrategyImpl implements SearchStrategy {
     @Resource
-    private ArticleMapper articleDao;
+    private ArticleMapper articleMapper;
 
     @Override
     public List<ArticleSearchDTO> searchArticle(String keywords) {
@@ -35,7 +35,7 @@ public class MySqlSearchStrategyImpl implements SearchStrategy {
             return new ArrayList<>();
         }
         // 搜索文章
-        List<Article> articleList = articleDao.selectList(new LambdaQueryWrapper<Article>()
+        List<Article> articleList = articleMapper.selectList(new LambdaQueryWrapper<Article>()
                 .eq(Article::getIsDelete, FALSE)
                 .eq(Article::getStatus, PUBLIC.getStatus())
                 .and(i -> i.like(Article::getArticleTitle, keywords)

@@ -1,5 +1,4 @@
-package com.zhi.blog.domain;
-
+package com.zhi.blog.domain.es;
 
 import cn.easyes.annotation.IndexName;
 import com.baomidou.mybatisplus.annotation.*;
@@ -18,67 +17,43 @@ import java.util.List;
  * @date 2023-01-07
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@TableName("blog_article")
 @IndexName("blog_article")
-public class Article extends BaseEntity {
+public class EsArticle  {
 
-    private static final long serialVersionUID=1L;
 
     /**
      *ID
      */
-    @TableId(value = "id" ,type = IdType.AUTO)
     private Long id;
 
     /**
      * 作者
      */
-    private Long userId;
+    private Long user_id;
 
-    /**
-     * 作者名
-     */
-    @TableField(exist = false)
-    private String username;
 
     /**
      * 文章分类
      */
-    private Long categoryId;
+    private Long category_id;
 
-    /**
-     * 文章分类名称
-     */
-    @TableField(exist = false)
-    private String categoryName;
-
-    /**
-     * 文章标签
-     */
-    @TableField(exist = false)
-    private List<String> tagNameList;
 
     /**
      * 文章缩略图
      */
-    private String articleCover;
+    private String article_cover;
 
-    /**
-     * 缩略图地址
-     */
-    @TableField(exist = false)
-    private SysOss sysOss;
+
 
     /**
      * 标题
      */
-    private String articleTitle;
+    private String article_title;
 
     /**
      * 内容
      */
-    private String articleContent;
+    private String article_content;
 
     /**
      * 文章类型 1原创 2转载 3翻译
@@ -88,17 +63,17 @@ public class Article extends BaseEntity {
     /**
      * 原文链接
      */
-    private String originalUrl;
+    private String original_url;
 
     /**
      * 是否置顶 0否 1是
      */
-    private Integer isTop;
+    private Integer is_top;
 
     /**
      * 是否删除 0否 1是
      */
-    private Integer isDelete;
+    private Integer is_delete;
 
     /**
      * 状态值 1公开 2私密 3评论可见
@@ -108,11 +83,11 @@ public class Article extends BaseEntity {
     /**
      * 点赞数
      */
-    private Long likeCount;
+    private Long like_count;
 
     /**
      * 浏览量
      */
-    private Long viewsCount;
+    private Long views_count;
 
 }

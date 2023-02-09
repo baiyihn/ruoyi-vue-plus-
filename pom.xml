@@ -38,10 +38,11 @@
         <lombok.version>1.18.24</lombok.version>
         <rabbitmq.version>2.4.1</rabbitmq.version>
         <mail.version>2.4.1</mail.version>
-        <elasticsearch.version>2.4.1</elasticsearch.version>
         <commons-pool2.version>2.8.0</commons-pool2.version>
         <justauth-spring-boot.version>1.4.0</justauth-spring-boot.version>
         <websocket.version>2.4.1</websocket.version>
+        <easy-es.version>1.1.1</easy-es.version>
+
 
         <!-- 统一 guava 版本 解决隐式漏洞问题 -->
         <guava.version>31.1-jre</guava.version>
@@ -287,14 +288,6 @@
                 <version>${rabbitmq.version}</version>
             </dependency>
 
-            <!-- elasticsearch-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-                <version>${elasticsearch.version}</version>
-            </dependency>
-
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-mail</artifactId>
@@ -320,6 +313,14 @@
                 <artifactId>spring-boot-starter-websocket</artifactId>
                 <version>${websocket.version}</version>
             </dependency>
+
+            <!--  easy-es  -->
+            <dependency>
+                <groupId>cn.easy-es</groupId>
+                <artifactId>easy-es-boot-starter</artifactId>
+                <version>${easy-es.version}</version>
+            </dependency>
+
 
             <!-- demo模块 -->
             <dependency>

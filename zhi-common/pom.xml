@@ -152,6 +152,13 @@
             <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
         </dependency>
 
+        <!--easy-es-->
+        <dependency>
+            <groupId>cn.easy-es</groupId>
+            <artifactId>easy-es-boot-starter</artifactId>
+        </dependency>
+
+
 
         <!--fastJson-->
         <dependency>

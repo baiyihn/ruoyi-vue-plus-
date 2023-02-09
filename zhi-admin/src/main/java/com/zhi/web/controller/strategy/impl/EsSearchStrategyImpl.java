@@ -1,15 +1,12 @@
 package com.zhi.web.controller.strategy.impl;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import cn.easyes.core.conditions.LambdaEsQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.zhi.blog.domain.Article;
+import com.zhi.blog.domain.es.EsArticle;
 import com.zhi.blog.dto.ArticleSearchDTO;
+import com.zhi.blog.easyesMapper.EsArticleMapper;
 import com.zhi.web.controller.strategy.SearchStrategy;
 import lombok.extern.log4j.Log4j2;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
-import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -29,75 +26,54 @@ import static com.zhi.common.enums.blog.ArticleStatusEnum.PUBLIC;
 public class EsSearchStrategyImpl implements SearchStrategy {
 
     @Resource
-    private ElasticsearchRestTemplate elasticsearchRestTemplate;
+    private EsArticleMapper esArticleMapper;
 
     @Override
     public List<ArticleSearchDTO> searchArticle(String keywords) {
         if (StringUtils.isBlank(keywords)) {
             return new ArrayList<>();
         }
-        return search(buildQuery(keywords));
-    }
+        // 搜索文章
+        LambdaEsQueryWrapper<EsArticle> wrapper = new LambdaEsQueryWrapper<>();
+        wrapper
+            .eq(EsArticle::getStatus,ISTRUE)
+            .eq(EsArticle::getType,ISTRUE)
+            .and(i -> i
+                .like(EsArticle::getArticle_title, keywords)
+                .or()
+                .like(EsArticle::getArticle_content, keywords)
+            );
 
-    /**
-     * 搜索文章构造
-     *
-     * @param keywords 关键字
-     * @return es条件构造器
-     */
-    private NativeSearchQueryBuilder buildQuery(String keywords) {
-        // 条件构造器
-        NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
-        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        // 根据关键词搜索文章标题或内容
-        boolQueryBuilder.must(QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("articleTitle", keywords))
-                        .should(QueryBuilders.matchQuery("articleContent", keywords)))
-                .must(QueryBuilders.termQuery("isDelete", FALSE))
-                .must(QueryBuilders.termQuery("status", PUBLIC.getStatus()));
-        nativeSearchQueryBuilder.withQuery(boolQueryBuilder);
-        return nativeSearchQueryBuilder;
-    }
 
-    /**
-     * 文章搜索结果高亮
-     *
-     * @param nativeSearchQueryBuilder es条件构造器
-     * @return 搜索结果
-     */
-    private List<ArticleSearchDTO> search(NativeSearchQueryBuilder nativeSearchQueryBuilder) {
-        // 添加文章标题高亮
-        HighlightBuilder.Field titleField = new HighlightBuilder.Field("articleTitle");
-        titleField.preTags(PRE_TAG);
-        titleField.postTags(POST_TAG);
-        // 添加文章内容高亮
-        HighlightBuilder.Field contentField = new HighlightBuilder.Field("articleContent");
-        contentField.preTags(PRE_TAG);
-        contentField.postTags(POST_TAG);
-        contentField.fragmentSize(200);
-        nativeSearchQueryBuilder.withHighlightFields(titleField, contentField);
-        // 搜索
-        try {
-            SearchHits<ArticleSearchDTO> search = elasticsearchRestTemplate.search(nativeSearchQueryBuilder.build(), ArticleSearchDTO.class);
-            return search.getSearchHits().stream().map(hit -> {
-                ArticleSearchDTO article = hit.getContent();
-                // 获取文章标题高亮数据
-                List<String> titleHighLightList = hit.getHighlightFields().get("articleTitle");
-                if (CollectionUtils.isNotEmpty(titleHighLightList)) {
-                    // 替换标题数据
-                    article.setArticleTitle(titleHighLightList.get(0));
-                }
-                // 获取文章内容高亮数据
-                List<String> contentHighLightList = hit.getHighlightFields().get("articleContent");
-                if (CollectionUtils.isNotEmpty(contentHighLightList)) {
-                    // 替换内容数据
-                    article.setArticleContent(contentHighLightList.get(contentHighLightList.size() - 1));
-                }
-                return article;
-            }).collect(Collectors.toList());
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        return new ArrayList<>();
+        List<EsArticle> articleList = esArticleMapper.selectList(wrapper);
+
+
+        // 高亮处理
+        return articleList.stream().map(item -> {
+            // 获取关键词第一次出现的位置
+            String articleContent = item.getArticle_content();
+            int index = item.getArticle_content().indexOf(keywords);
+            if (index != -1) {
+                // 获取关键词前面的文字
+                int preIndex = index > 25 ? index - 25 : 0;
+                String preText = item.getArticle_content().substring(preIndex, index);
+                // 获取关键词到后面的文字
+                int last = index + keywords.length();
+                int postLength = item.getArticle_content().length() - last;
+                int postIndex = postLength > 175 ? last + 175 : last + postLength;
+                String postText = item.getArticle_content().substring(index, postIndex);
+                // 文章内容高亮
+                articleContent = (preText + postText).replaceAll(keywords, PRE_TAG + keywords + POST_TAG);
+            }
+            // 文章标题高亮
+            String articleTitle = item.getArticle_title().replaceAll(keywords, PRE_TAG + keywords + POST_TAG);
+            return ArticleSearchDTO.builder()
+                .id(item.getId())
+                .articleTitle(articleTitle)
+                .articleContent(articleContent)
+                .build();
+        }).collect(Collectors.toList());
+
     }
 
 }
