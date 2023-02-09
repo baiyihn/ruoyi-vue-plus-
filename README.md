@@ -44,6 +44,7 @@
 | domain-vo | 后端给前端后台管理系统返回的数据层。 |
 | dto | 后端给前端前台界面返回的数据  |
 | dto-vo | 前端的前台界面给后端返回的数据 |
+| domain-es | es索引对应查询的实体类 |
 
 ## 博客特点：
 - 项目规范，属于企业级博客
@@ -55,10 +56,11 @@
 - 使用just-auth集成三方登录，便于拓展
 - 前台参考"Hexo"的"Butterfly"设计
 - 后台根据ruoyi-vue-plus开发十分贴合企业级开发规范
+- 整合了easy_es mail等流行框架
 
 ## 使用技术：
 ### 前端：前端： vue + vuex + vue-router + axios + vuetify + element + echarts
-### 后端： SpringBoot + nginx + docker + sa-token + Swagger2 + MyBatisPlus + Mysql + Redis + elasticsearch + RabbitMQ + MaxWell + Websocket
+### 后端： SpringBoot + easy_es + nginx + docker + sa-token + Swagger2 + MyBatisPlus + Mysql + Redis + elasticsearch + RabbitMQ + MaxWell + Websocket
 
 
 ## 存储：使用当前主流的三方云端，cos/oss/七牛等动态切换
