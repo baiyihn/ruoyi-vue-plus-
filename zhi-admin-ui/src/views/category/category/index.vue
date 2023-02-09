@@ -64,7 +64,13 @@
     <el-table v-loading="loading" :data="categoryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
 <!--      <el-table-column label="" align="center" prop="id" v-if="true"/>-->
-      <el-table-column label="分类名" align="center" prop="categoryName" />
+
+      <el-table-column  label="分类名" align="center" prop="categoryName" >
+        <template slot-scope="scope">
+          <el-tag type="warning">{{scope.row.categoryName}}</el-tag>
+        </template>
+      </el-table-column>>
+
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

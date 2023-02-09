@@ -64,7 +64,16 @@
     <el-table v-loading="loading" :data="tagList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="id" align="center" prop="id" v-if="true"/>
-      <el-table-column label="标签名" align="center" prop="tagName" />
+
+      <el-table-column  label="标签名" align="center" prop="tagName" >
+        <template slot-scope="scope">
+          <el-tag type="success">{{scope.row.tagName}}</el-tag>
+        </template>
+      </el-table-column>>
+
+
+
+
       <el-table-column label="文章数量" align="center" prop="articleCount"/>
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
