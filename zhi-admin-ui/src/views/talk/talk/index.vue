@@ -91,7 +91,6 @@ export default {
   methods: {
 
     addEmoji(key, value) {
-      console.log(key+"6666666666"+value)
       this.$refs.editor.addText(
         value
       );

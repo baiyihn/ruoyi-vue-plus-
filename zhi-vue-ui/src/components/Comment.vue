@@ -201,7 +201,8 @@
 import Reply from "./Reply";
 import Paging from "./Paging";
 import Emoji from "./Emoji";
-import EmojiList from "../assets/js/emoji";
+// import EmojiList from "../assets/js/emoji";
+import NewEmojiList from "@/assets/js/newEmoji";
 export default {
   components: {
     Reply,
@@ -311,11 +312,9 @@ export default {
       }
       //解析表情
       var reg = /\[.+?\]/g;
-      this.commentContent = this.commentContent.replace(reg, function(str) {
+      this.commentContent = this.commentContent.replace(reg, function() {
         return (
-          "<img src= '" +
-          EmojiList[str] +
-          "' width='24'height='24' style='margin: 0 1px;vertical-align: text-bottom'/>"
+          NewEmojiList
         );
       });
       //发送请求

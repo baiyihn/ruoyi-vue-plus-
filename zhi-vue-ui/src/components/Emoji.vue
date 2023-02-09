@@ -2,24 +2,31 @@
   <div v-show="chooseEmoji" class="emoji-wrapper">
     <span
       class="emoji-item"
-      v-for="(value, key, index) of emojiList"
+      v-for="(value, key, index) of newEmojiList"
       :key="index"
-      @click="addEmoji(key)"
+      @click="addEmoji(key, value)"
     >
-      <v-img
-        :lazy-src="value"
-        :src="value"
-        :title="key"
-        class="emoji"
-        width="24"
-        height="24"
-      />
+         <div
+             class="emoji"
+             width="24"
+             height="24">
+                {{value}}
+              </div>
+<!--      <v-img-->
+<!--        :lazy-src="value"-->
+<!--        :src="value"-->
+<!--        :title="key"-->
+<!--        class="emoji"-->
+<!--        width="24"-->
+<!--        height="24"-->
+<!--      />-->
     </span>
   </div>
 </template>
 
 <script>
 import EmojiList from "../assets/js/emoji";
+import NewEmojiList from "@/assets/js/newEmoji";
 export default {
   props: {
     chooseEmoji: {
@@ -28,12 +35,14 @@ export default {
   },
   data: function() {
     return {
-      emojiList: EmojiList
+      emojiList: EmojiList,
+      newEmojiList: NewEmojiList
+
     };
   },
   methods: {
-    addEmoji(key) {
-      this.$emit("addEmoji", key);
+    addEmoji(key,value) {
+      this.$emit("addEmoji", value);
     }
   }
 };
