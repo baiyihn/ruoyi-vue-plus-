@@ -1,5 +1,8 @@
 package com.zhi.blog.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhi.blog.domain.Article;
 import com.zhi.blog.domain.Tag;
 import com.zhi.blog.domain.vo.ArticleVo;
@@ -8,6 +11,9 @@ import com.zhi.blog.dto.ArticleHomeDTO;
 import com.zhi.blog.dto.ArticlePreviewDTO;
 import com.zhi.blog.dto.ArticleRecommendDTO;
 import com.zhi.blog.dto.vo.ConditionVO;
+import com.zhi.common.annotation.DataColumn;
+import com.zhi.common.annotation.DataPermission;
+import com.zhi.common.core.domain.entity.SysUser;
 import com.zhi.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -171,7 +177,17 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
     String getUsernameById(Long id);
 
 
-
+    /**
+     * 动态数据权限查询文章
+     */
+    @DataPermission({
+        @DataColumn(key = "deptName", value = "d.dept_id"),
+        @DataColumn(key = "userName", value = "u.user_id")
+    })
+    @Select("  select * from  blog_article b\n" +
+        "        left join sys_user u on b.user_id = u.user_id\n" +
+        "        ${ew.getCustomSqlSegment}")
+     Page<ArticleVo> selectPageArticlesList(@Param("page") Page<Article> page, @Param(Constants.WRAPPER) Wrapper<Article> queryWrapper);
 
 
 

@@ -280,7 +280,8 @@ public class ArticleServiceImpl implements IArticleService {
     @Override
     public TableDataInfo<ArticleVo> queryPageList(ArticleBo bo, PageQuery pageQuery) {
         LambdaQueryWrapper<Article> lqw = buildQueryWrapper(bo);
-        Page<ArticleVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
+//        Page<ArticleVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
+        Page<ArticleVo> result = baseMapper.selectPageArticlesList(pageQuery.build(),lqw);
         for(ArticleVo articleVo :result.getRecords()){
             articleVo.setArticleCover(baseMapper.ImgUrl(Long.parseLong(articleVo.getArticleCover())));
             articleVo.setCategoryName(baseMapper.selectCategoryNameById(articleVo.getCategoryId()));
