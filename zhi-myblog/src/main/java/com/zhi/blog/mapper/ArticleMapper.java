@@ -1,6 +1,7 @@
 package com.zhi.blog.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhi.blog.domain.Article;
@@ -30,6 +31,12 @@ import java.util.List;
  */
 public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, ArticleVo> {
 
+        @Override
+        @DataPermission({
+        @DataColumn(key = "deptName", value = "dept_id"),
+        @DataColumn(key = "userName", value = "user_id")
+    })
+    <P extends IPage<Article>> P selectPage(P page, @Param(Constants.WRAPPER) Wrapper<Article> queryWrapper);
 
 
 
@@ -177,17 +184,7 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
     String getUsernameById(Long id);
 
 
-    /**
-     * 动态数据权限查询文章
-     */
-    @DataPermission({
-        @DataColumn(key = "deptName", value = "d.dept_id"),
-        @DataColumn(key = "userName", value = "u.user_id")
-    })
-    @Select("  select * from  blog_article b\n" +
-        "        left join sys_user u on b.user_id = u.user_id\n" +
-        "        ${ew.getCustomSqlSegment}")
-     Page<ArticleVo> selectPageArticlesList(@Param("page") Page<Article> page, @Param(Constants.WRAPPER) Wrapper<Article> queryWrapper);
+
 
 
 

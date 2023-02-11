@@ -1,5 +1,6 @@
 package com.zhi.blog.service.impl;
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhi.blog.blogutils.CategoryOrTag;
 import com.zhi.blog.domain.Category;
@@ -275,13 +276,12 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     /**
-     * 查询文章列表列表
+     * 后台查询文章列表列表
      */
     @Override
     public TableDataInfo<ArticleVo> queryPageList(ArticleBo bo, PageQuery pageQuery) {
         LambdaQueryWrapper<Article> lqw = buildQueryWrapper(bo);
-//        Page<ArticleVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
-        Page<ArticleVo> result = baseMapper.selectPageArticlesList(pageQuery.build(),lqw);
+        Page<ArticleVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         for(ArticleVo articleVo :result.getRecords()){
             articleVo.setArticleCover(baseMapper.ImgUrl(Long.parseLong(articleVo.getArticleCover())));
             articleVo.setCategoryName(baseMapper.selectCategoryNameById(articleVo.getCategoryId()));
