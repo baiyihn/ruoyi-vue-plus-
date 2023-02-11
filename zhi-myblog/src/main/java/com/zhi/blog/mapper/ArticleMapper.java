@@ -31,13 +31,12 @@ import java.util.List;
  */
 public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, ArticleVo> {
 
-        @Override
-        @DataPermission({
+    @Override
+    @DataPermission({
         @DataColumn(key = "deptName", value = "dept_id"),
         @DataColumn(key = "userName", value = "user_id")
     })
     <P extends IPage<Article>> P selectPage(P page, @Param(Constants.WRAPPER) Wrapper<Article> queryWrapper);
-
 
 
     /**
@@ -98,9 +97,9 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
     List<ArticlePreviewDTO> listArticlesByCondition(@Param("current") Long current, @Param("size") Long size, @Param("condition") ConditionVO condition);
 
 
-
     /**
      * 查询全部文章列表
+     *
      * @return
      */
     @Select("  select a.id,a.user_id,a.category_id,o.url as article_cover,a.article_title,a.article_content,a.type,a.original_url,a.is_top,a.is_delete,a.status," +
@@ -114,6 +113,7 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
 
     /**
      * 根据id查询文章列表
+     *
      * @param id
      * @return
      */
@@ -127,6 +127,7 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
 
     /**
      * 根据id查询文章标签
+     *
      * @param id
      * @return
      */
@@ -142,7 +143,7 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
      * 根据id插入标签数据
      */
     @Insert("INSERT INTO blog_article_tag(article_id,tag_id) VALUES(#{aid},#{tid})")
-    int insertById(@Param("aid") Long aid , @Param("tid") Long tid);
+    int insertById(@Param("aid") Long aid, @Param("tid") Long tid);
 
     /**
      * 根据名称标签查询标签id
@@ -182,13 +183,6 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
      */
     @Select("select u.user_name from sys_user u where u.user_id = #{id}")
     String getUsernameById(Long id);
-
-
-
-
-
-
-
 
 
 }
