@@ -1,14 +1,6 @@
 package com.zhi.blog.domain.es;
-
 import cn.easyes.annotation.IndexName;
-import com.baomidou.mybatisplus.annotation.*;
-import com.zhi.common.core.domain.BaseEntity;
-import com.zhi.system.domain.SysOss;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.util.List;
-
 
 /**
  * 文章列表对象 blog_article
@@ -16,6 +8,7 @@ import java.util.List;
  * @author ftz
  * @date 2023-01-07
  */
+
 @Data
 @IndexName("blog_article")
 public class EsArticle  {
