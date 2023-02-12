@@ -85,7 +85,7 @@ export default {
           this.$store.commit("updateUserInfo", this.userInfo);
           this.$toast({ type: "success", message: "修改成功" });
         } else {
-          this.$toast({ type: "error", message: data.message });
+          this.$toast({ type: "error", message: data.msg });
         }
       });
     },
