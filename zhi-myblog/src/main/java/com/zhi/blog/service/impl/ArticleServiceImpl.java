@@ -103,13 +103,14 @@ public class ArticleServiceImpl implements IArticleService {
     public PageResult<ArchiveDTO> listArchives() {
         Page<Article> page = new Page<>(PageUtils.getCurrent(), PageUtils.getSize());
         // 获取分页数据
-        Page<Article> articlePage = baseMapper.selectPage(page, new LambdaQueryWrapper<Article>()
+//        Page<Article> articlePage = baseMapper.selectPage(page, new LambdaQueryWrapper<Article>()
+            List<Article> articlePage = baseMapper.selectList(new LambdaQueryWrapper<Article>()
             .select(Article::getId, Article::getArticleTitle, Article::getCreateTime)
             .orderByDesc(Article::getCreateTime)
             .eq(Article::getIsDelete, FALSE)
             .eq(Article::getStatus, PUBLIC.getStatus()));
-        List<ArchiveDTO> archiveDTOList = BeanCopyUtils.copyList(articlePage.getRecords(), ArchiveDTO.class);
-        return new PageResult<>(archiveDTOList, (int) articlePage.getTotal());
+        List<ArchiveDTO> archiveDTOList = BeanCopyUtils.copyList(articlePage, ArchiveDTO.class);
+        return new PageResult<>(archiveDTOList, (int) articlePage.size());
     }
 
 

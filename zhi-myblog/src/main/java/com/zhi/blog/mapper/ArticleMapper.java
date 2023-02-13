@@ -39,6 +39,8 @@ public interface ArticleMapper extends BaseMapperPlus<ArticleMapper, Article, Ar
     <P extends IPage<Article>> P selectPage(P page, @Param(Constants.WRAPPER) Wrapper<Article> queryWrapper);
 
 
+
+
     /**
      * 查询首页文章
      *
