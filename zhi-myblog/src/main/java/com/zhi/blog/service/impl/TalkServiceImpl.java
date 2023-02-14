@@ -1,5 +1,6 @@
 package com.zhi.blog.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import com.zhi.blog.domain.vo.PageResult;
 import com.zhi.blog.dto.CommentCountDTO;
@@ -172,7 +173,10 @@ public class TalkServiceImpl implements ITalkService {
      */
     @Override
     public Boolean insertByBo(TalkBo bo) {
-        bo.setUserId(baseMapper.getUserIdByName(bo.getCreateBy()));
+        String id = StpUtil.getLoginIdAsString();
+        Long.parseLong(id.substring(id.indexOf(":")+1));
+        bo.setUserId(Long.parseLong(id.substring(id.indexOf(":")+1)));
+//        bo.setUserId(baseMapper.getUserIdByName(bo.getCreateBy()));
         if (Objects.nonNull(bo.getImages())){
             List<String> list = Arrays.asList(bo.getImages().split(","));
             // 将图片转换为url路径
@@ -192,7 +196,10 @@ public class TalkServiceImpl implements ITalkService {
      */
     @Override
     public Boolean updateByBo(TalkBo bo) {
-        bo.setUserId(baseMapper.getUserIdByName(bo.getCreateBy()));
+        String id = StpUtil.getLoginIdAsString();
+        Long.parseLong(id.substring(id.indexOf(":")+1));
+        bo.setUserId(Long.parseLong(id.substring(id.indexOf(":")+1)));
+//        bo.setUserId(baseMapper.getUserIdByName(bo.getCreateBy()));
         if (Objects.nonNull(bo.getImages())){
             List<String> list = Arrays.asList(bo.getImages().split(","));
             // 将图片转换为url路径
