@@ -176,7 +176,6 @@ public class TalkServiceImpl implements ITalkService {
         String id = StpUtil.getLoginIdAsString();
         Long.parseLong(id.substring(id.indexOf(":")+1));
         bo.setUserId(Long.parseLong(id.substring(id.indexOf(":")+1)));
-//        bo.setUserId(baseMapper.getUserIdByName(bo.getCreateBy()));
         if (Objects.nonNull(bo.getImages())){
             List<String> list = Arrays.asList(bo.getImages().split(","));
             // 将图片转换为url路径
@@ -199,7 +198,6 @@ public class TalkServiceImpl implements ITalkService {
         String id = StpUtil.getLoginIdAsString();
         Long.parseLong(id.substring(id.indexOf(":")+1));
         bo.setUserId(Long.parseLong(id.substring(id.indexOf(":")+1)));
-//        bo.setUserId(baseMapper.getUserIdByName(bo.getCreateBy()));
         if (Objects.nonNull(bo.getImages())){
             List<String> list = Arrays.asList(bo.getImages().split(","));
             // 将图片转换为url路径
