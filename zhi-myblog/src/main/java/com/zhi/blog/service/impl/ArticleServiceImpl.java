@@ -1,4 +1,5 @@
 package com.zhi.blog.service.impl;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -322,7 +323,9 @@ public class ArticleServiceImpl implements IArticleService {
      */
     @Override
     public Boolean insertByBo(ArticleBo bo) {
-        bo.setUserId(baseMapper.getUserIdByName(bo.getCreateBy()));
+        String id = StpUtil.getLoginIdAsString();
+        Long.parseLong(id.substring(id.indexOf(":")+1));
+        bo.setUserId(Long.parseLong(id.substring(id.indexOf(":")+1)));
         //设置文章分类
         categoryOrTag.AddCateOrTag(bo);
         bo.setCategoryId(categoryMapper.selectIdByName(bo.getCategoryName()));
