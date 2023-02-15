@@ -52,7 +52,6 @@ import EmailModel from "./components/model/EmailModel";
 import Player from "./components/zw-player/player.vue";
 import ChatRoom from "./components/ChatRoom";
 import ToggleDay from "./components/base/toggle_day/ToggleDay.vue";
-
 export default {
     created() {
         //  获取博客信息

@@ -34,6 +34,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+
 import static com.zhi.common.constant.blog.CommonConst.ARTICLE_SET;
 import static com.zhi.common.constant.blog.CommonConst.FALSE;
 import static com.zhi.common.constant.blog.RedisPrefixConst.*;
@@ -155,9 +157,10 @@ public class ArticleServiceImpl implements IArticleService {
                     .orderByDesc(Article::getId)
                     .last("limit 5"));
                 // 将前台图片转换为url
-                articleList.forEach(item ->{
-                    item.setArticleCover(baseMapper.ImgUrl(Long.parseLong(item.getArticleCover())));
-                });
+                articleList.stream().map(i -> {
+                    i.setArticleCover(baseMapper.ImgUrl(Long.parseLong(i.getArticleCover())));
+                    return i;
+                }).collect(Collectors.toList());
                 return BeanCopyUtils.copyList(articleList, ArticleRecommendDTO.class);
             });
         // 查询id对应文章

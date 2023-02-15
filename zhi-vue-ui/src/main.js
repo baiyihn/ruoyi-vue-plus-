@@ -21,7 +21,6 @@ import "vue-image-swipe/dist/vue-image-swipe.css";
 import Toast from "./components/toast/index";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-
 Vue.prototype.config = config;
 Vue.config.productionTip = false;
 Vue.use(animated);
@@ -31,6 +30,7 @@ Vue.use(InfiniteLoading);
 Vue.use(VueAxios, axios);
 Vue.use(VueImageSwipe);
 Vue.use(Toast);
+
 
 Vue.filter("date", function(value) {
   return dayjs(value).format("YYYY-MM-DD");

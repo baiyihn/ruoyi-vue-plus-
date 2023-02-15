@@ -55,7 +55,6 @@ export default {
 
       this.showText = "";
       clearTimeout(this.timer);
-
       var speed = 200; //设置定时的速度 越来越快
       var count = 1;
 

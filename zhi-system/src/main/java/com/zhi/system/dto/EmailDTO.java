@@ -1,10 +1,8 @@
 package com.zhi.system.dto;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 /**
  * 邮件
  *

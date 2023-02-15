@@ -1,19 +1,14 @@
 package com.zhi.web.controller.consumer;
-
 import com.alibaba.fastjson.JSON;
-import com.zhi.system.dto.EmailDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
-
 import static com.zhi.common.constant.blog.MQPrefixConst.EMAIL_QUEUE;
-
+import com.zhi.system.dto.EmailDTO;
 /**
  * 通知邮箱
  *
