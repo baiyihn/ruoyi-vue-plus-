@@ -107,7 +107,6 @@ export default {
       //修改说说
       if (this.$route.query.id) {
         updateTalk(this.talk).then(response =>{
-          console.log(888888888888888888888888)
           if (response.code == 200){
             this.$refs.editor.clear();
             this.uploadList = [];
@@ -121,7 +120,6 @@ export default {
       }
         //新增说说
         addTalk(this.talk).then( response =>{
-          console.log(9999999999999999999)
           if (response.code == 200){
             this.$refs.editor.clear();
             this.uploadList = [];

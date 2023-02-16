@@ -264,9 +264,6 @@ export default {
         this.loading = false;
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(response => {
-        this.loading = false;
-        this.$modal.msgWarning(response.msg)
       }).finally(() => {
         this.loading = false;
       });
