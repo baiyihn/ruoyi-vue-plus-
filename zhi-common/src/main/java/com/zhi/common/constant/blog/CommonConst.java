@@ -9,6 +9,11 @@ package com.zhi.common.constant.blog;
  */
 public class CommonConst {
 
+    /**
+     * 默认文章标签/分类
+     */
+    public static final String DEFAULT = "默认";
+
 
 
     /**

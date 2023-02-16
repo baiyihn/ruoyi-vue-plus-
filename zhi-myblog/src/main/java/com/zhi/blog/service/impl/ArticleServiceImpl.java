@@ -1,6 +1,7 @@
 package com.zhi.blog.service.impl;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhi.blog.blogutils.CategoryOrTag;
@@ -17,6 +18,7 @@ import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zhi.common.exception.base.BaseException;
+import com.zhi.common.helper.LoginHelper;
 import com.zhi.common.utils.BeanCopyUtils;
 import com.zhi.common.utils.StringUtils;
 import com.zhi.common.utils.blog.PageUtils;
@@ -36,8 +38,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-import static com.zhi.common.constant.blog.CommonConst.ARTICLE_SET;
-import static com.zhi.common.constant.blog.CommonConst.FALSE;
+import static com.zhi.common.constant.blog.CommonConst.*;
 import static com.zhi.common.constant.blog.RedisPrefixConst.*;
 import static com.zhi.common.enums.blog.ArticleStatusEnum.PUBLIC;
 
@@ -326,9 +327,11 @@ public class ArticleServiceImpl implements IArticleService {
      */
     @Override
     public Boolean insertByBo(ArticleBo bo) {
-        String id = StpUtil.getLoginIdAsString();
-        Long.parseLong(id.substring(id.indexOf(":")+1));
-        bo.setUserId(Long.parseLong(id.substring(id.indexOf(":")+1)));
+        bo.setUserId(LoginHelper.getUserId());
+       // 没有传值默认分配
+        if (StringUtils.isEmpty(bo.getCategoryName())){
+            bo.setCategoryName(DEFAULT);
+        }
         //设置文章分类
         categoryOrTag.AddCateOrTag(bo);
         bo.setCategoryId(categoryMapper.selectIdByName(bo.getCategoryName()));
@@ -337,6 +340,10 @@ public class ArticleServiceImpl implements IArticleService {
         boolean flag = baseMapper.insert(add) > 0;
         if (flag) {
             bo.setId(add.getId());
+        }
+        //给文章默认标签
+        if (bo.getTagNameList().isEmpty()){
+            bo.setTagNameList(Arrays.asList(DEFAULT));
         }
         for(String s:bo.getTagNameList()){
             // 如果是新增的标签则先将标签新增

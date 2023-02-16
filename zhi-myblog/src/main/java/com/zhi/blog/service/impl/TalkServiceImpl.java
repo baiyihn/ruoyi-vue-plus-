@@ -10,6 +10,7 @@ import com.zhi.common.core.page.TableDataInfo;
 import com.zhi.common.core.domain.PageQuery;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.zhi.common.helper.LoginHelper;
 import com.zhi.common.utils.StringUtils;
 import com.zhi.common.utils.blog.HTMLUtils;
 import com.zhi.common.utils.blog.PageUtils;
@@ -173,9 +174,7 @@ public class TalkServiceImpl implements ITalkService {
      */
     @Override
     public Boolean insertByBo(TalkBo bo) {
-        String id = StpUtil.getLoginIdAsString();
-        Long.parseLong(id.substring(id.indexOf(":")+1));
-        bo.setUserId(Long.parseLong(id.substring(id.indexOf(":")+1)));
+        bo.setUserId(LoginHelper.getUserId());
         if (Objects.nonNull(bo.getImages())){
             List<String> list = Arrays.asList(bo.getImages().split(","));
             // 将图片转换为url路径
@@ -195,9 +194,7 @@ public class TalkServiceImpl implements ITalkService {
      */
     @Override
     public Boolean updateByBo(TalkBo bo) {
-        String id = StpUtil.getLoginIdAsString();
-        Long.parseLong(id.substring(id.indexOf(":")+1));
-        bo.setUserId(Long.parseLong(id.substring(id.indexOf(":")+1)));
+        bo.setUserId(LoginHelper.getUserId());
         if (Objects.nonNull(bo.getImages())){
             List<String> list = Arrays.asList(bo.getImages().split(","));
             // 将图片转换为url路径
