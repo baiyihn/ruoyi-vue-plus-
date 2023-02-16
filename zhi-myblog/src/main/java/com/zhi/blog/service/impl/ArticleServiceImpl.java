@@ -330,7 +330,7 @@ public class ArticleServiceImpl implements IArticleService {
         bo.setUserId(LoginHelper.getUserId());
        // 没有传值默认分配
         if (StringUtils.isEmpty(bo.getCategoryName())){
-            bo.setCategoryName(DEFAULT);
+            bo.setCategoryName(DEFAULTCATORTAG);
         }
         //设置文章分类
         categoryOrTag.AddCateOrTag(bo);
@@ -343,7 +343,7 @@ public class ArticleServiceImpl implements IArticleService {
         }
         //给文章默认标签
         if (bo.getTagNameList().isEmpty()){
-            bo.setTagNameList(Arrays.asList(DEFAULT));
+            bo.setTagNameList(Arrays.asList(DEFAULTCATORTAG));
         }
         for(String s:bo.getTagNameList()){
             // 如果是新增的标签则先将标签新增

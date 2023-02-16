@@ -27,6 +27,8 @@ import com.zhi.blog.domain.bo.CategoryBo;
 import com.zhi.blog.service.ICategoryService;
 import com.zhi.common.core.page.TableDataInfo;
 
+import static com.zhi.common.constant.blog.CommonConst.DEFAULTCATORTAGID;
+
 /**
  * 分类管理
  *
@@ -118,6 +120,9 @@ public class CategoryController extends BaseController {
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")
                           @PathVariable Long[] ids) {
+        if (Arrays.asList(ids).contains(DEFAULTCATORTAGID)){
+            return R.fail("不允许删除默认分类");
+        }
         return toAjax(iCategoryService.deleteWithValidByIds(Arrays.asList(ids), true));
     }
 }

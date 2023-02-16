@@ -12,9 +12,13 @@ public class CommonConst {
     /**
      * 默认文章标签/分类
      */
-    public static final String DEFAULT = "默认";
+    public static final String DEFAULTCATORTAG = "默认";
 
+    /**
+     * 默认文章标签/分类id
+     */
 
+    public static final Long DEFAULTCATORTAGID = Long.valueOf(1);
 
     /**
      * 已审核

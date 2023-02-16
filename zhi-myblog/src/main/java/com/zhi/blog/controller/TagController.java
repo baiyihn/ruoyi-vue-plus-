@@ -27,6 +27,8 @@ import com.zhi.blog.domain.bo.TagBo;
 import com.zhi.blog.service.ITagService;
 import com.zhi.common.core.page.TableDataInfo;
 
+import static com.zhi.common.constant.blog.CommonConst.DEFAULTCATORTAGID;
+
 /**
  * 标签管理
  *
@@ -117,6 +119,9 @@ public class TagController extends BaseController {
     @DeleteMapping("/{ids}")
     public R remove(@NotEmpty(message = "主键不能为空")
                           @PathVariable Long[] ids) {
+        if (Arrays.asList(ids).contains(DEFAULTCATORTAGID)){
+            return R.fail("不允许删除默认标签");
+        }
         return iTagService.deleteWithValidByIds(Arrays.asList(ids), true);
     }
 }
