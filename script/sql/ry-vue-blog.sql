@@ -11,7 +11,7 @@
  Target Server Version : 80017 (8.0.17)
  File Encoding         : 65001
 
- Date: 14/02/2023 22:07:34
+ Date: 19/02/2023 22:02:04
 */
 
 SET NAMES utf8mb4;
@@ -41,18 +41,14 @@ CREATE TABLE `blog_article`  (
   `update_by` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   FULLTEXT INDEX `ft_search`(`article_content`)
-) ENGINE = InnoDB AUTO_INCREMENT = 150 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 154 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of blog_article
 -- ----------------------------
-INSERT INTO `blog_article` VALUES (138, 1, 217, '1612781375180632066', '测试文章', '这一次我一定要成功', 1, '1', 0, 0, 1, '2022-11-24 20:34:47', '2023-01-17 13:03:42', 0, 1, NULL, 'admin');
 INSERT INTO `blog_article` VALUES (139, 1, 216, '1613048040015347713', '第二篇测试', 'test上传', 1, '', 0, 0, 1, '2022-12-02 15:28:58', '2023-01-11 13:39:58', 1, 8, NULL, 'admin');
 INSERT INTO `blog_article` VALUES (143, 1, 214, '1614870206843318273', '新的vue测试', '# Vue中 this.$router.push 传参 及 参数接收\n@[TOC](文章目录)\n## 1：两种方式\n### 方法一：name跳转页面\n\n```js\nthis.$router.push({name:\'anotherPage\',params:{id:1}});\n\n```\n**另一页面接收参数方式：**\n\n```js\nthis.$route.params.id\n\n```\n![在这里插入图片描述](https://img-blog.csdnimg.cn/ee3e431c7d1f42e290cacb126494598f.png)\n控制台展示：\n![在这里插入图片描述](https://img-blog.csdnimg.cn/da7e9c45e3be4ae89373ec195b0c96d7.png)\n### 方法二：path跳转页面\n\n```js\nthis.$router.push({path:\'/anotherPage\',query:{id:1}});\n\n```\n![在这里插入图片描述](https://img-blog.csdnimg.cn/a54ddde315754e65977725ffc62f1e2a.png)\n## 2、区别\n### 1、path的query传参的参数会带在url后边展示在地址栏(/anotherPage?id=1)，name的params传参的参数不会展示到地址栏。\n### 2、由于动态路由也是传递params的，所以在 this.$router.push() 方法中path不能和params一起使用，否则params将无效，需要用name来指定页面。\n\n原文链接：https://blog.csdn.net/chenxi_li/article/details/108365779', 1, NULL, 0, 0, 1, '2023-01-13 19:45:57', '2023-02-11 14:23:58', 0, 0, 'admin', 'test1');
-INSERT INTO `blog_article` VALUES (144, 4, 214, '1624311868237561857', 'test1的文章', 'test1的文章', 1, NULL, 0, 0, 1, '2023-02-11 15:38:24', '2023-02-11 15:38:38', 0, 0, 'test1', 'test1');
-INSERT INTO `blog_article` VALUES (147, 1, 214, '1625487802730811393', '1', '1', 1, NULL, 0, 0, 1, '2023-02-14 21:35:28', '2023-02-14 21:35:28', 0, 0, 'admin', 'admin');
-INSERT INTO `blog_article` VALUES (148, 1, 214, '1625487802730811393', '1', '1', 1, NULL, 0, 0, 1, '2023-02-14 21:37:22', '2023-02-14 21:37:22', 0, 0, 'admin', 'admin');
-INSERT INTO `blog_article` VALUES (149, 1, 214, '1625487802730811393', '1', '1', 1, NULL, 0, 0, 1, '2023-02-14 21:41:02', '2023-02-14 21:41:02', 0, 0, 'admin', 'admin');
+INSERT INTO `blog_article` VALUES (153, 1, 1, '1626098067067383809', '123', '123', 2, NULL, 0, 0, 2, '2023-02-16 13:56:08', '2023-02-16 13:56:08', 0, 0, 'admin', 'admin');
 
 -- ----------------------------
 -- Table structure for blog_article_tag
@@ -65,20 +61,15 @@ CREATE TABLE `blog_article_tag`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_article_tag_1`(`article_id` ASC) USING BTREE,
   INDEX `fk_article_tag_2`(`tag_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1191 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1199 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of blog_article_tag
 -- ----------------------------
 INSERT INTO `blog_article_tag` VALUES (1171, 139, 54);
 INSERT INTO `blog_article_tag` VALUES (1172, 139, 59);
-INSERT INTO `blog_article_tag` VALUES (1182, 138, 56);
-INSERT INTO `blog_article_tag` VALUES (1183, 138, 55);
 INSERT INTO `blog_article_tag` VALUES (1184, 143, 66);
-INSERT INTO `blog_article_tag` VALUES (1185, 144, 59);
-INSERT INTO `blog_article_tag` VALUES (1188, 147, 59);
-INSERT INTO `blog_article_tag` VALUES (1189, 148, 59);
-INSERT INTO `blog_article_tag` VALUES (1190, 149, 59);
+INSERT INTO `blog_article_tag` VALUES (1198, 153, 1);
 
 -- ----------------------------
 -- Table structure for blog_category
@@ -92,16 +83,16 @@ CREATE TABLE `blog_category`  (
   `create_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '创建人',
   `update_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新用户',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 226 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 228 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of blog_category
 -- ----------------------------
+INSERT INTO `blog_category` VALUES (1, '默认', '2023-02-16 14:07:57', '2023-02-16 14:07:57', 'admin', 'admin');
 INSERT INTO `blog_category` VALUES (214, '测试', '2022-11-24 20:34:23', '2023-01-07 14:48:28', NULL, 'admin');
 INSERT INTO `blog_category` VALUES (216, '正式', '2023-01-08 19:02:14', '2023-01-09 11:27:26', 'admin', 'admin');
 INSERT INTO `blog_category` VALUES (217, '付费', '2023-01-08 20:28:59', '2023-01-09 11:27:52', 'admin', 'admin');
 INSERT INTO `blog_category` VALUES (218, '积分', '2023-01-08 21:23:52', '2023-01-09 11:27:57', 'admin', 'admin');
-INSERT INTO `blog_category` VALUES (225, '', '2023-02-11 15:38:24', '2023-02-11 15:38:24', 'test1', 'test1');
 
 -- ----------------------------
 -- Table structure for blog_chat_record
@@ -208,13 +199,14 @@ CREATE TABLE `blog_message`  (
   `create_by` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `update_by` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3947 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3948 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of blog_message
 -- ----------------------------
 INSERT INTO `blog_message` VALUES (1, 'water-之', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/01/10/180d5a6553f04ebda0c70efd8c69bebe.jpg', '测试留言', '127.0.0.1', NULL, 10, 'Y', '2023-01-20 16:52:48', '2023-01-14 21:31:42', NULL, 'admin');
 INSERT INTO `blog_message` VALUES (3946, '老爸', 'https://s1.ax1x.com/2023/01/15/pSQf91A.jpg', '123123', '127.0.0.1', '', 9, 'N', '2023-01-15 21:07:59', '2023-01-15 21:07:59', NULL, NULL);
+INSERT INTO `blog_message` VALUES (3947, '游客', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/01/11/d917e0eddca44f41ba8e4befd51758c6.jpg', '123', '4.2.2.2', '美国', 7, 'Y', '2023-02-17 16:34:21', '2023-02-17 16:34:21', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for blog_operation_log
@@ -286,11 +278,12 @@ CREATE TABLE `blog_tag`  (
   `update_by` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 67 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 68 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of blog_tag
 -- ----------------------------
+INSERT INTO `blog_tag` VALUES (1, '默认', 'admin', '2023-02-16 13:42:39', 'admin', '2023-02-16 14:12:43');
 INSERT INTO `blog_tag` VALUES (54, '测试', NULL, NULL, 'admin', '2023-01-08 15:01:53');
 INSERT INTO `blog_tag` VALUES (55, 'vue', 'admin', '2023-01-09 11:44:46', 'admin', '2023-01-09 11:44:46');
 INSERT INTO `blog_tag` VALUES (56, 'springboot', 'admin', '2023-01-09 11:44:54', 'admin', '2023-01-09 11:44:54');
@@ -312,16 +305,15 @@ CREATE TABLE `blog_talk`  (
   `create_by` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `update_by` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of blog_talk
 -- ----------------------------
-INSERT INTO `blog_talk` VALUES (50, 1, '测试发布说说<img src=\"https://static.talkxj.com/emoji/xh.jpg\" width=\"24\" height=\"24\" alt=\"[喜欢]\" style=\"margin: 0 1px;vertical-align: text-bottom\"><img src=\"https://static.talkxj.com/emoji/tiaopi.jpg\" width=\"24\" height=\"24\" alt=\"[调皮]\" style=\"margin: 0 1px;vertical-align: text-bottom\"><img src=\"https://static.talkxj.com/emoji/dacall.jpg\" width=\"24\" height=\"24\" alt=\"[打call]\" style=\"margin: 0 1px;vertical-align: text-bottom\">', '1614121020367577090,1614870976800092162', 0, '2023-01-14 12:43:42', '2023-01-16 14:23:46', 'admin', 'admin');
-INSERT INTO `blog_talk` VALUES (51, 1, '快去写说说啦<img src=\"https://static.talkxj.com/emoji/xh.jpg\" width=\"24\" height=\"24\" alt=\"[喜欢]\" style=\"margin: 0 1px;vertical-align: text-bottom\">', NULL, 0, '2023-01-14 14:42:47', NULL, NULL, NULL);
 INSERT INTO `blog_talk` VALUES (52, 1, '😀😃😂', NULL, 0, '2023-02-08 22:24:16', '2023-02-08 22:24:16', 'admin', 'admin');
-INSERT INTO `blog_talk` VALUES (53, 1, '<img src=\"123\" width=\"24\" height=\"24\" alt=\"[微笑]\" style=\"margin: 0 1px;vertical-align: text-bottom\"><img src=\"😄 \" width=\"24\" height=\"24\" alt=\"[大笑]\" style=\"margin: 0 1px;vertical-align: text-bottom\"><img src=\"😅\" width=\"24\" height=\"24\" alt=\"[苦笑]\" style=\"margin: 0 1px;vertical-align: text-bottom\"><img src=\"🤣\" width=\"24\" height=\"24\" alt=\"[笑出泪]\" style=\"margin: 0 1px;vertical-align: text-bottom\"><img src=\"😉\" width=\"24\" height=\"24\" alt=\"[眨眼]\" style=\"margin: 0 1px;vertical-align: text-bottom\">', NULL, 0, '2023-02-08 22:44:27', '2023-02-08 22:44:27', 'admin', 'admin');
-INSERT INTO `blog_talk` VALUES (54, 1, '😄 😆😉🙂', NULL, 0, '2023-02-08 22:47:21', '2023-02-08 22:47:21', 'admin', 'admin');
+INSERT INTO `blog_talk` VALUES (54, 1, '😄 😆😉🙂', NULL, 0, '2023-02-08 22:47:21', '2023-02-16 14:18:32', 'admin', 'admin');
+INSERT INTO `blog_talk` VALUES (55, 1, '😁😆', NULL, 0, '2023-02-15 21:08:07', '2023-02-16 14:19:26', 'admin', 'admin');
+INSERT INTO `blog_talk` VALUES (59, 1, '123666', '1626104384729489409', 0, '2023-02-16 14:21:13', '2023-02-16 14:21:26', 'admin', 'admin');
 
 -- ----------------------------
 -- Table structure for blog_website_config
@@ -338,7 +330,7 @@ CREATE TABLE `blog_website_config`  (
 -- ----------------------------
 -- Records of blog_website_config
 -- ----------------------------
-INSERT INTO `blog_website_config` VALUES (1, '{\"alipayQRCode\":\"1613170158132543490\",\"gitee\":\"https://gitee.com/kalashok-pan\",\"github\":\"\",\"isChatRoom\":0,\"isCommentReview\":1,\"isEmailNotice\":1,\"isMessageReview\":1,\"isMusicPlayer\":0,\"isReward\":1,\"qq\":\"2831826106\",\"socialLoginList\":[\"qq\",\"weibo\",\"gitee\"],\"socialUrlList\":[\"gitee\",\"qq\"],\"touristAvatar\":\"1613170094936965121\",\"userAvatar\":\"1613170007087267841\",\"websiteAuthor\":\"Water-之\",\"websiteAvatar\":\"1613182450719031297\",\"websiteCreateTime\":\"2023-02-22\",\"websiteIntro\":\"记录成长\",\"websiteName\":\"夜色\",\"websiteNotice\":\"欢迎来到我的博客\",\"websiteRecordNo\":\"备案号\",\"websocketUrl\":\"ws://localhost:8080\",\"weiXinQRCode\":\"1613170123965743105\"}', '2021-08-09 19:37:30', NULL);
+INSERT INTO `blog_website_config` VALUES (1, '{\"alipayQRCode\":\"1613170158132543490\",\"gitee\":\"https://gitee.com/kalashok-pan\",\"github\":\"\",\"isChatRoom\":0,\"isCommentReview\":1,\"isEmailNotice\":1,\"isMessageReview\":1,\"isMusicPlayer\":0,\"isReward\":1,\"qq\":\"2831826106\",\"socialLoginList\":[\"qq\",\"weibo\",\"gitee\"],\"socialUrlList\":[\"gitee\",\"qq\"],\"touristAvatar\":\"1613170094936965121\",\"userAvatar\":\"1613170007087267841\",\"websiteAuthor\":\"Water-之\",\"websiteAvatar\":\"1625787929773232129\",\"websiteCreateTime\":\"2023-02-22\",\"websiteIntro\":\"记录成长\",\"websiteName\":\"夜色\",\"websiteNotice\":\"欢迎来到我的博客\",\"websiteRecordNo\":\"备案号\",\"websocketUrl\":\"ws://localhost:8080\",\"weiXinQRCode\":\"1613170123965743105\"}', '2021-08-09 19:37:30', NULL);
 
 -- ----------------------------
 -- Table structure for gen_table
@@ -850,6 +842,21 @@ INSERT INTO `sys_logininfor` VALUES (1624626862540005377, '测试666', '127.0.0.
 INSERT INTO `sys_logininfor` VALUES (1624627471531974658, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-12 12:32:28');
 INSERT INTO `sys_logininfor` VALUES (1625478260932476929, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-14 20:53:12');
 INSERT INTO `sys_logininfor` VALUES (1625487104853147650, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-14 21:28:21');
+INSERT INTO `sys_logininfor` VALUES (1625778036974571522, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-15 16:44:24');
+INSERT INTO `sys_logininfor` VALUES (1625787163205455874, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-15 17:20:40');
+INSERT INTO `sys_logininfor` VALUES (1625844261406744577, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-15 21:07:33');
+INSERT INTO `sys_logininfor` VALUES (1625845496801251330, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-15 21:12:28');
+INSERT INTO `sys_logininfor` VALUES (1625846201507237890, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '退出成功', '2023-02-15 21:15:16');
+INSERT INTO `sys_logininfor` VALUES (1625846241772556289, 'test1', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-15 21:15:25');
+INSERT INTO `sys_logininfor` VALUES (1625847087126138881, 'test1', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '退出成功', '2023-02-15 21:18:47');
+INSERT INTO `sys_logininfor` VALUES (1625847130541379586, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-15 21:18:57');
+INSERT INTO `sys_logininfor` VALUES (1626082520447610882, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-16 12:54:19');
+INSERT INTO `sys_logininfor` VALUES (1626093204354916353, 'admin', '127.0.0.1', '内网IP', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-16 13:36:46');
+INSERT INTO `sys_logininfor` VALUES (1626500769895186433, 'admin', '4.2.2.2', ' ', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-17 16:36:17');
+INSERT INTO `sys_logininfor` VALUES (1627233076977430530, 'admin', '4.2.2.2', ' ', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-19 17:06:13');
+INSERT INTO `sys_logininfor` VALUES (1627236400111906818, 'admin', '127.0.0.1', '内网IP', 'Chrome', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-19 17:19:25');
+INSERT INTO `sys_logininfor` VALUES (1627286783274323969, 'admin', '4.2.2.2', ' ', 'MSEdge', 'Windows 10 or Windows Server 2016', '1', '验证码错误', '2023-02-19 20:39:37');
+INSERT INTO `sys_logininfor` VALUES (1627286799334313986, 'admin', '4.2.2.2', ' ', 'MSEdge', 'Windows 10 or Windows Server 2016', '0', '登录成功', '2023-02-19 20:39:41');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1033,6 +1040,7 @@ INSERT INTO `sys_menu` VALUES (1613816542531686404, '说说管理删除', 161381
 INSERT INTO `sys_menu` VALUES (1613816542531686405, '说说管理导出', 1613816542531686400, 5, '#', '', NULL, 1, 0, 'F', '0', '0', 'talk:talk:export', '#', 'admin', '2023-01-13 16:37:32', '', NULL, '');
 INSERT INTO `sys_menu` VALUES (1613861852100489217, '发布说说', 1613813815185510401, 1, 'talk', 'talk/talk', NULL, 1, 0, 'C', '0', '0', NULL, 'druid', 'admin', '2023-01-13 19:33:44', 'admin', '2023-01-13 19:34:54', '');
 INSERT INTO `sys_menu` VALUES (1625495355317592066, '云端配置', 0, 4, 'system/oss-config/index', NULL, NULL, 1, 0, 'M', '0', '0', NULL, 'upload', 'admin', '2023-02-14 22:01:08', 'admin', '2023-02-14 22:04:01', '');
+INSERT INTO `sys_menu` VALUES (1627233395924889602, '关于我', 1613139021339353090, 4, 'about', 'about/About.vue', NULL, 1, 0, 'C', '0', '0', NULL, 'theme', 'admin', '2023-02-19 17:07:29', 'admin', '2023-02-19 17:10:50', '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -1615,6 +1623,65 @@ INSERT INTO `sys_oper_log` VALUES (1625495844050477057, '菜单管理', 2, 'com.
 INSERT INTO `sys_oper_log` VALUES (1625495864619343873, '菜单管理', 2, 'com.zhi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '', '/system/menu', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2023-01-05 19:54:19\",\"updateBy\":\"admin\",\"updateTime\":\"2023-02-14 22:03:09\",\"parentName\":null,\"parentId\":0,\"children\":[],\"menuId\":2,\"menuName\":\"系统监控\",\"orderNum\":5,\"path\":\"monitor\",\"component\":null,\"queryParam\":\"\",\"isFrame\":\"1\",\"isCache\":\"0\",\"menuType\":\"M\",\"visible\":\"0\",\"status\":\"0\",\"perms\":\"\",\"icon\":\"monitor\",\"remark\":\"系统监控目录\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-14 22:03:09');
 INSERT INTO `sys_oper_log` VALUES (1625495981514596354, '菜单管理', 2, 'com.zhi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '', '/system/menu', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2023-01-05 19:54:19\",\"updateBy\":\"admin\",\"updateTime\":\"2023-02-14 22:03:36\",\"parentName\":null,\"parentId\":0,\"children\":[],\"menuId\":1,\"menuName\":\"系统管理\",\"orderNum\":5,\"path\":\"system\",\"component\":null,\"queryParam\":\"\",\"isFrame\":\"1\",\"isCache\":\"0\",\"menuType\":\"M\",\"visible\":\"0\",\"status\":\"0\",\"perms\":\"\",\"icon\":\"system\",\"remark\":\"系统管理目录\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-14 22:03:37');
 INSERT INTO `sys_oper_log` VALUES (1625496082559574018, '菜单管理', 2, 'com.zhi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '', '/system/menu', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2023-02-14 22:01:08\",\"updateBy\":\"admin\",\"updateTime\":\"2023-02-14 22:04:00\",\"parentName\":null,\"parentId\":0,\"children\":[],\"menuId\":\"1625495355317592066\",\"menuName\":\"云端配置\",\"orderNum\":4,\"path\":\"system/oss-config/index\",\"component\":null,\"queryParam\":null,\"isFrame\":\"1\",\"isCache\":\"0\",\"menuType\":\"M\",\"visible\":\"0\",\"status\":\"0\",\"icon\":\"upload\",\"remark\":\"\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-14 22:04:01');
+INSERT INTO `sys_oper_log` VALUES (1625778064375959553, '文章列表', 3, 'com.zhi.blog.controller.ArticleController.remove()', 'DELETE', 1, 'admin', '', '/article/article/149', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 16:44:31');
+INSERT INTO `sys_oper_log` VALUES (1625778069941800961, '文章列表', 3, 'com.zhi.blog.controller.ArticleController.remove()', 'DELETE', 1, 'admin', '', '/article/article/148', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 16:44:32');
+INSERT INTO `sys_oper_log` VALUES (1625778076593967105, '文章列表', 3, 'com.zhi.blog.controller.ArticleController.remove()', 'DELETE', 1, 'admin', '', '/article/article/147', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 16:44:34');
+INSERT INTO `sys_oper_log` VALUES (1625778085594943489, '文章列表', 3, 'com.zhi.blog.controller.ArticleController.remove()', 'DELETE', 1, 'admin', '', '/article/article/144', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 16:44:36');
+INSERT INTO `sys_oper_log` VALUES (1625787279983267841, '对象存储配置', 2, 'com.zhi.web.controller.system.SysOssConfigController.edit()', 'PUT', 1, 'admin', '', '/system/oss/config', '127.0.0.1', '内网IP', '{\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"ossConfigId\":1,\"configKey\":\"minio\",\"accessKey\":\"hBaUeH9xKIj6dgvqFPCXHdk3wcoAavN2\",\"secretKey\":\"hBaUeH9xKIj6dgvqFPCXHdk3wcoAavN2\",\"bucketName\":\"blog\",\"prefix\":\"\",\"endpoint\":\"127.0.0.1:9000\",\"domain\":\"\",\"isHttps\":\"N\",\"status\":\"1\",\"region\":\"\",\"ext1\":\"\",\"remark\":\"\",\"accessPolicy\":\"1\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 17:21:08');
+INSERT INTO `sys_oper_log` VALUES (1625787307225272321, '对象存储状态修改', 2, 'com.zhi.web.controller.system.SysOssConfigController.changeStatus()', 'PUT', 1, 'admin', '', '/system/oss/config/changeStatus', '127.0.0.1', '内网IP', '{\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"ossConfigId\":1,\"configKey\":\"minio\",\"accessKey\":null,\"secretKey\":null,\"bucketName\":null,\"prefix\":null,\"endpoint\":null,\"domain\":null,\"isHttps\":null,\"status\":\"0\",\"region\":null,\"ext1\":null,\"remark\":null,\"accessPolicy\":null}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 17:21:14');
+INSERT INTO `sys_oper_log` VALUES (1625787348908265474, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '', 1, '创建Bucket失败, 请核对配置信息:[The Access Key Id you provided does not exist in our records. (Service: Amazon S3; Status Code: 403; Error Code: InvalidAccessKeyId; Request ID: 1743F5041BDC54A0; S3 Extended Request ID: 51b06bbe-5c82-4e94-8731-642a4083de7e; Proxy: null)]', '2023-02-15 17:21:24');
+INSERT INTO `sys_oper_log` VALUES (1625787606790852610, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '', 1, '创建Bucket失败, 请核对配置信息:[The Access Key Id you provided does not exist in our records. (Service: Amazon S3; Status Code: 403; Error Code: InvalidAccessKeyId; Request ID: 1743F5126CA97120; S3 Extended Request ID: 51b06bbe-5c82-4e94-8731-642a4083de7e; Proxy: null)]', '2023-02-15 17:22:26');
+INSERT INTO `sys_oper_log` VALUES (1625787904087314434, '对象存储配置', 2, 'com.zhi.web.controller.system.SysOssConfigController.edit()', 'PUT', 1, 'admin', '', '/system/oss/config', '127.0.0.1', '内网IP', '{\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"ossConfigId\":1,\"configKey\":\"minio\",\"accessKey\":\"Di4h8evEEG9p9fsB\",\"secretKey\":\"hBaUeH9xKIj6dgvqFPCXHdk3wcoAavN2\",\"bucketName\":\"blog\",\"prefix\":\"\",\"endpoint\":\"127.0.0.1:9000\",\"domain\":\"\",\"isHttps\":\"N\",\"status\":\"0\",\"region\":\"\",\"ext1\":\"\",\"remark\":\"\",\"accessPolicy\":\"1\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 17:23:37');
+INSERT INTO `sys_oper_log` VALUES (1625787929773232130, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '{\"code\":200,\"msg\":\"操作成功\",\"data\":{\"ossId\":\"1625787929773232129\",\"url\":\"http://127.0.0.1:9000/blog/2023/02/15/c33f0514eddf4d1cae8a3e114a54c1af.png\",\"fileName\":\"1.png\"}}', 0, '', '2023-02-15 17:23:43');
+INSERT INTO `sys_oper_log` VALUES (1625788426961833986, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '{\"code\":200,\"msg\":\"操作成功\",\"data\":{\"ossId\":\"1625788426961833985\",\"url\":\"http://127.0.0.1:9000/blog/2023/02/15/8f08966dff5c4f21861f997453d23cda.jpg\",\"fileName\":\"奔驰银箭MercedesBenz Vision EQ Silver Arrow 3440x1440壁纸_千叶网.jpg\"}}', 0, '', '2023-02-15 17:25:41');
+INSERT INTO `sys_oper_log` VALUES (1625788430799622145, '文章列表', 2, 'com.zhi.blog.controller.ArticleController.edit()', 'PUT', 1, 'admin', '', '/article/article', '127.0.0.1', '内网IP', '{\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":138,\"userId\":1,\"categoryId\":217,\"categoryName\":\"付费\",\"tagNameList\":[\"springboot\",\"vue\"],\"articleCover\":\"1625788426961833985\",\"articleTitle\":\"测试文章\",\"articleContent\":\"这一次我一定要成功\",\"type\":1,\"originalUrl\":\"1\",\"isDelete\":0,\"status\":1}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 17:25:42');
+INSERT INTO `sys_oper_log` VALUES (1625844324862369793, '分类管理', 3, 'com.zhi.blog.controller.CategoryController.remove()', 'DELETE', 1, 'admin', '', '/category/category/225', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 21:07:48');
+INSERT INTO `sys_oper_log` VALUES (1625844424464506881, '说说管理', 3, 'com.zhi.blog.controller.TalkController.remove()', 'DELETE', 1, 'admin', '', '/talk/talk/53', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 21:08:12');
+INSERT INTO `sys_oper_log` VALUES (1625844436040785922, '说说管理', 3, 'com.zhi.blog.controller.TalkController.remove()', 'DELETE', 1, 'admin', '', '/talk/talk/51', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 21:08:15');
+INSERT INTO `sys_oper_log` VALUES (1625844453824634882, '说说管理', 3, 'com.zhi.blog.controller.TalkController.remove()', 'DELETE', 1, 'admin', '', '/talk/talk/50', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 21:08:19');
+INSERT INTO `sys_oper_log` VALUES (1625845605282729985, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '', 1, '创建Bucket失败, 请核对配置信息:[Unable to execute HTTP request: Connect to 127.0.0.1:9000 [/127.0.0.1] failed: Connection refused: connect]', '2023-02-15 21:12:54');
+INSERT INTO `sys_oper_log` VALUES (1625845998343540739, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '{\"code\":200,\"msg\":\"操作成功\",\"data\":{\"ossId\":\"1625845998343540738\",\"url\":\"http://127.0.0.1:9000/blog/2023/02/15/bf09b6dafe91486ab42c70e3674bb84b.jpg\",\"fileName\":\"1.jpg\"}}', 0, '', '2023-02-15 21:14:27');
+INSERT INTO `sys_oper_log` VALUES (1625846030375440386, '文章列表', 1, 'com.zhi.blog.controller.ArticleController.add()', 'POST', 1, 'admin', '', '/article/article', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":150,\"userId\":1,\"categoryId\":214,\"categoryName\":\"测试\",\"tagNameList\":[\"springboot\"],\"articleCover\":\"1625845998343540738\",\"articleTitle\":\"123\",\"articleContent\":\"123\",\"type\":1,\"originalUrl\":null,\"isDelete\":0,\"status\":1}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 21:14:35');
+INSERT INTO `sys_oper_log` VALUES (1625846305064603649, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'test1', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '{\"code\":200,\"msg\":\"操作成功\",\"data\":{\"ossId\":\"1625846305001689090\",\"url\":\"http://127.0.0.1:9000/blog/2023/02/15/c152c56a1200477f85e9d6e8364d9f13.jpg\",\"fileName\":\"QQ图片20210630102645.jpg\"}}', 0, '', '2023-02-15 21:15:41');
+INSERT INTO `sys_oper_log` VALUES (1625846327227305985, '文章列表', 1, 'com.zhi.blog.controller.ArticleController.add()', 'POST', 1, 'test1', '', '/article/article', '127.0.0.1', '内网IP', '{\"createBy\":\"test1\",\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":151,\"userId\":4,\"categoryId\":214,\"categoryName\":\"测试\",\"tagNameList\":[\"啦啦啦\"],\"articleCover\":\"1625846305001689090\",\"articleTitle\":\"11111\",\"articleContent\":\"11111\",\"type\":1,\"originalUrl\":null,\"isDelete\":0,\"status\":1}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 21:15:46');
+INSERT INTO `sys_oper_log` VALUES (1625847073033277442, '文章列表', 3, 'com.zhi.blog.controller.ArticleController.remove()', 'DELETE', 1, 'test1', '', '/article/article/151', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 21:18:44');
+INSERT INTO `sys_oper_log` VALUES (1625847185734225921, 'OSS对象存储', 3, 'com.zhi.web.controller.system.SysOssController.remove()', 'DELETE', 1, 'admin', '', '/system/oss/1625788426961833985', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 21:19:11');
+INSERT INTO `sys_oper_log` VALUES (1625847195834109954, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '{\"code\":200,\"msg\":\"操作成功\",\"data\":{\"ossId\":\"1625847195834109953\",\"url\":\"http://127.0.0.1:9000/blog/2023/02/15/d1003aa894b3458ab595e3b00b171d48.jpg\",\"fileName\":\"1.jpg\"}}', 0, '', '2023-02-15 21:19:13');
+INSERT INTO `sys_oper_log` VALUES (1625847199101472769, '文章列表', 2, 'com.zhi.blog.controller.ArticleController.edit()', 'PUT', 1, 'admin', '', '/article/article', '127.0.0.1', '内网IP', '{\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":138,\"userId\":1,\"categoryId\":217,\"categoryName\":\"付费\",\"tagNameList\":[\"springboot\",\"vue\"],\"articleCover\":\"1625847195834109953\",\"articleTitle\":\"测试文章\",\"articleContent\":\"这一次我一定要成功\",\"type\":1,\"originalUrl\":\"1\",\"isDelete\":0,\"status\":1}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 21:19:14');
+INSERT INTO `sys_oper_log` VALUES (1625847218852450305, '文章列表', 3, 'com.zhi.blog.controller.ArticleController.remove()', 'DELETE', 1, 'admin', '', '/article/article/138', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-15 21:19:18');
+INSERT INTO `sys_oper_log` VALUES (1626093282092146690, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '{\"code\":200,\"msg\":\"操作成功\",\"data\":{\"ossId\":\"1626093282025037825\",\"url\":\"http://127.0.0.1:9000/blog/2023/02/16/f73c9860389842e590cecab5be49a3b3.jpg\",\"fileName\":\"宇宙.jpg\"}}', 0, '', '2023-02-16 13:37:04');
+INSERT INTO `sys_oper_log` VALUES (1626093305089515522, '文章列表', 1, 'com.zhi.blog.controller.ArticleController.add()', 'POST', 1, 'admin', '', '/article/article', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":152,\"userId\":1,\"categoryId\":214,\"categoryName\":\"测试\",\"tagNameList\":[\"啦啦啦\"],\"articleCover\":\"1626093282025037825\",\"articleTitle\":\"123\",\"articleContent\":\"123\",\"type\":2,\"originalUrl\":null,\"isDelete\":0,\"status\":2}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 13:37:10');
+INSERT INTO `sys_oper_log` VALUES (1626093921014669314, '文章列表', 3, 'com.zhi.blog.controller.ArticleController.remove()', 'DELETE', 1, 'admin', '', '/article/article/152', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 13:39:37');
+INSERT INTO `sys_oper_log` VALUES (1626094020730052609, '说说管理', 3, 'com.zhi.blog.controller.TalkController.remove()', 'DELETE', 1, 'admin', '', '/talk/talk/56', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 13:40:01');
+INSERT INTO `sys_oper_log` VALUES (1626094366458142721, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '{\"code\":200,\"msg\":\"操作成功\",\"data\":{\"ossId\":\"1626094366391033858\",\"url\":\"http://127.0.0.1:9000/blog/2023/02/16/02df055e87e049ae9af540e380b39766.jpg\",\"fileName\":\"QQ图片20210630102658.jpg\"}}', 0, '', '2023-02-16 13:41:23');
+INSERT INTO `sys_oper_log` VALUES (1626094375538810881, '文章列表', 1, 'com.zhi.blog.controller.ArticleController.add()', 'POST', 1, 'admin', '', '/article/article', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":null,\"userId\":1,\"categoryId\":null,\"categoryName\":null,\"tagNameList\":[],\"articleCover\":\"1626094366391033858\",\"articleTitle\":\"CESHI\",\"articleContent\":\"CESHI\",\"type\":2,\"originalUrl\":null,\"isDelete\":0,\"status\":1}', '', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'category_name\' doesn\'t have a default value\r\n### The error may exist in com/zhi/blog/mapper/CategoryMapper.java (best guess)\r\n### The error may involve com.zhi.blog.mapper.CategoryMapper.insert-Inline\r\n### The error occurred while setting parameters\r\n### SQL: INSERT INTO blog_category  ( create_by, create_time, update_by, update_time )  VALUES  ( ?, ?, ?, ? )\r\n### Cause: java.sql.SQLException: Field \'category_name\' doesn\'t have a default value\n; Field \'category_name\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'category_name\' doesn\'t have a default value', '2023-02-16 13:41:25');
+INSERT INTO `sys_oper_log` VALUES (1626094642476900353, '分类管理', 1, 'com.zhi.blog.controller.CategoryController.add()', 'POST', 1, 'admin', '', '/category/category', '127.0.0.1', '内网IP', '{\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":226,\"categoryName\":\"默认\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 13:42:29');
+INSERT INTO `sys_oper_log` VALUES (1626094686273822721, '标签管理', 1, 'com.zhi.blog.controller.TagController.add()', 'POST', 1, 'admin', '', '/tag/tag', '127.0.0.1', '内网IP', '{\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":67,\"tagName\":\"默认\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 13:42:39');
+INSERT INTO `sys_oper_log` VALUES (1626098067285487618, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '{\"code\":200,\"msg\":\"操作成功\",\"data\":{\"ossId\":\"1626098067067383809\",\"url\":\"http://127.0.0.1:9000/blog/2023/02/16/80992e0e2ac9492cb6d6c5800b9ea3fe.jpg\",\"fileName\":\"QQ图片20210630104247.jpg\"}}', 0, '', '2023-02-16 13:56:05');
+INSERT INTO `sys_oper_log` VALUES (1626098077410537474, '文章列表', 1, 'com.zhi.blog.controller.ArticleController.add()', 'POST', 1, 'admin', '', '/article/article', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":153,\"userId\":1,\"categoryId\":1,\"categoryName\":\"默认\",\"tagNameList\":[\"默认\"],\"articleCover\":\"1626098067067383809\",\"articleTitle\":\"123\",\"articleContent\":\"123\",\"type\":2,\"originalUrl\":null,\"isDelete\":0,\"status\":2}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 13:56:08');
+INSERT INTO `sys_oper_log` VALUES (1626098177729900546, '文章列表', 3, 'com.zhi.blog.controller.ArticleController.remove()', 'DELETE', 1, 'admin', '', '/article/article/150', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 13:56:32');
+INSERT INTO `sys_oper_log` VALUES (1626100461083873282, '分类管理', 3, 'com.zhi.blog.controller.CategoryController.remove()', 'DELETE', 1, 'admin', '', '/category/category/1', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 14:05:36');
+INSERT INTO `sys_oper_log` VALUES (1626101052115886082, '分类管理', 1, 'com.zhi.blog.controller.CategoryController.add()', 'POST', 1, 'admin', '', '/category/category', '127.0.0.1', '内网IP', '{\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":227,\"categoryName\":\"默认\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 14:07:57');
+INSERT INTO `sys_oper_log` VALUES (1626101128309612545, '分类管理', 3, 'com.zhi.blog.controller.CategoryController.remove()', 'DELETE', 1, 'admin', '', '/category/category/1', '127.0.0.1', '内网IP', '{}', '{\"code\":500,\"msg\":\"不允许删除默认分类\",\"data\":null}', 0, '', '2023-02-16 14:08:15');
+INSERT INTO `sys_oper_log` VALUES (1626101164233826306, '标签管理', 3, 'com.zhi.blog.controller.TagController.remove()', 'DELETE', 1, 'admin', '', '/tag/tag/1', '127.0.0.1', '内网IP', '{}', '{\"code\":500,\"msg\":\"不允许删除默认标签\",\"data\":null}', 0, '', '2023-02-16 14:08:24');
+INSERT INTO `sys_oper_log` VALUES (1626101207946862593, '标签管理', 3, 'com.zhi.blog.controller.TagController.remove()', 'DELETE', 1, 'admin', '', '/tag/tag/1', '127.0.0.1', '内网IP', '{}', '{\"code\":500,\"msg\":\"不允许删除默认标签\",\"data\":null}', 0, '', '2023-02-16 14:08:34');
+INSERT INTO `sys_oper_log` VALUES (1626101318445801474, '标签管理', 3, 'com.zhi.blog.controller.TagController.remove()', 'DELETE', 1, 'admin', '', '/tag/tag/1,66', '127.0.0.1', '内网IP', '{}', '{\"code\":500,\"msg\":\"不允许删除默认标签\",\"data\":null}', 0, '', '2023-02-16 14:09:00');
+INSERT INTO `sys_oper_log` VALUES (1626101728887808002, '标签管理', 3, 'com.zhi.blog.controller.TagController.remove()', 'DELETE', 1, 'admin', '', '/tag/tag/66', '127.0.0.1', '内网IP', '{}', '{\"code\":500,\"msg\":\"已有文章对应此标签，无法删除\",\"data\":null}', 0, '', '2023-02-16 14:10:38');
+INSERT INTO `sys_oper_log` VALUES (1626102097579712513, '标签管理', 3, 'com.zhi.blog.controller.TagController.remove()', 'DELETE', 1, 'admin', '', '/tag/tag/1', '127.0.0.1', '内网IP', '{}', '{\"code\":500,\"msg\":\"不允许删除默认标签\",\"data\":null}', 0, '', '2023-02-16 14:12:06');
+INSERT INTO `sys_oper_log` VALUES (1626102236230819841, '标签管理', 2, 'com.zhi.blog.controller.TagController.edit()', 'PUT', 1, 'admin', '', '/tag/tag', '127.0.0.1', '内网IP', '{\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":1,\"tagName\":\"默认1\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 14:12:39');
+INSERT INTO `sys_oper_log` VALUES (1626102251271593986, '标签管理', 2, 'com.zhi.blog.controller.TagController.edit()', 'PUT', 1, 'admin', '', '/tag/tag', '127.0.0.1', '内网IP', '{\"createBy\":null,\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":1,\"tagName\":\"默认\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 14:12:43');
+INSERT INTO `sys_oper_log` VALUES (1626103128623521794, '说说管理', 3, 'com.zhi.blog.controller.TalkController.remove()', 'DELETE', 1, 'admin', '', '/talk/talk/57', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 14:16:12');
+INSERT INTO `sys_oper_log` VALUES (1626104291028738050, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '{\"code\":200,\"msg\":\"操作成功\",\"data\":{\"ossId\":\"1626104290965823489\",\"url\":\"http://127.0.0.1:9000/blog/2023/02/16/9f00764fa98545a0a9745af49611d6df.jpg\",\"fileName\":\"宇宙.jpg\"}}', 0, '', '2023-02-16 14:20:49');
+INSERT INTO `sys_oper_log` VALUES (1626104299861942273, '说说管理', 1, 'com.zhi.blog.controller.TalkController.add()', 'POST', 1, 'admin', '', '/talk/talk', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2023-02-15 21:08:07\",\"updateBy\":null,\"updateTime\":null,\"id\":55,\"userId\":1,\"content\":\"123\",\"images\":\"1626104290965823489\",\"isTop\":null,\"imgList\":[\"1626104290965823489\"]}', '', 1, '\r\n### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'55\' for key \'PRIMARY\'\r\n### The error may exist in com/zhi/blog/mapper/TalkMapper.java (best guess)\r\n### The error may involve com.zhi.blog.mapper.TalkMapper.insert-Inline\r\n### The error occurred while setting parameters\r\n### SQL: INSERT INTO blog_talk  ( id, user_id, content, images,  create_by, create_time, update_by, update_time )  VALUES  ( ?, ?, ?, ?,  ?, ?, ?, ? )\r\n### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'55\' for key \'PRIMARY\'\n; Duplicate entry \'55\' for key \'PRIMARY\'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry \'55\' for key \'PRIMARY\'', '2023-02-16 14:20:51');
+INSERT INTO `sys_oper_log` VALUES (1626104340341170177, '说说管理', 1, 'com.zhi.blog.controller.TalkController.add()', 'POST', 1, 'admin', '', '/talk/talk', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":58,\"userId\":1,\"content\":\"123\",\"images\":null,\"isTop\":null,\"imgList\":null}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 14:21:01');
+INSERT INTO `sys_oper_log` VALUES (1626104363510505473, '说说管理', 3, 'com.zhi.blog.controller.TalkController.remove()', 'DELETE', 1, 'admin', '', '/talk/talk/58', '127.0.0.1', '内网IP', '{}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 14:21:06');
+INSERT INTO `sys_oper_log` VALUES (1626104384729489410, 'OSS对象存储', 1, 'com.zhi.web.controller.system.SysOssController.upload()', 'POST', 1, 'admin', '', '/system/oss/upload', '127.0.0.1', '内网IP', '', '{\"code\":200,\"msg\":\"操作成功\",\"data\":{\"ossId\":\"1626104384729489409\",\"url\":\"http://127.0.0.1:9000/blog/2023/02/16/aee9e25c646640198a1ebe91ebfd558a.jpg\",\"fileName\":\"宇宙.jpg\"}}', 0, '', '2023-02-16 14:21:12');
+INSERT INTO `sys_oper_log` VALUES (1626104390031089665, '说说管理', 1, 'com.zhi.blog.controller.TalkController.add()', 'POST', 1, 'admin', '', '/talk/talk', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":null,\"updateBy\":null,\"updateTime\":null,\"id\":59,\"userId\":1,\"content\":\"123\",\"images\":\"1626104384729489409\",\"isTop\":null,\"imgList\":[\"1626104384729489409\"]}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 14:21:13');
+INSERT INTO `sys_oper_log` VALUES (1626104443470716929, '说说管理', 2, 'com.zhi.blog.controller.TalkController.edit()', 'PUT', 1, 'admin', '', '/talk/talk', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2023-02-16 14:21:13\",\"updateBy\":null,\"updateTime\":null,\"id\":59,\"userId\":1,\"content\":\"123666\",\"images\":\"1626104384729489409\",\"isTop\":null,\"imgList\":[\"1626104384729489409\"]}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-16 14:21:26');
+INSERT INTO `sys_oper_log` VALUES (1627233397812326401, '菜单管理', 1, 'com.zhi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '', '/system/menu', '4.2.2.2', ' ', '{\"createBy\":\"admin\",\"createTime\":\"2023-02-19 17:07:28\",\"updateBy\":\"admin\",\"updateTime\":\"2023-02-19 17:07:28\",\"parentName\":null,\"parentId\":\"1613139021339353090\",\"children\":[],\"menuId\":\"1627233395924889602\",\"menuName\":\"关于我\",\"orderNum\":4,\"path\":\"about/About.vue\",\"component\":null,\"queryParam\":null,\"isFrame\":\"1\",\"isCache\":\"0\",\"menuType\":\"M\",\"visible\":\"0\",\"status\":\"0\",\"icon\":\"people\",\"remark\":null}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-19 17:07:29');
+INSERT INTO `sys_oper_log` VALUES (1627233573985677314, '菜单管理', 2, 'com.zhi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '', '/system/menu', '4.2.2.2', ' ', '{\"createBy\":\"admin\",\"createTime\":\"2023-02-19 17:07:29\",\"updateBy\":\"admin\",\"updateTime\":\"2023-02-19 17:08:10\",\"parentName\":null,\"parentId\":\"1613139021339353090\",\"children\":[],\"menuId\":\"1627233395924889602\",\"menuName\":\"关于我\",\"orderNum\":4,\"path\":\"about\",\"component\":null,\"queryParam\":null,\"isFrame\":\"1\",\"isCache\":\"0\",\"menuType\":\"M\",\"visible\":\"0\",\"status\":\"0\",\"icon\":\"people\",\"remark\":\"\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-19 17:08:11');
+INSERT INTO `sys_oper_log` VALUES (1627234047824588801, '菜单管理', 2, 'com.zhi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '', '/system/menu', '4.2.2.2', ' ', '{\"createBy\":\"admin\",\"createTime\":\"2023-02-19 17:07:29\",\"updateBy\":\"admin\",\"updateTime\":\"2023-02-19 17:10:03\",\"parentName\":null,\"parentId\":\"1613139021339353090\",\"children\":[],\"menuId\":\"1627233395924889602\",\"menuName\":\"关于我\",\"orderNum\":4,\"path\":\"about\",\"component\":\"about\",\"queryParam\":null,\"isFrame\":\"1\",\"isCache\":\"0\",\"menuType\":\"C\",\"visible\":\"0\",\"status\":\"0\",\"icon\":\"theme\",\"remark\":\"\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-19 17:10:04');
+INSERT INTO `sys_oper_log` VALUES (1627234242603872258, '菜单管理', 2, 'com.zhi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '', '/system/menu', '4.2.2.2', ' ', '{\"createBy\":\"admin\",\"createTime\":\"2023-02-19 17:07:29\",\"updateBy\":\"admin\",\"updateTime\":\"2023-02-19 17:10:50\",\"parentName\":null,\"parentId\":\"1613139021339353090\",\"children\":[],\"menuId\":\"1627233395924889602\",\"menuName\":\"关于我\",\"orderNum\":4,\"path\":\"about\",\"component\":\"about/About.vue\",\"queryParam\":null,\"isFrame\":\"1\",\"isCache\":\"0\",\"menuType\":\"C\",\"visible\":\"0\",\"status\":\"0\",\"icon\":\"theme\",\"remark\":\"\"}', '{\"code\":200,\"msg\":\"操作成功\",\"data\":null}', 0, '', '2023-02-19 17:10:51');
 
 -- ----------------------------
 -- Table structure for sys_oss
@@ -1678,6 +1745,15 @@ INSERT INTO `sys_oss` VALUES (1624311868237561857, '2023/02/11/f270e45538104ebb9
 INSERT INTO `sys_oss` VALUES (1625478371997646850, '2023/02/14/755f9aff4a644dcab2084a39ed1feb25.png', 'XHIZI6T41671292212659.png', '.png', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/02/14/755f9aff4a644dcab2084a39ed1feb25.png', '2023-02-14 20:53:38', 'admin', '2023-02-14 20:53:38', 'admin', 'aliyun');
 INSERT INTO `sys_oss` VALUES (1625480098360590337, '2023/02/14/3eb4a158cb6640cd840f6faad0d3fbb9.png', 'XHIZI6T41671292212659.png', '.png', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/02/14/3eb4a158cb6640cd840f6faad0d3fbb9.png', '2023-02-14 21:00:30', 'admin', '2023-02-14 21:00:30', 'admin', 'aliyun');
 INSERT INTO `sys_oss` VALUES (1625487802730811393, '2023/02/14/01f9bf2767854ac08f914b612e9b0b7f.png', 'XHIZI6T41671292212659.png', '.png', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/02/14/01f9bf2767854ac08f914b612e9b0b7f.png', '2023-02-14 21:31:07', 'admin', '2023-02-14 21:31:07', 'admin', 'aliyun');
+INSERT INTO `sys_oss` VALUES (1625787929773232129, '2023/02/15/c33f0514eddf4d1cae8a3e114a54c1af.png', '1.png', '.png', 'http://127.0.0.1:9000/blog/2023/02/15/c33f0514eddf4d1cae8a3e114a54c1af.png', '2023-02-15 17:23:43', 'admin', '2023-02-15 17:23:43', 'admin', 'minio');
+INSERT INTO `sys_oss` VALUES (1625845998343540738, '2023/02/15/bf09b6dafe91486ab42c70e3674bb84b.jpg', '1.jpg', '.jpg', 'http://127.0.0.1:9000/blog/2023/02/15/bf09b6dafe91486ab42c70e3674bb84b.jpg', '2023-02-15 21:14:27', 'admin', '2023-02-15 21:14:27', 'admin', 'minio');
+INSERT INTO `sys_oss` VALUES (1625846305001689090, '2023/02/15/c152c56a1200477f85e9d6e8364d9f13.jpg', 'QQ图片20210630102645.jpg', '.jpg', 'http://127.0.0.1:9000/blog/2023/02/15/c152c56a1200477f85e9d6e8364d9f13.jpg', '2023-02-15 21:15:41', 'test1', '2023-02-15 21:15:41', 'test1', 'minio');
+INSERT INTO `sys_oss` VALUES (1625847195834109953, '2023/02/15/d1003aa894b3458ab595e3b00b171d48.jpg', '1.jpg', '.jpg', 'http://127.0.0.1:9000/blog/2023/02/15/d1003aa894b3458ab595e3b00b171d48.jpg', '2023-02-15 21:19:13', 'admin', '2023-02-15 21:19:13', 'admin', 'minio');
+INSERT INTO `sys_oss` VALUES (1626093282025037825, '2023/02/16/f73c9860389842e590cecab5be49a3b3.jpg', '宇宙.jpg', '.jpg', 'http://127.0.0.1:9000/blog/2023/02/16/f73c9860389842e590cecab5be49a3b3.jpg', '2023-02-16 13:37:04', 'admin', '2023-02-16 13:37:04', 'admin', 'minio');
+INSERT INTO `sys_oss` VALUES (1626094366391033858, '2023/02/16/02df055e87e049ae9af540e380b39766.jpg', 'QQ图片20210630102658.jpg', '.jpg', 'http://127.0.0.1:9000/blog/2023/02/16/02df055e87e049ae9af540e380b39766.jpg', '2023-02-16 13:41:23', 'admin', '2023-02-16 13:41:23', 'admin', 'minio');
+INSERT INTO `sys_oss` VALUES (1626098067067383809, '2023/02/16/80992e0e2ac9492cb6d6c5800b9ea3fe.jpg', 'QQ图片20210630104247.jpg', '.jpg', 'http://127.0.0.1:9000/blog/2023/02/16/80992e0e2ac9492cb6d6c5800b9ea3fe.jpg', '2023-02-16 13:56:05', 'admin', '2023-02-16 13:56:05', 'admin', 'minio');
+INSERT INTO `sys_oss` VALUES (1626104290965823489, '2023/02/16/9f00764fa98545a0a9745af49611d6df.jpg', '宇宙.jpg', '.jpg', 'http://127.0.0.1:9000/blog/2023/02/16/9f00764fa98545a0a9745af49611d6df.jpg', '2023-02-16 14:20:49', 'admin', '2023-02-16 14:20:49', 'admin', 'minio');
+INSERT INTO `sys_oss` VALUES (1626104384729489409, '2023/02/16/aee9e25c646640198a1ebe91ebfd558a.jpg', '宇宙.jpg', '.jpg', 'http://127.0.0.1:9000/blog/2023/02/16/aee9e25c646640198a1ebe91ebfd558a.jpg', '2023-02-16 14:21:12', 'admin', '2023-02-16 14:21:12', 'admin', 'minio');
 
 -- ----------------------------
 -- Table structure for sys_oss_config
@@ -1708,9 +1784,9 @@ CREATE TABLE `sys_oss_config`  (
 -- ----------------------------
 -- Records of sys_oss_config
 -- ----------------------------
-INSERT INTO `sys_oss_config` VALUES (1, 'minio', 'xxxxx', 'xxxxx', 'ruoyi', '', '127.0.0.1:9000', '', 'N', '', '1', '1', '', 'admin', '2023-01-05 19:54:19', 'admin', '2023-01-10 20:21:39', '');
+INSERT INTO `sys_oss_config` VALUES (1, 'minio', 'Di4h8evEEG9p9fsB', 'hBaUeH9xKIj6dgvqFPCXHdk3wcoAavN2', 'blog', '', '127.0.0.1:9000', '', 'N', '', '1', '0', '', 'admin', '2023-01-05 19:54:19', 'admin', '2023-02-15 17:23:37', '');
 INSERT INTO `sys_oss_config` VALUES (2, 'qiniu', 'xxxxx', 'xxxxx', '420-image', '', 's3-cn-north-1.qiniucs.com', '', 'N', '', '1', '1', '', 'admin', '2023-01-05 19:54:19', 'admin', '2023-01-10 20:10:17', '');
-INSERT INTO `sys_oss_config` VALUES (3, 'aliyun', 'xxxx', 'xxxxx', '2831826106', '', 'oss-cn-beijing.aliyuncs.com', '', 'N', '', '1', '0', '', 'admin', '2023-01-05 19:54:19', 'admin', '2023-01-10 20:23:48', '');
+INSERT INTO `sys_oss_config` VALUES (3, 'aliyun', 'xxxx', 'xxxxx', '2831826106', '', 'oss-cn-beijing.aliyuncs.com', '', 'N', '', '1', '1', '', 'admin', '2023-01-05 19:54:19', 'admin', '2023-01-10 20:23:48', '');
 INSERT INTO `sys_oss_config` VALUES (4, 'qcloud', 'XXXXXXXXXXXXXXX', 'XXXXXXXXXXXXXXX', 'ruoyi-1250000000', '', 'cos.ap-beijing.myqcloud.com', '', 'N', 'ap-beijing', '1', '1', '', 'admin', '2023-01-05 19:54:19', 'admin', '2023-01-08 16:48:30', NULL);
 INSERT INTO `sys_oss_config` VALUES (5, 'image', 'ruoyi', 'ruoyi123', 'ruoyi', 'image', '127.0.0.1:9000', '', 'N', '', '1', '1', '', 'admin', '2023-01-05 19:54:19', 'admin', '2023-01-05 19:54:19', NULL);
 
@@ -2080,10 +2156,10 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 104, 'admin', 'water-之', 'sys_user', '2831826106@qq.com', '18888888888', '0', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/01/13/69a29185d99642fc926a62f86305b3fe.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-02-14 21:28:21', 'admin', '2023-01-05 19:54:19', 'admin', '2023-02-14 21:28:21', '管理员', NULL, NULL);
+INSERT INTO `sys_user` VALUES (1, 104, 'admin', 'water-之', 'sys_user', '2831826106@qq.com', '18888888888', '0', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/01/13/69a29185d99642fc926a62f86305b3fe.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '4.2.2.2', '2023-02-19 20:39:41', 'admin', '2023-01-05 19:54:19', 'admin', '2023-02-19 20:39:41', '管理员', NULL, NULL);
 INSERT INTO `sys_user` VALUES (2, 104, 'lionli', '疯狂的狮子Li', 'sys_user', 'crazyLionLi@qq.com', '15666666666', '1', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/01/10/180d5a6553f04ebda0c70efd8c69bebe.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-01-05 19:54:19', 'admin', '2023-01-05 19:54:19', 'admin', '2023-01-15 14:26:04', '测试员', NULL, NULL);
 INSERT INTO `sys_user` VALUES (3, 104, 'test', '本部门及以下 密码666666', 'sys_user', '', '', '0', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/01/10/180d5a6553f04ebda0c70efd8c69bebe.jpg', '$2a$10$b8yUzN0C71sbz.PhNOCgJe.Tu1yWC3RNrTyjSQ8p1W0.aaUXUJ.Ne', '0', '0', '127.0.0.1', '2023-01-05 19:54:34', 'admin', '2023-01-05 19:54:34', 'admin', '2023-01-15 14:26:30', NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (4, 104, 'test1', '仅本人 密码666666', 'sys_user', '', '', '0', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/01/10/180d5a6553f04ebda0c70efd8c69bebe.jpg', '$2a$10$b8yUzN0C71sbz.PhNOCgJe.Tu1yWC3RNrTyjSQ8p1W0.aaUXUJ.Ne', '0', '0', '127.0.0.1', '2023-02-11 16:01:41', 'admin', '2023-01-05 19:54:34', 'test1', '2023-02-11 16:01:41', NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (4, 104, 'test1', '仅本人 密码666666', 'sys_user', '', '', '0', 'http://2831826106.oss-cn-beijing.aliyuncs.com/2023/01/10/180d5a6553f04ebda0c70efd8c69bebe.jpg', '$2a$10$b8yUzN0C71sbz.PhNOCgJe.Tu1yWC3RNrTyjSQ8p1W0.aaUXUJ.Ne', '0', '0', '127.0.0.1', '2023-02-15 21:15:25', 'admin', '2023-01-05 19:54:34', 'test1', '2023-02-15 21:15:25', NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (5, NULL, '荷塘', '荷塘', 'sys_user', '2831826106@qq.com', '', '0', 'https://s1.ax1x.com/2023/01/15/pSQf91A.jpg', '$2a$10$h0IknNHCPWIe9o1NuThugOI2mhCqcXyrJd5a86/XOEO4ClTGVbwZW', '0', '0', '127.0.0.1', '2023-01-19 23:00:18', '老妈', '2023-01-15 17:01:45', '荷塘', '2023-01-19 23:00:18', NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (6, NULL, '月色', '月色', 'sys_user', '2831826106@qq.com', '', '0', 'https://s1.ax1x.com/2023/01/15/pSQf91A.jpg', '$2a$10$4XkCMVnhmntbicUiy.cx6.BWrzWGGsEvqqgCLl.UqUP6g92YpZj3e', '0', '0', '127.0.0.1', '2023-01-19 22:23:11', '老爸', '2023-01-15 17:03:59', '月色', '2023-01-19 22:23:11', NULL, NULL, '热爱学习');
 INSERT INTO `sys_user` VALUES (7, NULL, '测试', '测试', 'sys_user', '2831826106@qq.com', '', '0', 'https://s1.ax1x.com/2023/01/15/pSQf91A.jpg', '$2a$10$oVCi4XG.DByyZa77YJkRUuoc7CwEV7U0LSqnNqAhMJT2Z3CHFchIy', '0', '0', '127.0.0.1', '2023-01-17 13:40:32', '测试', '2023-01-17 13:40:31', '测试', '2023-01-17 13:40:32', NULL, NULL, NULL);
@@ -2216,7 +2292,7 @@ CREATE TABLE `xxl_job_group`  (
 -- ----------------------------
 -- Records of xxl_job_group
 -- ----------------------------
-INSERT INTO `xxl_job_group` VALUES (1, 'xxl-job-executor', '示例执行器', 0, NULL, '2023-02-14 22:07:22');
+INSERT INTO `xxl_job_group` VALUES (1, 'xxl-job-executor', '示例执行器', 0, NULL, '2023-02-19 22:00:11');
 
 -- ----------------------------
 -- Table structure for xxl_job_info
@@ -2311,7 +2387,7 @@ CREATE TABLE `xxl_job_log_report`  (
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `i_trigger_day`(`trigger_day` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of xxl_job_log_report
@@ -2347,6 +2423,11 @@ INSERT INTO `xxl_job_log_report` VALUES (28, '2023-02-10 00:00:00', 0, 0, 0, NUL
 INSERT INTO `xxl_job_log_report` VALUES (29, '2023-02-12 00:00:00', 0, 0, 0, NULL);
 INSERT INTO `xxl_job_log_report` VALUES (30, '2023-02-13 00:00:00', 0, 0, 0, NULL);
 INSERT INTO `xxl_job_log_report` VALUES (31, '2023-02-14 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (32, '2023-02-15 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (33, '2023-02-16 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (34, '2023-02-17 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (35, '2023-02-18 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (36, '2023-02-19 00:00:00', 0, 0, 0, NULL);
 
 -- ----------------------------
 -- Table structure for xxl_job_logglue
