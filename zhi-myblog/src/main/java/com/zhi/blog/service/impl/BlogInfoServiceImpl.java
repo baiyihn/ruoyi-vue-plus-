@@ -7,6 +7,7 @@ import com.zhi.blog.domain.bo.BlogPageBo;
 import com.zhi.blog.domain.vo.BlogHomeInfoVo;
 import com.zhi.blog.domain.vo.BlogPageVo;
 import com.zhi.blog.domain.vo.WebsiteConfigVO;
+import com.zhi.blog.dto.vo.BlogInfoVO;
 import com.zhi.blog.mapper.ArticleMapper;
 import com.zhi.blog.mapper.CategoryMapper;
 import com.zhi.blog.mapper.TagMapper;
@@ -20,12 +21,14 @@ import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.zhi.common.constant.blog.CommonConst.*;
@@ -121,5 +124,22 @@ public class BlogInfoServiceImpl implements IBlogInfoService {
             redisService.sAdd(UNIQUE_VISITOR, md5);
         }
     }
+
+    @Override
+    public String getAbout() {
+        Object value = redisService.get(ABOUT);
+        return Objects.nonNull(value) ? value.toString() : "";
+    }
+
+
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateAbout(BlogInfoVO blogInfoVO) {
+        redisService.set(ABOUT, blogInfoVO.getAboutContent());
+    }
+
+
+
 
 }

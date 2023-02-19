@@ -47,6 +47,10 @@ import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
 import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
 import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
 import Prism from 'prismjs';
+// 文本编辑器
+import mavonEditor from "mavon-editor";
+import "mavon-editor/dist/css/index.css";
+
 VueMarkdownEditor.use(vuepressTheme, {
   Prism,
 });
@@ -80,6 +84,7 @@ Vue.use(plugins)
 Vue.use(VueMeta)
 Vue.use(VueMarkdownEditor);
 Vue.use(VueCalendarHeatmap);
+Vue.use(mavonEditor);
 DictData.install()
 
 /**

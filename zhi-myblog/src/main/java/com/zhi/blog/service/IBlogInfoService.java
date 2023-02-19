@@ -1,6 +1,7 @@
 package com.zhi.blog.service;
 
 import com.zhi.blog.domain.vo.BlogHomeInfoVo;
+import com.zhi.blog.dto.vo.BlogInfoVO;
 
 
 /**
@@ -23,5 +24,17 @@ public interface IBlogInfoService {
      * 上传访客信息
      */
     void report();
+
+    /**
+     * 查看我的信息
+     */
+    String getAbout();
+
+    /**
+     * 修改关于我内容
+     *
+     * @param blogInfoVO 博客信息
+     */
+    void updateAbout(BlogInfoVO blogInfoVO);
 
 }

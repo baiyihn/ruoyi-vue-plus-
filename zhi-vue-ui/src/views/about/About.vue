@@ -41,8 +41,8 @@ export default {
   methods: {
     getAboutContent() {
       const that = this;
-      this.axios.get("/api/about").then(({ data }) => {
-        this.markdownToHtml(data);
+      this.axios.get("/api/blogInfo/about").then(({ data }) => {
+        this.markdownToHtml(data.msg);
         this.$nextTick(() => {
           // 添加代码复制功能
           this.clipboard = new Clipboard(".copy-btn");
@@ -109,7 +109,7 @@ export default {
         }
       });
       // 将markdown替换为html标签
-      this.aboutContent = md.render(data.data);
+      this.aboutContent = md.render(data);
     },
     previewImg(img) {
       this.$imagePreview({
