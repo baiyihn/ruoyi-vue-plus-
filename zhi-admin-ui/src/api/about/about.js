@@ -19,5 +19,16 @@ export function updateAbout(data) {
 }
 
 
+//上传富文本编辑器内图片
+export function uploadOssImage(data){
+  return request({
+    url:'/system/oss/upload',
+    method:'post',
+    data:data
+  })
+
+}
+
+
 
 

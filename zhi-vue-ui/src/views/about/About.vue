@@ -42,7 +42,7 @@ export default {
     getAboutContent() {
       const that = this;
       this.axios.get("/api/blogInfo/about").then(({ data }) => {
-        this.markdownToHtml(data.msg);
+        this.markdownToHtml(data.data);
         this.$nextTick(() => {
           // 添加代码复制功能
           this.clipboard = new Clipboard(".copy-btn");

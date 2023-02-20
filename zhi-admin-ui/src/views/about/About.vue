@@ -23,7 +23,7 @@
 
 <script>
 import * as imageConversion from "image-conversion";
-import {getAbout, updateAbout} from "@/api/about/about";
+import {getAbout, updateAbout, uploadOssImage} from "@/api/about/about";
 import {getToken} from "@/utils/auth";
 
 export default {
@@ -35,13 +35,14 @@ export default {
       form:{
         aboutContent: ""
       },
+      imgFile:[],
 
     };
   },
   methods: {
     getAbout() {
       getAbout().then(response =>{
-        this.aboutContent = response.data;
+        this.aboutContent = response.msg;
       })
 
     },
@@ -63,36 +64,21 @@ export default {
     //     this.$refs.md.$img2Url(pos, _res.url);
     //   })
     // },
-    handleEditorImgAdd (pos, $file) {
+    handleEditorImgAdd (pos,file) {
       let formdata = new FormData()
-      formdata.append('file', $file)
-      this.imgFile[pos] = $file
-      let instance = this.axios.create({
-        withCredentials: true,
-        headers: {
-          Authorization: getToken()   // 我上传的时候请求头需要带上token 验证，不需要的删除就好
-        }
-      })
-      instance.post('/dev-api/system/oss/upload', formdata).then(res => {
-        if (res.data.code === 200) {
+      formdata.append('file', file)
+      this.imgFile[pos] = file
+      uploadOssImage(formdata).then(res => {
+        if (res.code === 200) {
           this.$modal.msgSuccess("上传成功");
-          let url = res.data.data
-          let name = $file.name
+          let url = res.data.url
+          let name = file.name
           if (name.includes('-')) {
             name = name.replace(/-/g, '')
           }
           let content = this.form.aboutContent
           // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)  这里是必须要有的
-          if (content.includes(name)) {
-            let oStr = `(${pos})`
-            let nStr = `(${url})`
-            let index = content.indexOf(oStr)
-            let str = content.replace(oStr, '')
-            let insertStr = (soure, start, newStr) => {
-              return soure.slice(0, start) + newStr + soure.slice(start)
-            }
-            this.form.aboutContent = insertStr(str, index, nStr)
-          }
+          this.$refs.md.$img2Url(pos, res.data.url);
         } else {
           this.$modal.msgError(res.data.msg);
         }
@@ -144,6 +130,14 @@ export default {
       this.$modal.loading("正在上传图片，请稍候...");
       this.number++;
     },
+
+  // 根据下标替换字符
+    replaceStr (str, index, char)  {
+      const strAry = str.split('');
+      strAry[index] = char;
+      return strAry.join('');
+    },
+
   }
 };
 </script>
