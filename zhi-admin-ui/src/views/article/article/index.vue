@@ -16,8 +16,13 @@
         </el-button>
       </div>
       <!-- 文章内容 -->
-      <v-md-editor v-model="form.articleContent" class="ed" :disabled-menus="[]"
-                   @upload-image="handleImage()">
+      <v-md-editor v-model="form.articleContent"
+                   class="ed"
+                   placeholder="请输入内容"
+                   :disabled-menus="[]"
+                   @upload-image="handleUploadImage"
+      >
+
       </v-md-editor>
 
       <!-- <mavon-editor ref="md" v-model="article.articleContent" @imgAdd="uploadImg" style="height:calc(100vh - 260px)" navigation/> -->
@@ -127,6 +132,7 @@
 import { listArticle, getArticle, delArticle, addArticle, updateArticle } from "@/api/article/article";
 import {listCategory} from "@/api/category/category";
 import {listTag} from "@/api/tag/tag";
+import {uploadOssImage} from "@/api/about/about";
 
 export default {
   created() {
@@ -151,6 +157,8 @@ export default {
   dicts: ['article_status', 'article_type', 'sys_yes_no'],
   data() {
     return {
+      //文章图片
+      imgFile:[],
       //当前登录用户名称
       username:"",
       //当前修改的文章id
@@ -466,6 +474,23 @@ export default {
         this.form.tagNameList.push(item.tagName);
       }
     },
+
+    handleUploadImage(event,insertImage,files){
+      for(let i in files){
+      let  formData = new FormData();
+      formData.append('file', files[i]);
+      console.log("哈哈哈哈哈哈")
+        uploadOssImage(formData).then(response =>
+        {
+            this.$modal.msgSuccess("上传成功");
+            insertImage({
+              url:response.data.url,
+              desc: response.data.fileName,
+        })
+      },
+    )
+  }
+},
     /**  获取cookie中的作者名称   */
     finduser(){
       const strCookie = document.cookie;
