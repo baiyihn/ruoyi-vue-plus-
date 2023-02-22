@@ -73,12 +73,6 @@
 ## 加群与捐献 🐧群：551275273
 <img src="https://gitee.com/kalashok-pan/Images/raw/master/blog-image/ED626A4C123843EAC82303337086A5BE.jpg"  width = "200" height = "350">
 
-## 捐献作者
-开源博主创作不易！
-<tr>
-<td><img src="https://gitee.com/kalashok-pan/Images/raw/master/blog-image/wei.jpg"  width = "250" height = "300"></td>
-<td><img src="https://gitee.com/kalashok-pan/Images/raw/master/blog-image/zhi.jpg"  width = "300" height = "320"></td>
-        </tr>
 
 ## 演示图例
 
